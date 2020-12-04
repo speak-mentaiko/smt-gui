@@ -22,7 +22,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import MotionCompleter from './ruby-tab/motion-completer';
 import EventsCompleter from './ruby-tab/events-completer';
 import SensingCompleter from './ruby-tab/sensing-completer';
-
+import SoundCompleter from './ruby-tab/sound-completer';
 
 class RubyTab extends React.Component {
     constructor (props) {
@@ -97,6 +97,7 @@ class RubyTab extends React.Component {
             new MotionCompleter(),
             new EventsCompleter(),
             new SensingCompleter()
+            new SoundCompleter(),
         ];
 
         return (
