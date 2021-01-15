@@ -24,6 +24,7 @@ import EventsCompleter from './ruby-tab/events-completer';
 import SensingCompleter from './ruby-tab/sensing-completer';
 import SoundCompleter from './ruby-tab/sound-completer';
 import GdxForCompleter from './ruby-tab/gdx-for-completer';
+import MicrobitCompleter from './ruby-tab/microbit';
 
 class RubyTab extends React.Component {
     constructor (props) {
@@ -100,7 +101,8 @@ class RubyTab extends React.Component {
             new SensingCompleter()
             new SoundCompleter(),
             new SensingCompleter(),
-            new GdxForCompleter()
+            new GdxForCompleter(),
+            new MicrobitCompleter()
         ];
 
         return (
