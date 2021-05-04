@@ -112,7 +112,7 @@ jobs:
           path: dist
   integration:
     <<: *defaults
-    parallelism: 2
+    parallelism: 1
     environment:
       JEST_JUNIT_OUTPUT_NAME: results.txt
     steps:
