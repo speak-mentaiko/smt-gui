@@ -141,6 +141,17 @@ jobs:
           git config --global user.email $(git log --pretty=format:"%ae" -n1)
           git config --global user.name $(git log --pretty=format:"%an" -n1)
       - run: npm run deploy -- -x -r https://${GH_TOKEN}@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+
+  deploy-gh-pages-smalruby-app:
+    <<: *defaults
+    steps:
+      - *restore_git_cache
+      - checkout
+      - *restore_npm_cache
+      - *restore_build_cache
+      - run: |
+          git config --global user.email $(git log --pretty=format:"%ae" -n1)
+          git config --global user.name $(git log --pretty=format:"%an" -n1)
       - run: npm run deploy:smalruby.app -- -x -r https://${GH_TOKEN}@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
 
 workflows:
@@ -167,6 +178,16 @@ workflows:
           requires:
             - build
       - deploy-gh-pages:
+          requires:
+            - lint
+            - unit
+            - integration
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+      - deploy-gh-pages-smalruby-app:
           requires:
             - lint
             - unit
