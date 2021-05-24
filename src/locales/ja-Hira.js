@@ -41,11 +41,14 @@ export default {
     'smalrubotS1.turnLedOff': '[POSITION] のLED (エルイーディー) をオフにする',
     'smalrubotS1.getMotorSpeed': '[POSITION] DC (ディーシー) モーターのそくど (%)',
     'smalrubotS1.setMotorSpeed': '[POSITION] DC (ディーシー) モーターのそくどを [SPEED] (%) にする',
+    'smalrubotS1.setArmCalibration': 'アームを [DEGREE] どちょうせいする',
     'smalrubotS1.actionMenu.forward': 'すすめる',
     'smalrubotS1.actionMenu.backward': 'バックさせる',
     'smalrubotS1.actionMenu.turnLeft': 'ひだりにまげる',
     'smalrubotS1.actionMenu.turnRight': 'みぎにまげる',
     'smalrubotS1.positionsMenu.left': 'ひだり',
     'smalrubotS1.positionsMenu.right': 'みぎ',
-    'smalrubotS1.positionsMenu.touch': 'タッチ'
+    'smalrubotS1.positionsMenu.touch': 'タッチ',
+    'smalrubotS1.positionsMenu.light': 'ひかり',
+    'smalrubotS1.positionsMenu.sound': 'おと'
 };
