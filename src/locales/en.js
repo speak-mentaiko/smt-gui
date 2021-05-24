@@ -39,11 +39,14 @@ export default {
     'smalrubotS1.turnLedOff': 'turn [POSITION] LED off',
     'smalrubotS1.getMotorSpeed': '[POSITION] DC motor speed (%)',
     'smalrubotS1.setMotorSpeed': 'set [POSITION] DC motor speed [SPEED] (%)',
+    'smalrubotS1.setArmCalibration': 'Adjust arm [DEGREE] degrees',
     'smalrubotS1.actionMenu.forward': 'forward',
     'smalrubotS1.actionMenu.backward': 'backward',
     'smalrubotS1.actionMenu.turnLeft': 'turn left',
     'smalrubotS1.actionMenu.turnRight': 'turn right',
     'smalrubotS1.positionsMenu.left': 'left',
     'smalrubotS1.positionsMenu.right': 'right',
-    'smalrubotS1.positionsMenu.touch': 'touch'
+    'smalrubotS1.positionsMenu.touch': 'touch',
+    'smalrubotS1.positionsMenu.light': 'light',
+    'smalrubotS1.positionsMenu.sound': 'sound'
 };

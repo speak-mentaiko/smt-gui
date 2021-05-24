@@ -41,6 +41,7 @@ export default {
     'smalrubotS1.turnLedOff': '[POSITION] のLEDをオフにする',
     'smalrubotS1.getMotorSpeed': '[POSITION] DCモーターの速度 (%)',
     'smalrubotS1.setMotorSpeed': '[POSITION] DCモーターの速度を [SPEED] (%) にする',
+    'smalrubotS1.setArmCalibration': 'アームを [DEGREE] 度調整する',
     'smalrubotS1.actionMenu.forward': '進める',
     'smalrubotS1.actionMenu.backward': 'バックさせる',
     'smalrubotS1.actionMenu.turnLeft': '左に曲げる',
@@ -48,5 +49,7 @@ export default {
     'smalrubotS1.actionMenu.stop': '止める',
     'smalrubotS1.positionsMenu.left': '左',
     'smalrubotS1.positionsMenu.right': '右',
-    'smalrubotS1.positionsMenu.touch': 'タッチ'
+    'smalrubotS1.positionsMenu.touch': 'タッチ',
+    'smalrubotS1.positionsMenu.light': '光',
+    'smalrubotS1.positionsMenu.sound': '音'
 };
