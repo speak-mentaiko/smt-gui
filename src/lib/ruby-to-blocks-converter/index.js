@@ -28,6 +28,7 @@ import GdxForConverter from './gdx_for';
 import MeshConverter from './mesh';
 import SmalrubotS1Converter from './smalrubot_s1';
 import BoostConverter from './boost';
+import TranslateConverter from './translate';
 
 const messages = defineMessages({
     couldNotConvertPremitive: {
@@ -89,6 +90,7 @@ class RubyToBlocksConverter {
             MeshConverter,
             SmalrubotS1Converter,
             BoostConverter,
+            TranslateConverter,
 
             MotionConverter,
             LooksConverter,
