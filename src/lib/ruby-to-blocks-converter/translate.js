@@ -13,8 +13,8 @@ const TranslateConverter = {
             case 'translate':
                 if (args.length === 2 && this._isNumberOrStringOrBlock(args[0]) && this._isStringOrBlock(args[1])) {
                     block = this._createBlock('translate_getTranslate', 'value');
-                    this._addTextInput(block,'WORDS',args[0]);
-                    this._addInput(block,'LANGUAGE',this._createFieldBlock('translate_menu_languages','languages',args[1]));
+                    this._addTextInput(block, 'WORDS', args[0]);
+                    this._addInput(block, 'LANGUAGE', this._createFieldBlock('translate_menu_languages', 'languages', args[1]));
                 }
                 break;
             case 'language':
