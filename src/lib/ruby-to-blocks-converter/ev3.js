@@ -90,10 +90,10 @@ const EV3Converter = {
                 break;
             }
         } else if ((this._isSelf(receiver) || receiver === Opal.nil) &&
-                       name === 'when' &&
-                       args.length === 2 && args[0].type === 'sym' &&
-                       rubyBlockArgs && rubyBlockArgs.length === 0 &&
-                       rubyBlock) {
+                   name === 'when' &&
+                   args.length === 2 && args[0].type === 'sym' &&
+                   rubyBlockArgs && rubyBlockArgs.length === 0 &&
+                   rubyBlock) {
             switch(args[0].value) {
             case 'ev3_button_pressed':
                 if (this._isStringOrBlock(args[1])) {
