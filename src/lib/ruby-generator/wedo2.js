@@ -8,6 +8,7 @@ export default function (Generator) {
         const motorId = Generator.quote_(Generator.getFieldValue(block, 'MOTOR_ID') || 'motor');
         return [motorId, Generator.ORDER_ATOMIC];
     };
+
     Generator.wedo2_motorOnFor = function (block) {
         const motorId = Generator.valueToCode(block, 'MOTOR_ID', Generator.ORDER_NONE) || null;
         const duration = Generator.valueToCode(block, 'DURATION', Generator.ORDER_NONE) || null;
@@ -55,7 +56,7 @@ export default function (Generator) {
         block.isStatement = true;
         const op = Generator.valueToCode(block, 'OP', Generator.ORDER_NONE) || null;
         const reference = Generator.valueToCode(block, 'REFERENCE', Generator.ORDER_NONE) || null;
-        return `wedo2_when_distance(${op}, ${reference}) do\n`;
+        return `${Generator.spriteName()}.when(:wedo2_distance, ${op}, ${reference}) do\n`;
     };
 
     Generator.wedo2_menu_TILT_DIRECTION_ANY = function (block) {
@@ -66,7 +67,7 @@ export default function (Generator) {
     Generator.wedo2_whenTilted = function (block) {
         block.isStatement = true;
         const tiltDirectionAny = Generator.valueToCode(block, 'TILT_DIRECTION_ANY', Generator.ORDER_NONE) || null;
-        return `wedo2_when_tilted(${tiltDirectionAny}) do\n`;
+        return `${Generator.spriteName()}.when(:wedo2_tilted, ${tiltDirectionAny}) do\n`;
     };
 
     Generator.wedo2_getDistance = function () {
