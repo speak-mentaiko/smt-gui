@@ -15,7 +15,6 @@ const MakeyMakeyConverter = {
             rubyBlock) {
             switch (args[0].value) {
             case 'makey_key_pressed':
-                console.log('if');
                 if (this._isStringOrBlock(args[1])) {
                     block = this._createBlock('makeymakey_whenMakeyKeyPressed', 'hat');
                     this._addInput(
