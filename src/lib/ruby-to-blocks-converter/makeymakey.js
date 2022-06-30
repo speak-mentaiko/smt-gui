@@ -31,7 +31,7 @@ const MakeyMakeyConverter = {
                     this._addInput(
                         block, 
                         'SEQUENCE',
-                        this._createFieldBlock('makeymakey_menu_SEQUENC', 'SEQUENCE', args[1])
+                        this._createFieldBlock('makeymakey_menu_SEQUENCE', 'SEQUENCE', args[1])
                     );
                     this._setParent(rubyBlock, block);
                 }
