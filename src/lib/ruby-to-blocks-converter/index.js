@@ -29,6 +29,7 @@ import MeshConverter from './mesh';
 import SmalrubotS1Converter from './smalrubot_s1';
 import BoostConverter from './boost';
 import TranslateConverter from './translate';
+import MakeyMakeyConverter from './makeymakey'
 
 const messages = defineMessages({
     couldNotConvertPremitive: {
@@ -100,7 +101,8 @@ class RubyToBlocksConverter {
             SensingConverter,
             OperatorsConverter,
             VariablesConverter,
-            MyBlocksConverter
+            MyBlocksConverter,
+            MakeyMakeyConverter
         ];
         this.reset();
     }
