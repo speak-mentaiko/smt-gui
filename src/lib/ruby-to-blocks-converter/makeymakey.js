@@ -29,7 +29,7 @@ const MakeyMakeyConverter = {
                 if (this._isStringOrBlock(args[1])) {
                     block = this._createBlock('makeymakey_whenCodePressed', 'hat');
                     this._addInput(
-                        block, 
+                        block,
                         'SEQUENCE',
                         this._createFieldBlock('makeymakey_menu_SEQUENCE', 'SEQUENCE', args[1])
                     );

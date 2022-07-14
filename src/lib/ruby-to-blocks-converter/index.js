@@ -29,7 +29,7 @@ import MeshConverter from './mesh';
 import SmalrubotS1Converter from './smalrubot_s1';
 import BoostConverter from './boost';
 import TranslateConverter from './translate';
-import MakeyMakeyConverter from './makeymakey'
+import MakeyMakeyConverter from './makeymakey';
 
 const messages = defineMessages({
     couldNotConvertPremitive: {
