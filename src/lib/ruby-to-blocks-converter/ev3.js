@@ -94,7 +94,7 @@ const EV3Converter = {
                    args.length === 2 && args[0].type === 'sym' &&
                    rubyBlockArgs && rubyBlockArgs.length === 0 &&
                    rubyBlock) {
-            switch(args[0].value) {
+            switch (args[0].value) {
             case 'ev3_button_pressed':
                 if (this._isStringOrBlock(args[1])) {
                     block = this._createBlock('ev3_whenButtonPressed', 'hat');
