@@ -174,23 +174,39 @@ module.exports = [
                 title: 'Smalruby 3.0 GUI: Player Example',
                 originTrials: JSON.parse(fs.readFileSync('origin-trials.json'))
             }),
-            new CopyWebpackPlugin([{
-                from: 'static',
-                to: 'static'
-            }]),
-            new CopyWebpackPlugin([{
-                from: 'node_modules/scratch-blocks/media',
-                to: 'static/blocks-media'
-            }]),
-            new CopyWebpackPlugin([{
-                from: 'extensions/**',
-                to: 'static',
-                context: 'src/examples'
-            }]),
-            new CopyWebpackPlugin([{
-                from: 'extension-worker.{js,js.map}',
-                context: 'node_modules/scratch-vm/dist/web'
-            }])
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: 'static',
+                        to: 'static'
+                    }
+                ]
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: 'node_modules/scratch-blocks/media',
+                        to: 'static/blocks-media'
+                    }
+                ]
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: 'extensions/**',
+                        to: 'static',
+                        context: 'src/examples'
+                    }
+                ]
+            }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: 'extension-worker.{js,js.map}',
+                        context: 'node_modules/scratch-vm/dist/web'
+                    }
+                ]
+            })
         ])
     })
 ].concat(
@@ -223,24 +239,40 @@ module.exports = [
                 ])
             },
             plugins: base.plugins.concat([
-                new CopyWebpackPlugin([{
-                    from: 'static/javascripts/setup-opal.js',
-                    to: 'static/javascripts/setup-opal.js'
-                }]),
-                new CopyWebpackPlugin([{
-                    from: 'node_modules/scratch-blocks/media',
-                    to: 'static/blocks-media'
-                }]),
-                new CopyWebpackPlugin([{
-                    from: 'extension-worker.{js,js.map}',
-                    context: 'node_modules/scratch-vm/dist/web'
-                }]),
+                new CopyWebpackPlugin({
+                    patterns: [
+                        {
+                            from: 'static/javascripts/setup-opal.js',
+                            to: 'static/javascripts/setup-opal.js'
+                        }
+                    ]
+                }),
+                new CopyWebpackPlugin({
+                    patterns: [
+                        {
+                            from: 'node_modules/scratch-blocks/media',
+                            to: 'static/blocks-media'
+                        }
+                    ]
+                }),
+                new CopyWebpackPlugin({
+                    patterns: [
+                        {
+                            from: 'extension-worker.{js,js.map}',
+                            context: 'node_modules/scratch-vm/dist/web'
+                        }
+                    ]
+                }),
                 // Include library JSON files for scratch-desktop to use for downloading
-                new CopyWebpackPlugin([{
-                    from: 'src/lib/libraries/*.json',
-                    to: 'libraries',
-                    flatten: true
-                }])
+                new CopyWebpackPlugin({
+                    patterns: [
+                        {
+                            from: 'src/lib/libraries/*.json',
+                            to: 'libraries',
+                            flatten: true
+                        }
+                    ]
+                })
             ])
         })) : []
 );

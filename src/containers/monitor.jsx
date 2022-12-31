@@ -39,6 +39,7 @@ class Monitor extends React.Component {
         super(props);
         bindAll(this, [
             'handleDragEnd',
+            'handleHide',
             'handleNextMode',
             'handleSetModeToDefault',
             'handleSetModeToLarge',
@@ -113,6 +114,12 @@ class Monitor extends React.Component {
             id: this.props.id,
             x: newX,
             y: newY
+        }));
+    }
+    handleHide () {
+        this.props.vm.runtime.requestUpdateMonitor(Map({
+            id: this.props.id,
+            visible: false
         }));
     }
     handleNextMode () {
@@ -210,6 +217,7 @@ class Monitor extends React.Component {
                     onDragEnd={this.handleDragEnd}
                     onExport={isList ? this.handleExport : null}
                     onImport={isList ? this.handleImport : null}
+                    onHide={this.handleHide}
                     onNextMode={this.handleNextMode}
                     onSetModeToDefault={isList ? null : this.handleSetModeToDefault}
                     onSetModeToLarge={isList ? null : this.handleSetModeToLarge}
@@ -232,8 +240,8 @@ Monitor.propTypes = {
     min: PropTypes.number,
     mode: PropTypes.oneOf(['default', 'slider', 'large', 'list']),
     monitorLayout: PropTypes.shape({
-        monitors: PropTypes.object,
-        savedMonitorPositions: PropTypes.object
+        monitors: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+        savedMonitorPositions: PropTypes.object // eslint-disable-line react/forbid-prop-types
     }).isRequired,
     onDragEnd: PropTypes.func.isRequired,
     opcode: PropTypes.string.isRequired, // eslint-disable-line react/no-unused-prop-types
@@ -242,6 +250,7 @@ Monitor.propTypes = {
     resizeMonitorRect: PropTypes.func.isRequired,
     spriteName: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     targetId: PropTypes.string,
+    toolboxXML: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
@@ -257,6 +266,8 @@ Monitor.propTypes = {
 };
 const mapStateToProps = state => ({
     monitorLayout: state.scratchGui.monitorLayout,
+    // render on toolbox updates since changes to the blocks could affect monitor labels, i.e. updated locale
+    toolboxXML: state.scratchGui.toolbox.toolboxXML,
     vm: state.scratchGui.vm
 });
 const mapDispatchToProps = dispatch => ({

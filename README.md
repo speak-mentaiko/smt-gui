@@ -38,7 +38,7 @@ See [jest cli docs](https://facebook.github.io/jest/docs/en/cli.html#content) fo
 
 ### Running tests
 
-*NOTE: If you're a windows user, please run these scripts in Windows `cmd.exe`  instead of Git Bash/MINGW64.*
+*NOTE: If you're a Windows user, please run these scripts in Windows `cmd.exe`  instead of Git Bash/MINGW64.*
 
 Before running any tests, make sure you have run `npm install` from this (scratch-gui) repository's top level.
 
@@ -69,7 +69,7 @@ $(npm bin)/jest --runInBand test/unit/components/button.test.jsx
 
 #### Running integration tests
 
-Integration tests use a headless browser to manipulate the actual html and javascript that the repo
+Integration tests use a headless browser to manipulate the actual HTML and javascript that the repo
 produces. You will not see this activity (though you can hear it when sounds are played!).
 
 Note that integration tests require you to first create a build that can be loaded in a browser:
@@ -100,7 +100,7 @@ USE_HEADLESS=no $(npm bin)/jest --runInBand test/integration/backpack.test.js
 
 ### Ignoring optional dependencies
 
-When running `npm install`, you can get warnings about optionsl dependencies:
+When running `npm install`, you can get warnings about optional dependencies:
 
 ```
 npm WARN optional Skipping failed optional dependency /chokidar/fsevents:
@@ -117,7 +117,7 @@ Further reading: [Stack Overflow](https://stackoverflow.com/questions/36725181/n
 
 ### Resolving dependencies
 
-When installing for the first time, you can get warnings which need to be resolved:
+When installing for the first time, you can get warnings that need to be resolved:
 
 ```
 npm WARN eslint-config-scratch@5.0.0 requires a peer of babel-eslint@^8.0.1 but none was installed.
@@ -132,7 +132,7 @@ You can check which versions are available:
 npm view react-intl-redux@0.* version
 ```
 
-You will neet do install the required version:
+You will need to install the required version:
 
 ```
 npm install  --no-optional --save-dev react-intl-redux@^0.7
