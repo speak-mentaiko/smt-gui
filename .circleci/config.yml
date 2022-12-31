@@ -216,23 +216,6 @@ workflows:
     jobs:
       - commitlint/lint:
           target-branch: develop
-  push-translations:
-    triggers:
-      - schedule:
-          cron: 0 0 * * * # daily at 12 UTC, 8 ET
-          filters:
-            branches:
-              only:
-                - develop
-    jobs:
-      - setup:
-          context:
-            - dockerhub-credentials
-      - push-translations:
-          context:
-            - dockerhub-credentials
-          requires:
-              - setup
 
   build-test-no-deploy:
     jobs:
