@@ -55,6 +55,7 @@ aliases:
 jobs:
   build-test-no-cache:
     <<: *defaults
+    resource_class: large
     environment:
       DETECT_CHROMEDRIVER_VERSION: "true"
       JEST_JUNIT_OUTPUT_DIR: test-results
@@ -136,6 +137,7 @@ jobs:
           path: test-results
   build:
     <<: *defaults
+    resource_class: large
     environment:
       NODE_ENV: production
       NODE_OPTIONS: --max-old-space-size=4000
