@@ -5898,61 +5898,6 @@
     },
     {
         "name": "Grasshopper",
-        "md5": "e7210a370837dd1e4ebc1a56a973b7f6.svg",
-        "type": "sprite",
-        "tags": [
-            "animals",
-            "insect",
-            "bug",
-            "wetland",
-            "owen davey"
-        ],
-        "isStage": false,
-        "variables": {},
-        "costumes": [
-            {
-                "assetId": "f505a4e9eab5e40e2669a4462dba4c90",
-                "name": "gobo-a",
-                "bitmapResolution": 1,
-                "md5ext": "f505a4e9eab5e40e2669a4462dba4c90.svg",
-                "dataFormat": "svg",
-                "rotationCenterX": 47,
-                "rotationCenterY": 55
-            },
-            {
-                "assetId": "5c0896569305ab177d87caa31aad2a72",
-                "name": "gobo-b",
-                "bitmapResolution": 1,
-                "md5ext": "5c0896569305ab177d87caa31aad2a72.svg",
-                "dataFormat": "svg",
-                "rotationCenterX": 47,
-                "rotationCenterY": 55
-            },
-            {
-                "assetId": "9d8021c216fb92cc708e1e96f3ed2b52",
-                "name": "gobo-c",
-                "bitmapResolution": 1,
-                "md5ext": "9d8021c216fb92cc708e1e96f3ed2b52.svg",
-                "dataFormat": "svg",
-                "rotationCenterX": 47,
-                "rotationCenterY": 55
-            }
-        ],
-        "sounds": [
-            {
-                "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
-                "name": "pop",
-                "dataFormat": "wav",
-                "format": "",
-                "rate": 44100,
-                "sampleCount": 1032,
-                "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
-            }
-        ],
-        "blocks": {}
-    },
-    {
-        "name": "Grasshopper",
         "tags": [
             "animals",
             "insect",
