@@ -175,11 +175,11 @@ describe('Working with sounds', () => {
         await clickText('Sounds');
         const el = await findByXpath('//button[@aria-label="Choose a Sound"]');
         await el.sendKeys(Key.chord(cmdCtrl, 'a')); // Select all
-        await findByText('0.85', scope.soundsTab); // Meow sound duration
+        await findByText('0.59', scope.soundsTab); // Meow sound duration
         await el.sendKeys(Key.DELETE);
         await findByText('0.00', scope.soundsTab); // Sound is now empty
         await el.sendKeys(Key.chord(cmdCtrl, 'z')); // undo
-        await findByText('0.85', scope.soundsTab); // Meow sound is back
+        await findByText('0.59', scope.soundsTab); // Meow sound is back
         await el.sendKeys(Key.chord(cmdCtrl, Key.SHIFT, 'z')); // redo
         await findByText('0.00', scope.soundsTab); // Sound is empty again
 
