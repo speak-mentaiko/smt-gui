@@ -56,6 +56,20 @@ end
 
 **採用:** `when_%event_type%(%args%)`
 
+```ruby
+# フラグが押されたとき
+when_flag_clicked do
+end
+
+# [スペース▼]キーが押されたとき
+when_key_pressed("space") do
+end
+
+# [音量▼] > (10) のとき
+when_greater_than("loudness", 10) do # 省略形 when_gt(...)
+end
+```
+
 * `on(:%event_type%, %args%)` と迷った
 * 決め手は「メソッド名がブロックの英語表現と類似している」こと
 * スモウルビーは、先生やメンターなどの指導者がいない状況でRubyの文法を学ぶことを想定しているため、ブロックを英語(English)表記にするだけでRubyの文法をほとんど学べている、というのは魅力的
@@ -65,12 +79,15 @@ end
 ### `when_%event_type%(%args%)`
 
 ```ruby
+# フラグが押されたとき
 when_flag_clicked do
 end
 
+# [スペース▼]キーが押されたとき
 when_key_pressed("space") do
 end
 
+# [音量▼] > (10) のとき
 when_greater_than("loudness", 10) do # 省略形 when_gt(...)
 end
 ```
@@ -85,6 +102,20 @@ end
 
 ### `When(:%event_type%, %args%)`
 
+```ruby
+# フラグが押されたとき
+When(:flag_clicked) do
+end
+
+# [スペース▼]キーが押されたとき
+When(:key_pressed, "space") do
+end
+
+# [音量▼] > (10) のとき
+When(:greater_than, "loudness", 10) do
+end
+```
+
 * `+` `self.` を記述しなくてよい
 * `+` `self.when` からの変更が少ない
 * `-` Ruby にはメソッド名を大文字から始める習慣がないため、Rubyの初学者に誤った知識を与える可能性がある
@@ -92,12 +123,40 @@ end
 
 ### `_when(:%event_type%, %args%)`
 
+```ruby
+# フラグが押されたとき
+_when(:flag_clicked) do
+end
+
+# [スペース▼]キーが押されたとき
+_when(:key_pressed, "space") do
+end
+
+# [音量▼] > (10) のとき
+_when(:greater_than, "loudness", 10) do
+end
+```
+
 * `+` `self.` を記述しなくてよい
 * `+` `self.when` からの変更が少ない
 * `-` ( `When` と同様に ) Ruby にはメソッド名を `_` から始める習慣がないため、Rubyの初学者に誤った知識を与える可能性がある
 * `-` ( `When` と同様に ) Rubyの初学者がまったく動作の異なる予約語 `when` をこの When メソッドだと勘違いして覚えてしまう可能性がある
 
 ### `on(:%event_type%, %args%)`
+
+```ruby
+# フラグが押されたとき
+on(:flag_clicked) do
+end
+
+# [スペース▼]キーが押されたとき
+on(:key_pressed, "space") do
+end
+
+# [音量▼] > (10) のとき
+on(:greater_than, "loudness", 10) do
+end
+```
 
 * `+` `self.` を記述しなくてよい
 * `+` `self.when` からの変更が少ない
