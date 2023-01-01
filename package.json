@@ -12,7 +12,7 @@
   "main": "./dist/smalruby3-gui.js",
   "scripts": {
     "setup-opal": "node ./scripts/make-setup-opal.js",
-    "setup-scratch-vm": "cd node_modules/scratch-vm && npm ci && $(npm bin)/webpack --colors --bail --silent",
+    "setup-scratch-vm": "cd node_modules/scratch-vm && npm install && $(npm bin)/webpack --colors --bail --silent",
     "build": "npm run clean && npm run setup-opal && webpack --colors --bail",
     "clean": "rimraf ./static/javascripts/setup-opal.js && rimraf ./build && mkdirp build && rimraf ./dist && mkdirp dist",
     "deploy": "touch build/.nojekyll && gh-pages -t -d build -m \"[skip ci] Build for $(git log --pretty=format:%H -n1)\"",
