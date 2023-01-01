@@ -65,6 +65,9 @@ jobs:
       - browser-tools/install-chrome # must be before node/install-packages
       - node/install-packages
       - run:
+          name: "build scratch-vm for smalruby"
+          command: npm run setup-scratch-vm
+      - run:
           name: Lint
           command: npm run test:lint -- --quiet --output-file test-results/eslint-results.xml --format junit
       - run:
@@ -98,6 +101,9 @@ jobs:
       - checkout
       - browser-tools/install-chrome # must be before node/install-packages
       - node/install-packages
+      - run:
+          name: "build scratch-vm for smalruby"
+          command: npm run setup-scratch-vm
       - *save_git_cache
       - *save_npm_cache
   lint:
