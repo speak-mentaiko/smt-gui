@@ -1,4 +1,4 @@
 Opal.load('opal-parser');
 Opal.load('parser');
-Opal.load('parser/ruby23');
-Opal.Parser.CurrentRuby = Opal.Parser.Ruby23;
+Opal.load('parser/ruby31');
+Opal.Parser.CurrentRuby = Opal.Parser.Ruby31;
