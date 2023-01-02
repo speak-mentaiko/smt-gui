@@ -88,7 +88,6 @@ jobs:
           command: |
               google-chrome --version
               npx --no -- chromedriver --version
-              npm run setup-opal
               npm run test:integration -- --reporters="default" --reporters="jest-junit"
       - store_artifacts:
           path: coverage
