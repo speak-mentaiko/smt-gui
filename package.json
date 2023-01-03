@@ -7,7 +7,7 @@
   "homepage": "https://github.com/smalruby/smalruby3-gui#readme",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/smalruby/smalruby3-gui.git"
+    "url": "https://github.com/smalruby/smalruby3-gui.git"
   },
   "main": "./dist/smalruby3-gui.js",
   "scripts": {
