@@ -219,6 +219,7 @@ workflows:
   commitlint:
     jobs:
       - commitlint/lint:
+          target-branch: develop
           filters:
             branches:
               ignore:
