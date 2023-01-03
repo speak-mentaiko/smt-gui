@@ -21,7 +21,6 @@ describe('RubyToBlocksConverter/Event', () => {
 
     describe('event_whenflagclicked', () => {
         test('normal', () => {
-            code = 'self.when(:flag_clicked) { bounce_if_on_edge }';
             expected = [
                 {
                     opcode: 'event_whenflagclicked',
@@ -30,25 +29,30 @@ describe('RubyToBlocksConverter/Event', () => {
                     }
                 }
             ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
+            [
+                'self.when(:flag_clicked) { bounce_if_on_edge }',
+                'when_flag_clicked { bounce_if_on_edge }',
+                'when_flag_clicked() { bounce_if_on_edge }',
+                'self.when_flag_clicked { bounce_if_on_edge }'
+            ].forEach(code => {
+                convertAndExpectToEqualBlocks(converter, target, code, expected);
+            });
 
-            code = 'self.when(:flag_clicked) { bounce_if_on_edge; move(10) }';
             expected = [
                 {
                     opcode: 'event_whenflagclicked',
                     next: rubyToExpected(converter, target, 'bounce_if_on_edge; move(10)')[0]
                 }
             ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
+            [
+                'self.when(:flag_clicked) { bounce_if_on_edge; move(10) }',
+                'when_flag_clicked { bounce_if_on_edge; move(10) }'
+            ].forEach(code => {
+                convertAndExpectToEqualBlocks(converter, target, code, expected);
+            });
         });
 
         test('hat', () => {
-            code = `
-                bounce_if_on_edge
-                self.when(:flag_clicked) do
-                end
-                bounce_if_on_edge
-            `;
             expected = [
                 rubyToExpected(converter, target, 'bounce_if_on_edge')[0],
                 {
@@ -56,7 +60,22 @@ describe('RubyToBlocksConverter/Event', () => {
                 },
                 rubyToExpected(converter, target, 'bounce_if_on_edge')[0]
             ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
+            [
+                `
+                    bounce_if_on_edge
+                    self.when(:flag_clicked) do
+                    end
+                    bounce_if_on_edge
+                `,
+                `
+                    bounce_if_on_edge
+                    when_flag_clicked do
+                    end
+                    bounce_if_on_edge
+                `
+            ].forEach(code => {
+                convertAndExpectToEqualBlocks(converter, target, code, expected);
+            });
         });
 
         test('invalid', () => {
@@ -68,7 +87,8 @@ describe('RubyToBlocksConverter/Event', () => {
 
             [
                 'self.when(:flag_clicked, 1) { bounce_if_on_edge }',
-                'self.when(:flag_click) { bounce_if_on_edge }'
+                'self.when(:flag_click) { bounce_if_on_edge }',
+                'when_flag_click { bounce_if_on_edge }'
             ].forEach(s => {
                 convertAndExpectRubyBlockError(converter, target, s);
             });

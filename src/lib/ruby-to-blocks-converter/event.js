@@ -112,6 +112,12 @@ const EventConverter = {
                     this._addInput(block, 'BROADCAST_INPUT', inputBlock, shadowBlock);
                 }
                 break;
+            case 'when_flag_clicked':
+                if (args.length == 0 && rubyBlockArgs && rubyBlockArgs.length === 0 && rubyBlock) {
+                    block = this._createBlock('event_whenflagclicked', 'hat');
+                    this._setParent(rubyBlock, block);
+                }
+                break;
             }
         }
 
