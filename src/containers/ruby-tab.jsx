@@ -14,8 +14,9 @@ import {BLOCKS_TAB_INDEX} from '../reducers/editor-tab';
 
 import RubyToBlocksConverterHOC from '../lib/ruby-to-blocks-converter-hoc.jsx';
 
-import 'brace/mode/ruby';
-import 'brace/theme/clouds';
+import "ace-builds/src-noconflict/mode-ruby";
+import "ace-builds/src-noconflict/theme-clouds";
+import "ace-builds/src-noconflict/ext-language_tools";
 
 class RubyTab extends React.Component {
     constructor (props) {
