@@ -34,8 +34,8 @@ describe('RubyToBlocksConverter/Event', () => {
                 'when_flag_clicked { bounce_if_on_edge }',
                 'when_flag_clicked() { bounce_if_on_edge }',
                 'self.when_flag_clicked { bounce_if_on_edge }'
-            ].forEach(code => {
-                convertAndExpectToEqualBlocks(converter, target, code, expected);
+            ].forEach(s => {
+                convertAndExpectToEqualBlocks(converter, target, s, expected);
             });
 
             expected = [
@@ -47,8 +47,8 @@ describe('RubyToBlocksConverter/Event', () => {
             [
                 'self.when(:flag_clicked) { bounce_if_on_edge; move(10) }',
                 'when_flag_clicked { bounce_if_on_edge; move(10) }'
-            ].forEach(code => {
-                convertAndExpectToEqualBlocks(converter, target, code, expected);
+            ].forEach(s => {
+                convertAndExpectToEqualBlocks(converter, target, s, expected);
             });
         });
 
@@ -73,8 +73,8 @@ describe('RubyToBlocksConverter/Event', () => {
                     end
                     bounce_if_on_edge
                 `
-            ].forEach(code => {
-                convertAndExpectToEqualBlocks(converter, target, code, expected);
+            ].forEach(s => {
+                convertAndExpectToEqualBlocks(converter, target, s, expected);
             });
         });
 
