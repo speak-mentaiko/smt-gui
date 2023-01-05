@@ -1,5 +1,9 @@
 import path from 'path';
 import SeleniumHelper from '../helpers/selenium-helper';
+import {
+    setRubyCode,
+    getRubyCode
+} from '../helpers/ruby-helper';
 
 const {
     /* eslint-disable no-unused-vars */
@@ -30,20 +34,11 @@ describe('convert Code from Ruby', () => {
         await driver.quit();
     });
 
-    const setRubyCode = function (code) {
-        code = code.replace(/\n/g, '\\n');
-        return driver.executeScript(`ace.edit('ruby-editor').setValue('${code}');`);
-    };
-
-    const getRubyCode = function () {
-        return driver.executeScript(`return ace.edit('ruby-editor').getValue();`);
-    };
-
     test('Code from Ruby -> Ruby from Code', async () => {
         await loadUri(uri);
 
         await clickText('Ruby', '*[@role="tab"]');
-        await setRubyCode('move(\\n10\\n)\\n');
+        await setRubyCode(driver, 'move(\\n10\\n)\\n');
 
         await clickText('Code', '*[@role="tab"]');
 
@@ -55,17 +50,17 @@ describe('convert Code from Ruby', () => {
 
         await clickText('Ruby', '*[@role="tab"]');
 
-        expect(await getRubyCode()).toEqual('move(10)\n');
+        expect(await getRubyCode(driver)).toEqual('move(10)\n');
     });
 
     describe('syntax error', () => {
         beforeEach(async () => {
             await loadUri(uri);
             await clickText('Ruby', '*[@role="tab"]');
-            await setRubyCode('move(10)');
+            await setRubyCode(driver, 'move(10)');
             await clickText('Code', '*[@role="tab"]');
             await clickText('Ruby', '*[@role="tab"]');
-            await setRubyCode('move(10');
+            await setRubyCode(driver, 'move(10');
         });
 
         test('clicked Code', async () => {
@@ -148,7 +143,7 @@ describe('convert Code from Ruby', () => {
             );
             await clickText('Generate Ruby from Code');
 
-            expect(await getRubyCode()).toEqual('move(10)\n');
+            expect(await getRubyCode(driver)).toEqual('move(10)\n');
 
             await clickText('Code', '*[@role="tab"]');
             await findByXpath('//li[contains(@id, "react-tabs-") and @aria-selected="true"]/span[text()="Code"]');
