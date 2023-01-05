@@ -8,7 +8,7 @@ const fs = require('fs');
 const {By, until, Button} = webdriver;
 
 const USE_HEADLESS = process.env.USE_HEADLESS !== 'no';
-const IS_ROOT_USER = process.getuid() == 0;
+const IS_ROOT_USER = process.getuid() === 0;
 
 // The main reason for this timeout is so that we can control the timeout message and report details;
 // if we hit the Jasmine default timeout then we get a terse message that we can't control.
