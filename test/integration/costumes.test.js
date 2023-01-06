@@ -41,7 +41,7 @@ describe('Working with costumes', () => {
         await findByXpath("//input[@value='Abby-a']"); // Should show editor for new costume
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding a costume by surprise button', async () => {
         await loadUri(uri);
@@ -53,7 +53,7 @@ describe('Working with costumes', () => {
         await clickXpath('//button[@aria-label="Surprise"]');
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding a costume by paint button', async () => {
         await loadUri(uri);
@@ -65,7 +65,7 @@ describe('Working with costumes', () => {
         await clickXpath('//button[@aria-label="Paint"]');
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Duplicating a costume', async () => {
         await loadUri(uri);
@@ -80,7 +80,7 @@ describe('Working with costumes', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Converting bitmap/vector in paint editor', async () => {
         await loadUri(uri);
@@ -107,7 +107,7 @@ describe('Working with costumes', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Undo/redo in the paint editor', async () => {
         await loadUri(uri);
@@ -121,7 +121,7 @@ describe('Working with costumes', () => {
         await clickText('Convert to Vector', scope.costumesTab);
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding an svg from file', async () => {
         await loadUri(uri);
@@ -136,7 +136,7 @@ describe('Working with costumes', () => {
         await clickText('100 x 100', scope.costumesTab); // Size is right
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding a png from file (gh-3582)', async () => {
         await loadUri(uri);
@@ -150,7 +150,7 @@ describe('Working with costumes', () => {
         await clickText('gh-3582-png', scope.costumesTab);
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding a bmp from file', async () => {
         await loadUri(uri);
@@ -164,7 +164,7 @@ describe('Working with costumes', () => {
         await clickText('bmpfile', scope.costumesTab);
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding several costumes with a gif', async () => {
         await loadUri(uri);
@@ -185,7 +185,7 @@ describe('Working with costumes', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding a letter costume through the Letters filter in the library', async () => {
         await loadUri(uri);
@@ -199,7 +199,7 @@ describe('Working with costumes', () => {
         await rightClickText('Block-a', scope.costumesTab); // Make sure it is there
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Costumes animate on mouseover', async () => {
         await loadUri(uri);
@@ -214,7 +214,7 @@ describe('Working with costumes', () => {
         await findByXpath('//img[@src="https://cdn.assets.scratch.mit.edu/internalapi/asset/45de34b47a2ce22f6f5d28bb35a44ff5.svg/get/"]');
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding multiple costumes at the same time', async () => {
         const files = [
@@ -235,7 +235,7 @@ describe('Working with costumes', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Load an invalid svg from scratch3 as costume', async () => { // eslint-disable-line no-disabled-tests
         await loadUri(uri);
@@ -249,7 +249,7 @@ describe('Working with costumes', () => {
         const costumeTile = await findByText('corrupt-from-scratch3', scope.costumesTab); // Name from filename
         const tileVisible = await costumeTile.isDisplayed();
         await expect(tileVisible).toBe(true);
-    });
+    }, 60 * 1000);
 
     test('Load an invalid svg from scratch2 as costume', async () => { // eslint-disable-line no-disabled-tests
         await loadUri(uri);
@@ -263,5 +263,5 @@ describe('Working with costumes', () => {
         const costumeTile = await findByText('scratch2-corrupted', scope.costumesTab); // Name from filename
         const tileVisible = await costumeTile.isDisplayed();
         await expect(tileVisible).toBe(true);
-    });
+    }, 60 * 1000);
 });

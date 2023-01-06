@@ -48,6 +48,7 @@ describe('Ruby Tab: Control category blocks', () => {
             end
             wait until false
             until false
+              move(10)
             end
             stop("all")
 

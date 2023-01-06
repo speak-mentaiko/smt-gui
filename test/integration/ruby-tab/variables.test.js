@@ -37,7 +37,6 @@ describe('Ruby Tab: Variables category blocks', () => {
             show_variable("@sprite_only_variable")
             hide_variable("$my_variable")
             hide_variable("@sprite_only_variable")
-
             list("$my_list").push("thing")
             list("$sprite_only_list").push("thing")
             list("$my_list").delete_at(1)

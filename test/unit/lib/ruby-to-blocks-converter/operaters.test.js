@@ -779,7 +779,7 @@ describe('RubyToBlocksConverter/Operators', () => {
                     },
                     {
                         name: 'LETTER',
-                        block: expectedInfo.makeNumber(0)
+                        block: expectedInfo.makeNumber(1)
                     }
                 ]
             }

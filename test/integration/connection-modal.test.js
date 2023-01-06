@@ -44,7 +44,7 @@ describe('Hardware extension connection modal', () => {
 
         await clickText('micro:bit');
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for modal to open
-        findByText('Scratch Link'); // Scratch Link is mentioned in the error modal
+        await findByText('Scratch Link'); // Scratch Link is mentioned in the error modal
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
@@ -59,7 +59,7 @@ describe('Hardware extension connection modal', () => {
 
         await clickText('EV3');
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for modal to open
-        findByText('Scratch Link'); // Scratch Link is mentioned in the error modal
+        await findByText('Scratch Link'); // Scratch Link is mentioned in the error modal
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);

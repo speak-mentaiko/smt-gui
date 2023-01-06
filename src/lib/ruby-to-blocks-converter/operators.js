@@ -25,7 +25,11 @@ const OperatorsConverter = {
                     args.length === 1 && this._isNumberOrBlock(args[0])) {
                     block = this._createBlock('operator_letter_of', 'value');
                     this._addTextInput(block, 'STRING', receiver, 'apple');
-                    this._addNumberInput(block, 'LETTER', 'math_number', args[0], 1);
+                    let letter = args[0];
+                    if (this._isNumber(args[0]) && !_.isNumber(args[0]) && args[0].type === 'int') {
+                        letter = letter.value + 1;
+                    }
+                    this._addNumberInput(block, 'LETTER', 'math_number', letter, 1);
                     return block;
                 }
                 break;
