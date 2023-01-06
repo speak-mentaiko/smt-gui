@@ -36,7 +36,6 @@ describe('Removed trademarks (ex: Scratch Cat)', () => {
         await driver.quit();
     });
 
-
     test('Removed trademark sprites', async () => {
         await loadUri(uri);
         await clickXpath('//button[@aria-label="Choose a Sprite"]');
@@ -44,8 +43,9 @@ describe('Removed trademarks (ex: Scratch Cat)', () => {
 
         for (const name of trademarkNames) {
             searchElement.clear();
+            await driver.sleep(250);
             await searchElement.sendKeys(name);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await driver.sleep(500);
             expect(await notExistsByXpath(`//*[span[text()="${name}"]]`)).toBeTruthy();
         }
 
@@ -61,14 +61,14 @@ describe('Removed trademarks (ex: Scratch Cat)', () => {
 
         for (const name of trademarkNames) {
             searchElement.clear();
+            await driver.sleep(250);
             const costumePrefix = `${name}-`;
             await searchElement.sendKeys(costumePrefix);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await driver.sleep(500);
             expect(await notExistsByXpath(`//*[span[contains(text(), "${costumePrefix}")]]`)).toBeTruthy();
         }
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
     });
-
 });
