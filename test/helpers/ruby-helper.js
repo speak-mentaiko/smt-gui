@@ -1,13 +1,42 @@
-const setRubyCode = function (driver, code) {
-    code = code.replace(/\n/g, '\\n');
-    return driver.executeScript(`ace.edit('ruby-editor').setValue('${code}');`);
-};
+import bindAll from 'lodash.bindall';
 
-const getRubyCode = function (driver) {
-    return driver.executeScript(`return ace.edit('ruby-editor').getValue();`);
-};
+class RubyHelper {
+    constructor (seleniumHelper) {
+        bindAll(this, [
+            'fillInRubyProgram',
+            'expectInterconvertBetweenCodeAndRuby',
+        ]);
 
-export {
-    setRubyCode,
-    getRubyCode
-};
+        this.seleniumHelper = seleniumHelper;
+        this.clickText = seleniumHelper.clickText;
+        this.clickXpath = seleniumHelper.clickXpath;
+    }
+
+    get currentRubyProgram () {
+        return this.driver.executeScript(`return ace.edit('ruby-editor').getValue();`);
+    }
+
+    get driver () {
+        return this.seleniumHelper.driver;
+    }
+
+    fillInRubyProgram (code) {
+        code = code.replace(/\n/g, '\\n').replace(/'/g, "\\'");
+        return this.driver.executeScript(`ace.edit('ruby-editor').setValue('${code}');`);
+    };
+
+    async expectInterconvertBetweenCodeAndRuby (code) {
+        await this.clickText('Ruby', '*[@role="tab"]');
+        await this.fillInRubyProgram(code);
+        await this.clickText('Code', '*[@role="tab"]');
+        await this.clickXpath(
+            '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
+                '/*/span[text()="Edit"]'
+        );
+        await this.clickText('Generate Ruby from Code');
+        await this.clickText('Ruby', '*[@role="tab"]');
+        expect(await this.currentRubyProgram).toEqual(`${code}\n`);
+    }
+}
+
+export default RubyHelper;
