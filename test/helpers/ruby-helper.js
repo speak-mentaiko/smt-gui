@@ -5,7 +5,7 @@ class RubyHelper {
         bindAll(this, [
             'fillInRubyProgram',
             'currentRubyProgram',
-            'expectInterconvertBetweenCodeAndRuby',
+            'expectInterconvertBetweenCodeAndRuby'
         ]);
 
         this.seleniumHelper = seleniumHelper;
@@ -24,7 +24,7 @@ class RubyHelper {
     fillInRubyProgram (code) {
         code = code.replace(/\n/g, '\\n').replace(/'/g, "\\'");
         return this.driver.executeScript(`ace.edit('ruby-editor').setValue('${code}');`);
-    };
+    }
 
     async expectInterconvertBetweenCodeAndRuby (code) {
         await this.clickText('Ruby', '*[@role="tab"]');
