@@ -1,10 +1,8 @@
 import path from 'path';
 import SeleniumHelper from '../helpers/selenium-helper';
-import {
-    setRubyCode,
-    getRubyCode
-} from '../helpers/ruby-helper';
+import RubyHelper from '../helpers/ruby-helper';
 
+const seleniumHelper = new SeleniumHelper();
 const {
     /* eslint-disable no-unused-vars */
     clickText,
@@ -19,7 +17,12 @@ const {
     takeScreenshot,
     scope
     /* eslint-enable no-unused-vars */
-} = new SeleniumHelper();
+} = seleniumHelper;
+const rubyHelper = new RubyHelper(seleniumHelper);
+const {
+    fillInRubyProgram,
+    currentRubyProgram
+} = rubyHelper;
 
 const uri = path.resolve(__dirname, '../../build/index.html');
 
@@ -38,7 +41,7 @@ describe('convert Code from Ruby', () => {
         await loadUri(uri);
 
         await clickText('Ruby', '*[@role="tab"]');
-        await setRubyCode(driver, 'move(\\n10\\n)\\n');
+        await fillInRubyProgram('move(\\n10\\n)\\n');
 
         await clickText('Code', '*[@role="tab"]');
 
@@ -50,17 +53,17 @@ describe('convert Code from Ruby', () => {
 
         await clickText('Ruby', '*[@role="tab"]');
 
-        expect(await getRubyCode(driver)).toEqual('move(10)\n');
+        expect(await currentRubyProgram()).toEqual('move(10)\n');
     });
 
     describe('syntax error', () => {
         beforeEach(async () => {
             await loadUri(uri);
             await clickText('Ruby', '*[@role="tab"]');
-            await setRubyCode(driver, 'move(10)');
+            await fillInRubyProgram('move(10)');
             await clickText('Code', '*[@role="tab"]');
             await clickText('Ruby', '*[@role="tab"]');
-            await setRubyCode(driver, 'move(10');
+            await fillInRubyProgram('move(10');
         });
 
         test('clicked Code', async () => {
@@ -143,7 +146,7 @@ describe('convert Code from Ruby', () => {
             );
             await clickText('Generate Ruby from Code');
 
-            expect(await getRubyCode(driver)).toEqual('move(10)\n');
+            expect(await currentRubyProgram()).toEqual('move(10)\n');
 
             await clickText('Code', '*[@role="tab"]');
             await findByXpath('//li[contains(@id, "react-tabs-") and @aria-selected="true"]/span[text()="Code"]');

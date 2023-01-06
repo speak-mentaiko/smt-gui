@@ -19,7 +19,9 @@ const POSITIONS = [
 const SENSOR_POSITIONS = [
     'left',
     'right',
-    'touch'
+    'touch',
+    'light',
+    'sound'
 ];
 
 /**
@@ -103,6 +105,14 @@ const SmalrubotS1Converter = {
                     );
                     this._addField(block, 'POSITION', args[0]);
                     this._addNumberInput(block, 'SPEED', 'math_number', args[1], 100);
+                }
+                break;
+            case 'arm_calibration=':
+                if (args.length === 1 && this._isNumberOrBlock(args[0])) {
+                    block = this._changeRubyExpressionBlock(
+                        receiver, 'smalrubotS1_setArmCalibration', 'statement'
+                    );
+                    this._addNumberInput(block, 'DEGREE', 'math_number', args[0], 0);
                 }
                 break;
             }

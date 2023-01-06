@@ -1,23 +1,22 @@
-import path from 'path';
 import dedent from 'dedent';
 import SeleniumHelper from '../../helpers/selenium-helper';
-import {
-    setRubyCode,
-    getRubyCode
-} from '../../helpers/ruby-helper';
+import RubyHelper from '../../helpers/ruby-helper';
 
+const seleniumHelper = new SeleniumHelper();
 const {
-    clickText,
-    clickXpath,
     getDriver,
-    loadUri
-} = new SeleniumHelper();
+    loadUri,
+    urlFor
+} = seleniumHelper;
 
-const uri = path.resolve(__dirname, '../../../build/index.html');
+const rubyHelper = new RubyHelper(seleniumHelper);
+const {
+    expectInterconvertBetweenCodeAndRuby
+} = rubyHelper;
 
 let driver;
 
-describe('Ruby Tab: event', () => {
+describe('Ruby Tab: Events category blocks', () => {
     beforeAll(() => {
         driver = getDriver();
     });
@@ -27,9 +26,8 @@ describe('Ruby Tab: event', () => {
     });
 
     test('Ruby -> Code -> Ruby', async () => {
-        await loadUri(uri);
+        await loadUri(urlFor('/'));
 
-        await clickText('Ruby', '*[@role="tab"]');
         const code = dedent`
             self.when(:flag_clicked) do
             end
@@ -61,18 +59,6 @@ describe('Ruby Tab: event', () => {
             broadcast("message1")
             broadcast_and_wait("message1")
         `;
-        await setRubyCode(driver, code);
-
-        await clickText('Code', '*[@role="tab"]');
-
-        await clickXpath(
-            '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
-                '/*/span[text()="Edit"]'
-        );
-        await clickText('Generate Ruby from Code');
-
-        await clickText('Ruby', '*[@role="tab"]');
-
-        expect(await getRubyCode(driver)).toEqual(`${code}\n`);
+        await expectInterconvertBetweenCodeAndRuby(code);
     });
 });

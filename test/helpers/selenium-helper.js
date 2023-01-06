@@ -3,6 +3,7 @@ jest.setTimeout(30000); // eslint-disable-line no-undef
 import bindAll from 'lodash.bindall';
 import 'chromedriver'; // register path
 import webdriver from 'selenium-webdriver';
+import pathModule from 'path';
 const fs = require('fs');
 
 const {By, until, Button} = webdriver;
@@ -53,7 +54,8 @@ class SeleniumHelper {
             soundsTab: "*[@id='react-tabs-5']",
             spriteTile: '*[starts-with(@class,"react-contextmenu-wrapper")]',
             monitors: '*[starts-with(@class,"stage_monitor-wrapper")]',
-            contextMenu: '*[starts-with(@class,"react-contextmenu")]'
+            contextMenu: '*[starts-with(@class,"react-contextmenu")]',
+            spriteItems: '*[starts-with(@class,"sprite-selector_items-wrapper")]'
         };
     }
 
@@ -127,9 +129,10 @@ class SeleniumHelper {
             .then(elements => elements.length > 0);
     }
 
-    notExistsByXpath (xpath) {
-        return this.driver.findElements(By.xpath(xpath))
-            .then(elements => elements.length === 0 || elements.every(i => !i.isDisplayed()));
+    notExistsByXpath (xpath, timeoutMessage = `notExistsByXpath timed out for path: ${xpath}`) {
+        return this.driver.wait(() => this.driver.findElements(By.xpath(xpath))
+            .then(elements => elements.length === 0 || elements.every(i => !i.isDisplayed())),
+        DEFAULT_TIMEOUT_MILLISECONDS, timeoutMessage);
     }
 
     loadUri (uri) {
@@ -218,6 +221,15 @@ class SeleniumHelper {
         return this.driver.takeScreenshot().then(image => {
             fs.writeFileSync(path, image, 'base64');
         });
+    }
+
+    urlFor (path) {
+        switch (path) {
+        case '/':
+            return pathModule.resolve(__dirname, '../../build/index.html');
+        default:
+            throw new Error(`Invalid path: ${path}`);
+        }
     }
 }
 

@@ -46,7 +46,7 @@ export default function (Generator) {
 
     Generator.boost_setMotorDirection = function (block) {
         const motorid = Generator.valueToCode(block, 'MOTOR_ID', Generator.ORDER_NONE) || null;
-        const motordirection = Generator.valueToCode(block, 'MOTOR_DIRECTION') || null;
+        const motordirection = Generator.valueToCode(block, 'MOTOR_DIRECTION', Generator.ORDER_NONE) || null;
         return `boost_motor_set_direction_for(${motorid}, ${motordirection})\n`;
     };
 

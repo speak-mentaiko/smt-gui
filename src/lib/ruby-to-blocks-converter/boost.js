@@ -87,7 +87,7 @@ const BoostConverter = {
                 break;
             case 'boost_seeing_color?':
                 if (args.length === 1 && this._isStringOrBlock(args[0])) {
-                    block = this._createBlock('boost_seeingColor', 'boolean');
+                    block = this._createBlock('boost_seeingColor', 'value_boolean');
                     this._addInput(
                         block,
                         'COLOR',
