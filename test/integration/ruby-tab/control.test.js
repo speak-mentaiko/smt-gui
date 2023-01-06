@@ -4,6 +4,9 @@ import RubyHelper from '../../helpers/ruby-helper';
 
 const seleniumHelper = new SeleniumHelper();
 const {
+    clickText,
+    clickXpath,
+    scope,
     getDriver,
     loadUri,
     urlFor
@@ -16,7 +19,7 @@ const {
 
 let driver;
 
-describe('Ruby Tab: event category blocks', () => {
+describe('Ruby Tab: Control category blocks', () => {
     beforeAll(() => {
         driver = getDriver();
     });
@@ -27,37 +30,37 @@ describe('Ruby Tab: event category blocks', () => {
 
     test('Ruby -> Code -> Ruby', async () => {
         await loadUri(urlFor('/'));
+        await clickXpath('//button[@aria-label="Choose a Sprite"]');
+        await clickText('Abby', scope.modal);
+        await clickText('Sprite1', scope.spriteItems);
 
         const code = dedent`
-            self.when(:flag_clicked) do
+            sleep(1)
+            10.times do
+            end
+            loop do
             end
 
-            self.when(:key_pressed, "space") do
+            if false
+            end
+            if false
+            else
+            end
+            wait until false
+            until false
+            end
+            stop("all")
+
+            stop("this script")
+
+            stop("other scripts in sprite")
+
+            self.when(:start_as_a_clone) do
             end
 
-            self.when(:clicked) do
-            end
-
-            self.when(:key_pressed, "any") do
-            end
-
-            self.when(:key_pressed, "a") do
-            end
-
-            self.when(:backdrop_switches, "backdrop1") do
-            end
-
-            self.when(:greater_than, "loudness", 10) do
-            end
-
-            self.when(:greater_than, "timer", 10) do
-            end
-
-            self.when(:receive, "message1") do
-            end
-
-            broadcast("message1")
-            broadcast_and_wait("message1")
+            create_clone("_myself_")
+            create_clone("Abby")
+            delete_this_clone
         `;
         await expectInterconvertBetweenCodeAndRuby(code);
     });

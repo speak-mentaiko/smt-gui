@@ -39,11 +39,12 @@ describe('Removed trademarks (ex: Scratch Cat)', () => {
     test('Removed trademark sprites', async () => {
         await loadUri(uri);
         await clickXpath('//button[@aria-label="Choose a Sprite"]');
+        await driver.sleep(5000);
         const searchElement = await findByXpath("//input[@placeholder='Search']");
 
         for (const name of trademarkNames) {
             searchElement.clear();
-            await driver.sleep(250);
+            await driver.sleep(500);
             await searchElement.sendKeys(name);
             await driver.sleep(500);
             expect(await notExistsByXpath(`//*[span[text()="${name}"]]`)).toBeTruthy();
@@ -57,11 +58,12 @@ describe('Removed trademarks (ex: Scratch Cat)', () => {
         await loadUri(uri);
         await clickText('Costumes');
         await clickXpath('//button[@aria-label="Choose a Costume"]');
+        await driver.sleep(5000);
         const searchElement = await findByXpath("//input[@placeholder='Search']");
 
         for (const name of trademarkNames) {
             searchElement.clear();
-            await driver.sleep(250);
+            await driver.sleep(500);
             const costumePrefix = `${name}-`;
             await searchElement.sendKeys(costumePrefix);
             await driver.sleep(500);

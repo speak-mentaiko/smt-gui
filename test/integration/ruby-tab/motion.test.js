@@ -19,7 +19,7 @@ const {
 
 let driver;
 
-describe('Ruby Tab: motion category blocks', () => {
+describe('Ruby Tab: Motion category blocks', () => {
     beforeAll(() => {
         driver = getDriver();
     });
