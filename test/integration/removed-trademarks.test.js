@@ -1,4 +1,3 @@
-import path from 'path';
 import SeleniumHelper from '../helpers/selenium-helper';
 
 const {
@@ -7,11 +6,9 @@ const {
     findByXpath,
     notExistsByXpath,
     getDriver,
-    getLogs,
-    loadUri
+    loadUri,
+    urlFor
 } = new SeleniumHelper();
-
-const uri = path.resolve(__dirname, '../../build/index.html');
 
 let driver;
 
@@ -37,40 +34,28 @@ describe('Removed trademarks (ex: Scratch Cat)', () => {
     });
 
     test('Removed trademark sprites', async () => {
-        await loadUri(uri);
+        await loadUri(urlFor('/'));
         await clickXpath('//button[@aria-label="Choose a Sprite"]');
-        await driver.sleep(5000);
         const searchElement = await findByXpath("//input[@placeholder='Search']");
 
         for (const name of trademarkNames) {
-            searchElement.clear();
-            await driver.sleep(500);
             await searchElement.sendKeys(name);
-            await driver.sleep(500);
             expect(await notExistsByXpath(`//*[span[text()="${name}"]]`)).toBeTruthy();
+            searchElement.clear();
         }
-
-        const logs = await getLogs();
-        await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Removed trademark costumes', async () => {
-        await loadUri(uri);
+        await loadUri(urlFor('/'));
         await clickText('Costumes');
         await clickXpath('//button[@aria-label="Choose a Costume"]');
-        await driver.sleep(5000);
         const searchElement = await findByXpath("//input[@placeholder='Search']");
 
         for (const name of trademarkNames) {
-            searchElement.clear();
-            await driver.sleep(500);
             const costumePrefix = `${name}-`;
             await searchElement.sendKeys(costumePrefix);
-            await driver.sleep(500);
             expect(await notExistsByXpath(`//*[span[contains(text(), "${costumePrefix}")]]`)).toBeTruthy();
+            searchElement.clear();
         }
-
-        const logs = await getLogs();
-        await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 });

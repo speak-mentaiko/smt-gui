@@ -129,9 +129,10 @@ class SeleniumHelper {
             .then(elements => elements.length > 0);
     }
 
-    notExistsByXpath (xpath) {
-        return this.driver.findElements(By.xpath(xpath))
-            .then(elements => elements.length === 0 || elements.every(i => !i.isDisplayed()));
+    notExistsByXpath (xpath, timeoutMessage = `notExistsByXpath timed out for path: ${xpath}`) {
+        return this.driver.wait(() => this.driver.findElements(By.xpath(xpath))
+            .then(elements => elements.length === 0 || elements.every(i => !i.isDisplayed())),
+        DEFAULT_TIMEOUT_MILLISECONDS, timeoutMessage);
     }
 
     loadUri (uri) {
