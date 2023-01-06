@@ -4,6 +4,7 @@ class RubyHelper {
     constructor (seleniumHelper) {
         bindAll(this, [
             'fillInRubyProgram',
+            'currentRubyProgram',
             'expectInterconvertBetweenCodeAndRuby',
         ]);
 
@@ -12,12 +13,12 @@ class RubyHelper {
         this.clickXpath = seleniumHelper.clickXpath;
     }
 
-    get currentRubyProgram () {
-        return this.driver.executeScript(`return ace.edit('ruby-editor').getValue();`);
-    }
-
     get driver () {
         return this.seleniumHelper.driver;
+    }
+
+    currentRubyProgram () {
+        return this.driver.executeScript(`return ace.edit('ruby-editor').getValue();`);
     }
 
     fillInRubyProgram (code) {
@@ -35,7 +36,7 @@ class RubyHelper {
         );
         await this.clickText('Generate Ruby from Code');
         await this.clickText('Ruby', '*[@role="tab"]');
-        expect(await this.currentRubyProgram).toEqual(`${code}\n`);
+        expect(await this.currentRubyProgram()).toEqual(`${code}\n`);
     }
 }
 
