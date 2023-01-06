@@ -6,7 +6,7 @@
 export default function (Generator) {
     Generator.event_whenflagclicked = function (block) {
         block.isStatement = true;
-        return `${Generator.spriteName()}.when(:flag_clicked) do\n`;
+        return `when_flag_clicked do\n`;
     };
 
     Generator.event_whenkeypressed = function (block) {

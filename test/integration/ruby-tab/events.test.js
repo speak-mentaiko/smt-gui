@@ -29,7 +29,7 @@ describe('Ruby Tab: Events category blocks', () => {
         await loadUri(urlFor('/'));
 
         const code = dedent`
-            self.when(:flag_clicked) do
+            when_flag_clicked do
             end
 
             self.when(:key_pressed, "space") do
