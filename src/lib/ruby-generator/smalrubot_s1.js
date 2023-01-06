@@ -61,5 +61,10 @@ export default function (Generator) {
         return `smalrubot_s1.set_motor_speed(${position}, ${speed})\n`;
     };
 
+    Generator.smalrubotS1_setArmCalibration = function (block) {
+        const degree = Generator.valueToCode(block, 'DEGREE', Generator.ORDER_NONE) || 0;
+        return `smalrubot_s1.arm_calibration = ${degree}\n`;
+    };
+
     return Generator;
 }
