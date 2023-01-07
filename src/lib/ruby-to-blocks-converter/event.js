@@ -77,42 +77,6 @@ const EventConverter = {
                 }
                 break;
             }
-        } else if (this._isSelf(receiver) || receiver === Opal.nil) {
-            switch (name) {
-            case 'broadcast':
-            case 'broadcast_and_wait':
-                if (args.length === 1 && this._isStringOrBlock(args[0]) && !rubyBlock) {
-                    let opcode;
-                    if (name === 'broadcast') {
-                        opcode = 'event_broadcast';
-                    } else {
-                        opcode = 'event_broadcastandwait';
-                    }
-                    const menuBlock = this._createBlock('event_broadcast_menu', 'value', {
-                        shadow: true
-                    });
-                    let broadcastMsg;
-                    let inputBlock;
-                    let shadowBlock;
-                    if (this._isString(args[0])) {
-                        broadcastMsg = this._lookupOrCreateBroadcastMsg(args[0]);
-                        inputBlock = menuBlock;
-                        shadowBlock = menuBlock;
-                    } else {
-                        broadcastMsg = this._defaultBroadcastMsg();
-                        inputBlock = args[0];
-                        shadowBlock = menuBlock;
-                    }
-                    this._addField(menuBlock, 'BROADCAST_OPTION', broadcastMsg.name, {
-                        id: broadcastMsg.id,
-                        variableType: Variable.BROADCAST_MESSAGE_TYPE
-                    });
-
-                    block = this._createBlock(opcode, 'statement');
-                    this._addInput(block, 'BROADCAST_INPUT', inputBlock, shadowBlock);
-                }
-                break;
-            }
         }
 
         return block;
@@ -223,6 +187,42 @@ const EventConverter = {
             converter.setParent(rubyBlock, block);
             return block;
         });
+
+        const createBroadcastBlockFunc = (params, opcode) => {
+            const {args, rubyBlock} = params;
+
+            if (!converter.isStringOrBlock(args[0])) return null;
+
+            if (rubyBlock) return null;
+
+            const menuBlock = converter.createBlock('event_broadcast_menu', 'value', {
+                shadow: true
+            });
+            let broadcastMsg;
+            let inputBlock;
+            let shadowBlock;
+            if (converter.isString(args[0])) {
+                broadcastMsg = converter.lookupOrCreateBroadcastMsg(args[0]);
+                inputBlock = menuBlock;
+                shadowBlock = menuBlock;
+            } else {
+                broadcastMsg = converter.defaultBroadcastMsg();
+                inputBlock = args[0];
+                shadowBlock = menuBlock;
+            }
+            converter.addField(menuBlock, 'BROADCAST_OPTION', broadcastMsg.name, {
+                id: broadcastMsg.id,
+                variableType: Variable.BROADCAST_MESSAGE_TYPE
+            });
+
+            const block = converter.createBlock(opcode, 'statement');
+            converter.addInput(block, 'BROADCAST_INPUT', inputBlock, shadowBlock);
+            return block;
+        };
+        converter.registerCallMethod('self', 'broadcast', 1,
+            params => createBroadcastBlockFunc(params, 'event_broadcast'));
+        converter.registerCallMethod('self', 'broadcast_and_wait', 1,
+            params => createBroadcastBlockFunc(params, 'event_broadcastandwait'));
     }
 };
 

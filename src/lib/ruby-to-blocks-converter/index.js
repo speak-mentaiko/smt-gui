@@ -524,6 +524,10 @@ class RubyToBlocksConverter {
         return this._isNumber(numberOrBlock) || this._isValueBlock(numberOrBlock);
     }
 
+    isStringOrBlock (stringOrBlock) {
+        return this._isStringOrBlock(stringOrBlock);
+    }
+
     _isStringOrBlock (stringOrBlock) {
         return this._isString(stringOrBlock) || this._isValueBlock(stringOrBlock);
     }
@@ -663,6 +667,10 @@ class RubyToBlocksConverter {
             name: name,
             value: value.toString()
         }, attributes);
+    }
+
+    addInput (block, name, inputBlock, shadowBlock) {
+        return this._addInput(block, name, inputBlock, shadowBlock);
     }
 
     _addInput (block, name, inputBlock, shadowBlock) {
@@ -807,6 +815,10 @@ class RubyToBlocksConverter {
             this._context.broadcastMsgs[key] = broadcastMsg;
         }
         return broadcastMsg;
+    }
+
+    defaultBroadcastMsg () {
+        return this._defaultBroadcastMsg();
     }
 
     _defaultBroadcastMsg () {
