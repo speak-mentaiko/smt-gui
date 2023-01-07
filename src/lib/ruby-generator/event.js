@@ -12,31 +12,31 @@ export default function (Generator) {
     Generator.event_whenkeypressed = function (block) {
         block.isStatement = true;
         const key = Generator.quote_(Generator.getFieldValue(block, 'KEY_OPTION') || null);
-        return `${Generator.spriteName()}.when(:key_pressed, ${key}) do\n`;
+        return `when_key_pressed(${key}) do\n`;
     };
 
     Generator.event_whenthisspriteclicked = function (block) {
         block.isStatement = true;
-        return `${Generator.spriteName()}.when(:clicked) do\n`;
+        return `when_clicked do\n`;
     };
 
     Generator.event_whenbackdropswitchesto = function (block) {
         block.isStatement = true;
         const backdrop = Generator.quote_(Generator.getFieldValue(block, 'BACKDROP') || '');
-        return `${Generator.spriteName()}.when(:backdrop_switches, ${backdrop}) do\n`;
+        return `when_backdrop_switches(${backdrop}) do\n`;
     };
 
     Generator.event_whengreaterthan = function (block) {
         block.isStatement = true;
         const lh = Generator.quote_(Generator.getFieldValue(block, 'WHENGREATERTHANMENU').toLowerCase() || '');
         const rh = Generator.valueToCode(block, 'VALUE', Generator.ORDER_NONE) || '0';
-        return `${Generator.spriteName()}.when(:greater_than, ${lh}, ${rh}) do\n`;
+        return `when_greater_than(${lh}, ${rh}) do\n`;
     };
 
     Generator.event_whenbroadcastreceived = function (block) {
         block.isStatement = true;
         const message = Generator.getFieldValue(block, 'BROADCAST_OPTION');
-        return `${Generator.spriteName()}.when(:receive, ${Generator.quote_(message)}) do\n`;
+        return `when_receive(${Generator.quote_(message)}) do\n`;
     };
 
     Generator.event_broadcast = function (block) {
@@ -56,7 +56,7 @@ export default function (Generator) {
 
     Generator.event_whenstageclicked = function (block) {
         block.isStatement = true;
-        return `Stage.when(:clicked) do\n`;
+        return `when_clicked do\n`;
     };
 
     return Generator;

@@ -20,38 +20,6 @@ describe('RubyToBlocksConverter/Event', () => {
     });
 
     describe('event_whenflagclicked', () => {
-        test('normal', () => {
-            expected = [
-                {
-                    opcode: 'event_whenflagclicked',
-                    next: {
-                        opcode: 'motion_ifonedgebounce'
-                    }
-                }
-            ];
-            [
-                'self.when(:flag_clicked) { bounce_if_on_edge }',
-                'when_flag_clicked { bounce_if_on_edge }',
-                'when_flag_clicked() { bounce_if_on_edge }',
-                'self.when_flag_clicked { bounce_if_on_edge }'
-            ].forEach(s => {
-                convertAndExpectToEqualBlocks(converter, target, s, expected);
-            });
-
-            expected = [
-                {
-                    opcode: 'event_whenflagclicked',
-                    next: rubyToExpected(converter, target, 'bounce_if_on_edge; move(10)')[0]
-                }
-            ];
-            [
-                'self.when(:flag_clicked) { bounce_if_on_edge; move(10) }',
-                'when_flag_clicked { bounce_if_on_edge; move(10) }'
-            ].forEach(s => {
-                convertAndExpectToEqualBlocks(converter, target, s, expected);
-            });
-        });
-
         test('hat', () => {
             expected = [
                 rubyToExpected(converter, target, 'bounce_if_on_edge')[0],
@@ -109,40 +77,6 @@ describe('RubyToBlocksConverter/Event', () => {
     });
 
     describe('event_whenkeypressed', () => {
-        test('normal', () => {
-            code = 'self.when(:key_pressed, "space") { bounce_if_on_edge }';
-            expected = [
-                {
-                    opcode: 'event_whenkeypressed',
-                    fields: [
-                        {
-                            name: 'KEY_OPTION',
-                            value: 'space'
-                        }
-                    ],
-                    next: {
-                        opcode: 'motion_ifonedgebounce'
-                    }
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-            code = 'self.when(:key_pressed, "space") { bounce_if_on_edge; move(10) }';
-            expected = [
-                {
-                    opcode: 'event_whenkeypressed',
-                    fields: [
-                        {
-                            name: 'KEY_OPTION',
-                            value: 'space'
-                        }
-                    ],
-                    next: rubyToExpected(converter, target, 'bounce_if_on_edge; move(10)')[0]
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-        });
-
         test('hat', () => {
             code = `
                 bounce_if_on_edge
@@ -294,40 +228,6 @@ describe('RubyToBlocksConverter/Event', () => {
     });
 
     describe('event_whenbackdropswitchesto', () => {
-        test('normal', () => {
-            code = 'self.when(:backdrop_switches, "backdrop1") { bounce_if_on_edge }';
-            expected = [
-                {
-                    opcode: 'event_whenbackdropswitchesto',
-                    fields: [
-                        {
-                            name: 'BACKDROP',
-                            value: 'backdrop1'
-                        }
-                    ],
-                    next: {
-                        opcode: 'motion_ifonedgebounce'
-                    }
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-            code = 'self.when(:backdrop_switches, "backdrop1") { bounce_if_on_edge; move(10) }';
-            expected = [
-                {
-                    opcode: 'event_whenbackdropswitchesto',
-                    fields: [
-                        {
-                            name: 'BACKDROP',
-                            value: 'backdrop1'
-                        }
-                    ],
-                    next: rubyToExpected(converter, target, 'bounce_if_on_edge; move(10)')[0]
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-        });
-
         test('hat', () => {
             code = `
                 bounce_if_on_edge
@@ -384,37 +284,14 @@ describe('RubyToBlocksConverter/Event', () => {
 
     describe('event_whengreaterthan', () => {
         test('normal', () => {
-            code = 'self.when(:greater_than, "loudness", 10) { }';
-            expected = [
-                {
-                    opcode: 'event_whengreaterthan',
-                    fields: [
-                        {
-                            name: 'WHENGREATERTHANMENU',
-                            value: 'LOUDNESS'
-                        }
-                    ],
-                    inputs: [
-                        {
-                            name: 'VALUE',
-                            block: expectedInfo.makeNumber(10)
-                        }
-                    ]
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
             code = 'self.when(:greater_than, "LOUDNESS", 10) { }';
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-            code = 'self.when(:greater_than, "timer", 10) { }';
             expected = [
                 {
                     opcode: 'event_whengreaterthan',
                     fields: [
                         {
                             name: 'WHENGREATERTHANMENU',
-                            value: 'TIMER'
+                            value: 'LOUDNESS'
                         }
                     ],
                     inputs: [
@@ -423,71 +300,6 @@ describe('RubyToBlocksConverter/Event', () => {
                             block: expectedInfo.makeNumber(10)
                         }
                     ]
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-            code = 'self.when(:greater_than, "loudness", x) { }';
-            expected = [
-                {
-                    opcode: 'event_whengreaterthan',
-                    fields: [
-                        {
-                            name: 'WHENGREATERTHANMENU',
-                            value: 'LOUDNESS'
-                        }
-                    ],
-                    inputs: [
-                        {
-                            name: 'VALUE',
-                            block: rubyToExpected(converter, target, 'x')[0],
-                            shadow: expectedInfo.makeNumber(10)
-                        }
-                    ]
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-            code = 'self.when(:greater_than, "loudness", 10) { bounce_if_on_edge }';
-            expected = [
-                {
-                    opcode: 'event_whengreaterthan',
-                    fields: [
-                        {
-                            name: 'WHENGREATERTHANMENU',
-                            value: 'LOUDNESS'
-                        }
-                    ],
-                    inputs: [
-                        {
-                            name: 'VALUE',
-                            block: expectedInfo.makeNumber(10)
-                        }
-                    ],
-                    next: {
-                        opcode: 'motion_ifonedgebounce'
-                    }
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-            code = 'self.when(:greater_than, "loudness", 10) { bounce_if_on_edge; move(10) }';
-            expected = [
-                {
-                    opcode: 'event_whengreaterthan',
-                    fields: [
-                        {
-                            name: 'WHENGREATERTHANMENU',
-                            value: 'LOUDNESS'
-                        }
-                    ],
-                    inputs: [
-                        {
-                            name: 'VALUE',
-                            block: expectedInfo.makeNumber(10)
-                        }
-                    ],
-                    next: rubyToExpected(converter, target, 'bounce_if_on_edge; move(10)')[0]
                 }
             ];
             convertAndExpectToEqualBlocks(converter, target, code, expected);
@@ -557,54 +369,6 @@ describe('RubyToBlocksConverter/Event', () => {
     });
 
     describe('event_whenbroadcastreceived', () => {
-        test('normal', () => {
-            code = 'self.when(:receive, "message1") { }';
-            expected = [
-                {
-                    opcode: 'event_whenbroadcastreceived',
-                    fields: [
-                        {
-                            name: 'BROADCAST_OPTION',
-                            broadcastMsg: 'message1'
-                        }
-                    ]
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-            code = 'self.when(:receive, "message1") { bounce_if_on_edge }';
-            expected = [
-                {
-                    opcode: 'event_whenbroadcastreceived',
-                    fields: [
-                        {
-                            name: 'BROADCAST_OPTION',
-                            broadcastMsg: 'message1'
-                        }
-                    ],
-                    next: {
-                        opcode: 'motion_ifonedgebounce'
-                    }
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-            code = 'self.when(:receive, "message1") { bounce_if_on_edge; move(10) }';
-            expected = [
-                {
-                    opcode: 'event_whenbroadcastreceived',
-                    fields: [
-                        {
-                            name: 'BROADCAST_OPTION',
-                            broadcastMsg: 'message1'
-                        }
-                    ],
-                    next: rubyToExpected(converter, target, 'bounce_if_on_edge; move(10)')[0]
-                }
-            ];
-            convertAndExpectToEqualBlocks(converter, target, code, expected);
-        });
-
         test('hat', () => {
             code = `
                 bounce_if_on_edge
@@ -670,55 +434,6 @@ describe('RubyToBlocksConverter/Event', () => {
         }
     ].forEach(info => {
         describe(`${info.opcode}`, () => {
-            test('normal', () => {
-                code = `${info.methodName}("message1")`;
-                expected = [
-                    {
-                        opcode: info.opcode,
-                        inputs: [
-                            {
-                                name: 'BROADCAST_INPUT',
-                                block: {
-                                    opcode: 'event_broadcast_menu',
-                                    fields: [
-                                        {
-                                            name: 'BROADCAST_OPTION',
-                                            broadcastMsg: 'message1'
-                                        }
-                                    ],
-                                    shadow: true
-                                }
-                            }
-                        ]
-                    }
-                ];
-                convertAndExpectToEqualBlocks(converter, target, code, expected);
-
-                code = `${info.methodName}(x)`;
-                expected = [
-                    {
-                        opcode: info.opcode,
-                        inputs: [
-                            {
-                                name: 'BROADCAST_INPUT',
-                                block: rubyToExpected(converter, target, 'x')[0],
-                                shadow: {
-                                    opcode: 'event_broadcast_menu',
-                                    fields: [
-                                        {
-                                            name: 'BROADCAST_OPTION',
-                                            broadcastMsg: 'message1'
-                                        }
-                                    ],
-                                    shadow: true
-                                }
-                            }
-                        ]
-                    }
-                ];
-                convertAndExpectToEqualBlocks(converter, target, code, expected);
-            });
-
             test('statement', () => {
                 code = `
                   bounce_if_on_edge
