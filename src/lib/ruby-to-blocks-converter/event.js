@@ -161,7 +161,7 @@ const EventConverter = {
         });
 
         const createBroadcastBlockFunc = (params, opcode) => {
-            const {args, rubyBlock} = params;
+            const {args} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
 

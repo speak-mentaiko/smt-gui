@@ -288,7 +288,9 @@ class RubyToBlocksConverter {
         if (!numArgsToNumRubyBlockArgs) numArgsToNumRubyBlockArgs = methodToNumArgs[name] = {};
 
         let numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[numArgs];
-        if (!numRubyBlockArgsToCreateBlockFuncs) numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[numArgs] = {};
+        if (!numRubyBlockArgsToCreateBlockFuncs) {
+            numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[numArgs] = {};
+        }
 
         let createBlockFuncs = numRubyBlockArgsToCreateBlockFuncs[numRubyBlockArgs];
         if (!createBlockFuncs) createBlockFuncs = numRubyBlockArgsToCreateBlockFuncs[numRubyBlockArgs] = [];
