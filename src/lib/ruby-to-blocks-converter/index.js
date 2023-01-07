@@ -275,22 +275,29 @@ class RubyToBlocksConverter {
         });
     }
 
-    registerCallMethod (receiverName, name, numArgs, createBlockFunc) {
+    registerCallMethodWithBlock (receiverName, name, numArgs, numRubyBlockArgs, createBlockFunc) {
         if (receiverName === 'self') {
-            this.registerCallMethod('sprite', name, numArgs, createBlockFunc);
-            this.registerCallMethod('stage', name, numArgs, createBlockFunc);
+            this.registerCallMethodWithBlock('sprite', name, numArgs, numRubyBlockArgs, createBlockFunc);
+            this.registerCallMethodWithBlock('stage', name, numArgs, numRubyBlockArgs, createBlockFunc);
             return;
         }
         let methodToNumArgs = this._receiverToMethods[receiverName];
         if (!methodToNumArgs) methodToNumArgs = this._receiverToMethods[receiverName] = {};
 
-        let numArgsToCreateBlockFuncs = methodToNumArgs[name];
-        if (!numArgsToCreateBlockFuncs) numArgsToCreateBlockFuncs = methodToNumArgs[name] = {};
+        let numArgsToNumRubyBlockArgs = methodToNumArgs[name];
+        if (!numArgsToNumRubyBlockArgs) numArgsToNumRubyBlockArgs = methodToNumArgs[name] = {};
 
-        let createBlockFuncs = numArgsToCreateBlockFuncs[numArgs];
-        if (!createBlockFuncs) createBlockFuncs = numArgsToCreateBlockFuncs[numArgs] = [];
+        let numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[numArgs];
+        if (!numRubyBlockArgsToCreateBlockFuncs) numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[numArgs] = {};
+
+        let createBlockFuncs = numRubyBlockArgsToCreateBlockFuncs[numRubyBlockArgs];
+        if (!createBlockFuncs) createBlockFuncs = numRubyBlockArgsToCreateBlockFuncs[numRubyBlockArgs] = [];
 
         createBlockFuncs.push(createBlockFunc);
+    }
+
+    registerCallMethod (receiverName, name, numArgs, createBlockFunc) {
+        this.registerCallMethodWithBlock(receiverName, name, numArgs, 'none', createBlockFunc);
     }
 
     _callMethod (receiver, name, args, rubyBlockArgs, rubyBlock, node) {
@@ -300,10 +307,15 @@ class RubyToBlocksConverter {
         const methodToNumArgs = this._receiverToMethods[receiverName];
         if (!methodToNumArgs) return null;
 
-        const numArgsToCreateBlockFuncs = methodToNumArgs[name];
-        if (!numArgsToCreateBlockFuncs) return null;
+        const numArgsToNumRubyBlockArgs = methodToNumArgs[name];
+        if (!numArgsToNumRubyBlockArgs) return null;
 
-        const createBlockFuncs = numArgsToCreateBlockFuncs[args.length];
+        const numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[args.length];
+        if (!numRubyBlockArgsToCreateBlockFuncs) return null;
+
+        let numRubyBlockArgs = 'none';
+        if (rubyBlock) numRubyBlockArgs = rubyBlockArgs.length;
+        const createBlockFuncs = numRubyBlockArgsToCreateBlockFuncs[numRubyBlockArgs];
         if (!createBlockFuncs) return null;
 
         const params = {

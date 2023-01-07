@@ -83,27 +83,19 @@ const EventConverter = {
     },
 
     register: function (converter) {
-        converter.registerCallMethod('self', 'when_flag_clicked', 0, params => {
-            const {rubyBlockArgs, rubyBlock} = params;
-
-            if (!rubyBlockArgs) return null;
-            if (rubyBlockArgs.length !== 0) return null;
-            if (!rubyBlock) return null;
+        converter.registerCallMethodWithBlock('self', 'when_flag_clicked', 0, 0, params => {
+            const {rubyBlock} = params;
 
             const block = converter.createBlock('event_whenflagclicked', 'hat');
             converter.setParent(rubyBlock, block);
             return block;
         });
 
-        converter.registerCallMethod('self', 'when_key_pressed', 1, params => {
-            const {args, rubyBlockArgs, rubyBlock} = params;
+        converter.registerCallMethodWithBlock('self', 'when_key_pressed', 1, 0, params => {
+            const {args, rubyBlock} = params;
 
             if (!converter.isString(args[0])) return null;
             if (KeyOptions.indexOf(args[0].toString()) < 0) return null;
-
-            if (!rubyBlockArgs) return null;
-            if (rubyBlockArgs.length !== 0) return null;
-            if (!rubyBlock) return null;
 
             const block = converter.createBlock('event_whenkeypressed', 'hat');
             converter.addField(block, 'KEY_OPTION', args[0]);
@@ -111,38 +103,26 @@ const EventConverter = {
             return block;
         });
 
-        converter.registerCallMethod('sprite', 'when_clicked', 0, params => {
-            const {rubyBlockArgs, rubyBlock} = params;
-
-            if (!rubyBlockArgs) return null;
-            if (rubyBlockArgs.length !== 0) return null;
-            if (!rubyBlock) return null;
+        converter.registerCallMethodWithBlock('sprite', 'when_clicked', 0, 0, params => {
+            const {rubyBlock} = params;
 
             const block = converter.createBlock('event_whenthisspriteclicked', 'hat');
             converter.setParent(rubyBlock, block);
             return block;
         });
 
-        converter.registerCallMethod('stage', 'when_clicked', 0, params => {
-            const {rubyBlockArgs, rubyBlock} = params;
-
-            if (!rubyBlockArgs) return null;
-            if (rubyBlockArgs.length !== 0) return null;
-            if (!rubyBlock) return null;
+        converter.registerCallMethodWithBlock('stage', 'when_clicked', 0, 0, params => {
+            const {rubyBlock} = params;
 
             const block = converter.createBlock('event_whenstageclicked', 'hat');
             converter.setParent(rubyBlock, block);
             return block;
         });
 
-        converter.registerCallMethod('self', 'when_backdrop_switches', 1, params => {
-            const {args, rubyBlockArgs, rubyBlock} = params;
+        converter.registerCallMethodWithBlock('self', 'when_backdrop_switches', 1, 0, params => {
+            const {args, rubyBlock} = params;
 
             if (!converter.isString(args[0])) return null;
-
-            if (!rubyBlockArgs) return null;
-            if (rubyBlockArgs.length !== 0) return null;
-            if (!rubyBlock) return null;
 
             const block = converter.createBlock('event_whenbackdropswitchesto', 'hat');
             converter.addField(block, 'BACKDROP', args[0]);
@@ -150,17 +130,13 @@ const EventConverter = {
             return block;
         });
 
-        converter.registerCallMethod('self', 'when_greater_than', 2, params => {
-            const {args, rubyBlockArgs, rubyBlock} = params;
+        converter.registerCallMethodWithBlock('self', 'when_greater_than', 2, 0, params => {
+            const {args, rubyBlock} = params;
 
             if (!converter.isString(args[0])) return null;
             const args0 = args[0].toString().toUpperCase();
             if (GreaterThanMenu.indexOf(args0) < 0) return null;
             if (!converter.isNumberOrBlock(args[1])) return null;
-
-            if (!rubyBlockArgs) return null;
-            if (rubyBlockArgs.length !== 0) return null;
-            if (!rubyBlock) return null;
 
             const block = converter.createBlock('event_whengreaterthan', 'hat');
             converter.addField(block, 'WHENGREATERTHANMENU', args0);
@@ -169,14 +145,10 @@ const EventConverter = {
             return block;
         });
 
-        converter.registerCallMethod('self', 'when_receive', 1, params => {
-            const {args, rubyBlockArgs, rubyBlock} = params;
+        converter.registerCallMethodWithBlock('self', 'when_receive', 1, 0, params => {
+            const {args, rubyBlock} = params;
 
             if (!converter.isString(args[0])) return null;
-
-            if (!rubyBlockArgs) return null;
-            if (rubyBlockArgs.length !== 0) return null;
-            if (!rubyBlock) return null;
 
             const broadcastMsg = converter.lookupOrCreateBroadcastMsg(args[0]);
             const block = converter.createBlock('event_whenbroadcastreceived', 'hat');
@@ -192,8 +164,6 @@ const EventConverter = {
             const {args, rubyBlock} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
-
-            if (rubyBlock) return null;
 
             const menuBlock = converter.createBlock('event_broadcast_menu', 'value', {
                 shadow: true
