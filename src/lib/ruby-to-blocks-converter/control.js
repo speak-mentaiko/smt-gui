@@ -68,17 +68,6 @@ const ControlConverter = {
                     block = this._createBlock('control_delete_this_clone', 'statement');
                 }
                 break;
-            case 'when':
-                if (args.length === 1 &&
-                    args[0].type === 'sym' && args[0].value === 'start_as_a_clone' &&
-                    rubyBlockArgs && rubyBlockArgs.length === 0) {
-                    block = this._createBlock('control_start_as_clone', 'hat');
-                    if (this._isBlock(rubyBlock)) {
-                        rubyBlock.parent = block.id;
-                        block.next = rubyBlock.id;
-                    }
-                }
-                break;
             }
         } else if (this._isNumberOrBlock(receiver)) {
             switch (name) {
@@ -131,6 +120,22 @@ const ControlConverter = {
             const block = converter.createBlock('control_start_as_clone', 'hat');
             converter.setParent(rubyBlock, block);
             return block;
+        });
+
+        // backward compatibility
+        converter.registerCallMethodWithBlock('self', 'when', 1, 0, params => {
+            const {args} = params;
+
+            if (args[0].type !== 'sym') return null;
+
+            switch (args[0].value) {
+            case 'start_as_a_clone':
+                return converter.callMethod(
+                    params.receiver, 'when_start_as_a_clone', params.args.slice(1),
+                    params.rubyBlockArgs, params.rubyBlock, params.node);
+            }
+
+            return null;
         });
     }
 };
