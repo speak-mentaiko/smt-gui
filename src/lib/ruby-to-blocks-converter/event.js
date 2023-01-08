@@ -1,5 +1,3 @@
-/* global Opal */
-import _ from 'lodash';
 import Variable from 'scratch-vm/src/engine/variable';
 import {KeyOptions} from './constants';
 
@@ -12,77 +10,90 @@ const GreaterThanMenu = [
  * Event converter
  */
 const EventConverter = {
-    // eslint-disable-next-line no-unused-vars
-    onSend: function (receiver, name, args, rubyBlockArgs, rubyBlock) {
-        let block;
-        if ((this._isSelf(receiver) || receiver === Opal.nil) &&
-            name === 'when' &&
-            args.length >= 1 && args[0].type === 'sym' &&
-            rubyBlockArgs && rubyBlockArgs.length === 0 &&
-            rubyBlock) {
-            switch (args[0].value) {
-            case 'flag_clicked':
-            case 'clicked':
-                if (args.length === 1) {
-                    let opcode;
-                    switch (args[0].value) {
-                    case 'flag_clicked':
-                        opcode = 'event_whenflagclicked';
-                        break;
-                    case 'clicked':
-                        if (this._context.target && this._context.target.isStage) {
-                            opcode = 'event_whenstageclicked';
-                        } else {
-                            opcode = 'event_whenthisspriteclicked';
-                        }
-                        break;
-                    }
-                    block = this._createBlock(opcode, 'hat');
-                    this._setParent(rubyBlock, block);
-                }
-                break;
-            case 'key_pressed':
-                if (args.length === 2 && this._isString(args[1]) && KeyOptions.indexOf(args[1].toString()) >= 0) {
-                    block = this._createBlock('event_whenkeypressed', 'hat');
-                    this._addField(block, 'KEY_OPTION', args[1]);
-                    this._setParent(rubyBlock, block);
-                }
-                break;
-            case 'backdrop_switches':
-                if (args.length === 2 && this._isString(args[1])) {
-                    block = this._createBlock('event_whenbackdropswitchesto', 'hat');
-                    this._addField(block, 'BACKDROP', args[1]);
-                    this._setParent(rubyBlock, block);
-                }
-                break;
-            case 'greater_than':
-                if (args.length === 3 &&
-                    this._isString(args[1]) && GreaterThanMenu.indexOf(args[1].toString().toUpperCase()) >= 0 &&
-                    this._isNumberOrBlock(args[2])) {
-                    block = this._createBlock('event_whengreaterthan', 'hat');
-                    this._addField(block, 'WHENGREATERTHANMENU', args[1].toString().toUpperCase());
-                    this._addNumberInput(block, 'VALUE', 'math_number', args[2], 10);
-                    this._setParent(rubyBlock, block);
-                }
-                break;
-            case 'receive':
-                if (args.length === 2 && this._isString(args[1])) {
-                    const broadcastMsg = this._lookupOrCreateBroadcastMsg(args[1]);
-                    block = this._createBlock('event_whenbroadcastreceived', 'hat');
-                    this._addField(block, 'BROADCAST_OPTION', broadcastMsg.name, {
-                        id: broadcastMsg.id,
-                        variableType: Variable.BROADCAST_MESSAGE_TYPE
-                    });
-                    this._setParent(rubyBlock, block);
-                }
-                break;
-            }
-        }
-
-        return block;
-    },
-
     register: function (converter) {
+        converter.registerCallMethodWithBlock('self', 'when', 1, 0, params => {
+            const {receiverName, args, rubyBlock} = params;
+
+            if (args[0].type !== 'sym') return null;
+
+            if (args[0].value === 'flag_clicked') {
+                const block = converter.createBlock('event_whenflagclicked', 'hat');
+                converter.setParent(rubyBlock, block);
+                return block;
+            }
+
+            if (args[0].value === 'clicked') {
+                let opcode = 'event_whenthisspriteclicked';
+                if (receiverName === 'stage') opcode = 'event_whenstageclicked';
+                const block = converter.createBlock(opcode, 'hat');
+                converter.setParent(rubyBlock, block);
+                return block;
+            }
+
+            return null;
+        });
+
+        converter.registerCallMethodWithBlock('self', 'when', 2, 0, params => {
+            const {args, rubyBlock} = params;
+
+            if (args[0].type !== 'sym') return null;
+
+            if (args[0].value === 'key_pressed') {
+                if (!converter.isString(args[1])) return null;
+                if (KeyOptions.indexOf(args[1].toString()) < 0) return null;
+
+                const block = converter.createBlock('event_whenkeypressed', 'hat');
+                converter.addField(block, 'KEY_OPTION', args[1]);
+                converter.setParent(rubyBlock, block);
+                return block;
+            }
+
+            if (args[0].value === 'backdrop_switches') {
+                if (!converter.isString(args[1])) return null;
+
+                const block = converter.createBlock('event_whenbackdropswitchesto', 'hat');
+                converter.addField(block, 'BACKDROP', args[1]);
+                converter.setParent(rubyBlock, block);
+                return block;
+            }
+
+            if (args[0].value === 'receive') {
+                if (!converter.isString(args[1])) return null;
+
+                const broadcastMsg = converter.lookupOrCreateBroadcastMsg(args[1]);
+                const block = converter.createBlock('event_whenbroadcastreceived', 'hat');
+                converter.addField(block, 'BROADCAST_OPTION', broadcastMsg.name, {
+                    id: broadcastMsg.id,
+                    variableType: Variable.BROADCAST_MESSAGE_TYPE
+                });
+                converter.setParent(rubyBlock, block);
+                return block;
+            }
+
+            return null;
+        });
+
+        converter.registerCallMethodWithBlock('self', 'when', 3, 0, params => {
+            const {args, rubyBlock} = params;
+
+            if (args[0].type !== 'sym') return null;
+
+            if (args[0].value === 'greater_than') {
+                if (!converter.isString(args[1])) return null;
+                const args1 = args[1].toString().toUpperCase();
+                if (GreaterThanMenu.indexOf(args1) < 0) return null;
+                if (!converter.isNumberOrBlock(args[2])) return null;
+
+                const block = converter.createBlock('event_whengreaterthan', 'hat');
+                converter.addField(block, 'WHENGREATERTHANMENU', args1);
+                converter.addNumberInput(block, 'VALUE', 'math_number', args[2], 10);
+                converter.setParent(rubyBlock, block);
+                return block;
+            }
+
+            return null;
+        });
+
         converter.registerCallMethodWithBlock('self', 'when_flag_clicked', 0, 0, params => {
             const {rubyBlock} = params;
 
@@ -103,18 +114,12 @@ const EventConverter = {
             return block;
         });
 
-        converter.registerCallMethodWithBlock('sprite', 'when_clicked', 0, 0, params => {
-            const {rubyBlock} = params;
+        converter.registerCallMethodWithBlock('self', 'when_clicked', 0, 0, params => {
+            const {receiverName, rubyBlock} = params;
 
-            const block = converter.createBlock('event_whenthisspriteclicked', 'hat');
-            converter.setParent(rubyBlock, block);
-            return block;
-        });
-
-        converter.registerCallMethodWithBlock('stage', 'when_clicked', 0, 0, params => {
-            const {rubyBlock} = params;
-
-            const block = converter.createBlock('event_whenstageclicked', 'hat');
+            let opcode = 'event_whenthisspriteclicked';
+            if (receiverName === 'stage') opcode = 'event_whenstageclicked';
+            const block = converter.createBlock(opcode, 'hat');
             converter.setParent(rubyBlock, block);
             return block;
         });
