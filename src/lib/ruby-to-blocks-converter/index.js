@@ -107,7 +107,8 @@ class RubyToBlocksConverter {
         this.reset();
 
         [
-            EventConverter
+            EventConverter,
+            ControlConverter
         ].forEach(x => x.register(this));
     }
 

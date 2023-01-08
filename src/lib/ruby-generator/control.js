@@ -51,7 +51,7 @@ export default function (Generator) {
 
     Generator.control_start_as_clone = function (block) {
         block.isStatement = true;
-        return `${Generator.spriteName()}.when(:start_as_a_clone) do\n`;
+        return `when_start_as_a_clone do\n`;
     };
 
     Generator.control_create_clone_of = function (block) {

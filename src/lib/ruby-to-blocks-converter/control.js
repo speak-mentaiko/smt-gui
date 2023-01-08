@@ -122,6 +122,16 @@ const ControlConverter = {
         }
         this._addSubstack(block, statement);
         return block;
+    },
+
+    register: function (converter) {
+        converter.registerCallMethodWithBlock('self', 'when_start_as_a_clone', 0, 0, params => {
+            const {rubyBlock} = params;
+
+            const block = converter.createBlock('control_start_as_clone', 'hat');
+            converter.setParent(rubyBlock, block);
+            return block;
+        });
     }
 };
 
