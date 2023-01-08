@@ -96,7 +96,6 @@ class RubyToBlocksConverter {
             MotionConverter,
             LooksConverter,
             SoundConverter,
-            EventConverter,
             ControlConverter,
             SensingConverter,
             OperatorsConverter,
@@ -107,9 +106,9 @@ class RubyToBlocksConverter {
         this._receiverToMethods = {};
         this.reset();
 
-        this._converters.forEach(x => {
-            if (x.hasOwnProperty('register')) x.register(this);
-        });
+        [
+            EventConverter
+        ].forEach(x => x.register(this));
     }
 
     get errors () {
