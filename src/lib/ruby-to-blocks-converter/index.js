@@ -302,7 +302,7 @@ class RubyToBlocksConverter {
         this.registerCallMethodWithBlock(receiverName, name, numArgs, 'none', createBlockFunc);
     }
 
-    _callMethod (receiver, name, args, rubyBlockArgs, rubyBlock, node) {
+    callMethod (receiver, name, args, rubyBlockArgs, rubyBlock, node) {
         const receiverName = this._getReceiverName(receiver);
         if (!receiverName) return null;
 
@@ -1120,7 +1120,7 @@ class RubyToBlocksConverter {
             rubyBlock = this._processStatement(rubyBlockNode);
         }
 
-        let block = this._callMethod(receiver, name, args, rubyBlockArgs, rubyBlock, node);
+        let block = this.callMethod(receiver, name, args, rubyBlockArgs, rubyBlock, node);
         if (!block) {
             block = this._callConvertersHandler('onSend', receiver, name, args, rubyBlockArgs, rubyBlock, node);
         }

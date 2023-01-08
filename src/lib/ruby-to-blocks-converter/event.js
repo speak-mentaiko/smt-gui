@@ -11,89 +11,6 @@ const GreaterThanMenu = [
  */
 const EventConverter = {
     register: function (converter) {
-        converter.registerCallMethodWithBlock('self', 'when', 1, 0, params => {
-            const {receiverName, args, rubyBlock} = params;
-
-            if (args[0].type !== 'sym') return null;
-
-            if (args[0].value === 'flag_clicked') {
-                const block = converter.createBlock('event_whenflagclicked', 'hat');
-                converter.setParent(rubyBlock, block);
-                return block;
-            }
-
-            if (args[0].value === 'clicked') {
-                let opcode = 'event_whenthisspriteclicked';
-                if (receiverName === 'stage') opcode = 'event_whenstageclicked';
-                const block = converter.createBlock(opcode, 'hat');
-                converter.setParent(rubyBlock, block);
-                return block;
-            }
-
-            return null;
-        });
-
-        converter.registerCallMethodWithBlock('self', 'when', 2, 0, params => {
-            const {args, rubyBlock} = params;
-
-            if (args[0].type !== 'sym') return null;
-
-            if (args[0].value === 'key_pressed') {
-                if (!converter.isString(args[1])) return null;
-                if (KeyOptions.indexOf(args[1].toString()) < 0) return null;
-
-                const block = converter.createBlock('event_whenkeypressed', 'hat');
-                converter.addField(block, 'KEY_OPTION', args[1]);
-                converter.setParent(rubyBlock, block);
-                return block;
-            }
-
-            if (args[0].value === 'backdrop_switches') {
-                if (!converter.isString(args[1])) return null;
-
-                const block = converter.createBlock('event_whenbackdropswitchesto', 'hat');
-                converter.addField(block, 'BACKDROP', args[1]);
-                converter.setParent(rubyBlock, block);
-                return block;
-            }
-
-            if (args[0].value === 'receive') {
-                if (!converter.isString(args[1])) return null;
-
-                const broadcastMsg = converter.lookupOrCreateBroadcastMsg(args[1]);
-                const block = converter.createBlock('event_whenbroadcastreceived', 'hat');
-                converter.addField(block, 'BROADCAST_OPTION', broadcastMsg.name, {
-                    id: broadcastMsg.id,
-                    variableType: Variable.BROADCAST_MESSAGE_TYPE
-                });
-                converter.setParent(rubyBlock, block);
-                return block;
-            }
-
-            return null;
-        });
-
-        converter.registerCallMethodWithBlock('self', 'when', 3, 0, params => {
-            const {args, rubyBlock} = params;
-
-            if (args[0].type !== 'sym') return null;
-
-            if (args[0].value === 'greater_than') {
-                if (!converter.isString(args[1])) return null;
-                const args1 = args[1].toString().toUpperCase();
-                if (GreaterThanMenu.indexOf(args1) < 0) return null;
-                if (!converter.isNumberOrBlock(args[2])) return null;
-
-                const block = converter.createBlock('event_whengreaterthan', 'hat');
-                converter.addField(block, 'WHENGREATERTHANMENU', args1);
-                converter.addNumberInput(block, 'VALUE', 'math_number', args[2], 10);
-                converter.setParent(rubyBlock, block);
-                return block;
-            }
-
-            return null;
-        });
-
         converter.registerCallMethodWithBlock('self', 'when_flag_clicked', 0, 0, params => {
             const {rubyBlock} = params;
 
@@ -194,10 +111,72 @@ const EventConverter = {
             converter.addInput(block, 'BROADCAST_INPUT', inputBlock, shadowBlock);
             return block;
         };
-        converter.registerCallMethod('self', 'broadcast', 1,
+        converter.registerCallMethod(
+            'self', 'broadcast', 1,
             params => createBroadcastBlockFunc(params, 'event_broadcast'));
-        converter.registerCallMethod('self', 'broadcast_and_wait', 1,
+        converter.registerCallMethod(
+            'self', 'broadcast_and_wait', 1,
             params => createBroadcastBlockFunc(params, 'event_broadcastandwait'));
+
+        // backward compatibility
+        converter.registerCallMethodWithBlock('self', 'when', 1, 0, params => {
+            const {args} = params;
+
+            if (args[0].type !== 'sym') return null;
+
+            switch (args[0].value) {
+            case 'flag_clicked':
+                return converter.callMethod(
+                    params.receiver, 'when_flag_clicked', params.args.slice(1),
+                    params.rubyBlockArgs, params.rubyBlock, params.node);
+            case 'clicked':
+                return converter.callMethod(
+                    params.receiver, 'when_clicked', params.args.slice(1),
+                    params.rubyBlockArgs, params.rubyBlock, params.node);
+            }
+
+            return null;
+        });
+
+        // backward compatibility
+        converter.registerCallMethodWithBlock('self', 'when', 2, 0, params => {
+            const {args} = params;
+
+            if (args[0].type !== 'sym') return null;
+
+            switch (args[0].value) {
+            case 'key_pressed':
+                return converter.callMethod(
+                    params.receiver, 'when_key_pressed', params.args.slice(1),
+                    params.rubyBlockArgs, params.rubyBlock, params.node);
+            case 'backdrop_switches':
+                return converter.callMethod(
+                    params.receiver, 'when_backdrop_switches', params.args.slice(1),
+                    params.rubyBlockArgs, params.rubyBlock, params.node);
+            case 'receive':
+                return converter.callMethod(
+                    params.receiver, 'when_receive', params.args.slice(1),
+                    params.rubyBlockArgs, params.rubyBlock, params.node);
+            }
+
+            return null;
+        });
+
+        // backward compatibility
+        converter.registerCallMethodWithBlock('self', 'when', 3, 0, params => {
+            const {args} = params;
+
+            if (args[0].type !== 'sym') return null;
+
+            switch (args[0].value) {
+            case 'greater_than':
+                return converter.callMethod(
+                    params.receiver, 'when_greater_than', params.args.slice(1),
+                    params.rubyBlockArgs, params.rubyBlock, params.node);
+            }
+
+            return null;
+        });
     }
 };
 
