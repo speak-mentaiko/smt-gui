@@ -29,7 +29,7 @@ describe('Ruby Tab: Events category blocks', () => {
         await driver.quit();
     });
 
-    const eventsCode = dedent`
+    const eventsRuby = dedent`
         when_flag_clicked do
           bounce_if_on_edge
         end
@@ -94,7 +94,7 @@ describe('Ruby Tab: Events category blocks', () => {
         broadcast_and_wait(x)
     `;
 
-    const eventsOldCode = dedent`
+    const eventsOldRuby = dedent`
         self.when(:flag_clicked) do
           bounce_if_on_edge
         end
@@ -162,14 +162,14 @@ describe('Ruby Tab: Events category blocks', () => {
     describe('sprite', () => {
         test('Ruby -> Code -> Ruby', async () => {
             await loadUri(urlFor('/'));
-            await expectInterconvertBetweenCodeAndRuby(eventsCode);
+            await expectInterconvertBetweenCodeAndRuby(eventsRuby);
         });
 
         test('Ruby -> Code -> Ruby (backward compatibility) ', async () => {
             await loadUri(urlFor('/'));
 
             await clickText('Ruby', '*[@role="tab"]');
-            await fillInRubyProgram(eventsOldCode);
+            await fillInRubyProgram(eventsOldRuby);
             await clickText('Code', '*[@role="tab"]');
             await clickXpath(
                 '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
@@ -177,7 +177,7 @@ describe('Ruby Tab: Events category blocks', () => {
             );
             await clickText('Generate Ruby from Code');
             await clickText('Ruby', '*[@role="tab"]');
-            expect(await currentRubyProgram()).toEqual(`${eventsCode}\n`);
+            expect(await currentRubyProgram()).toEqual(`${eventsRuby}\n`);
         });
     });
 
@@ -186,7 +186,7 @@ describe('Ruby Tab: Events category blocks', () => {
             await loadUri(urlFor('/'));
             await clickXpath('//span[text()="Stage"]');
 
-            await expectInterconvertBetweenCodeAndRuby(eventsCode);
+            await expectInterconvertBetweenCodeAndRuby(eventsRuby);
         });
 
         test('Ruby -> Code -> Ruby (backward compatibility) ', async () => {
@@ -194,7 +194,7 @@ describe('Ruby Tab: Events category blocks', () => {
             await clickXpath('//span[text()="Stage"]');
 
             await clickText('Ruby', '*[@role="tab"]');
-            await fillInRubyProgram(eventsOldCode);
+            await fillInRubyProgram(eventsOldRuby);
             await clickText('Code', '*[@role="tab"]');
             await clickXpath(
                 '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
@@ -202,7 +202,7 @@ describe('Ruby Tab: Events category blocks', () => {
             );
             await clickText('Generate Ruby from Code');
             await clickText('Ruby', '*[@role="tab"]');
-            expect(await currentRubyProgram()).toEqual(`${eventsCode}\n`);
+            expect(await currentRubyProgram()).toEqual(`${eventsRuby}\n`);
         });
     });
 });
