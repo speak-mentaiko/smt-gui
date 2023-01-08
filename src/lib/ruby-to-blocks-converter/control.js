@@ -132,7 +132,8 @@ const ControlConverter = {
             case 'start_as_a_clone':
                 return converter.callMethod(
                     params.receiver, 'when_start_as_a_clone', params.args.slice(1),
-                    params.rubyBlockArgs, params.rubyBlock, params.node);
+                    params.rubyBlockArgs, params.rubyBlock, params.node
+                );
             }
 
             return null;

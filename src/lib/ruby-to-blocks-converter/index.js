@@ -83,7 +83,6 @@ class RubyToBlocksConverter {
         this._converters = [
             MusicConverter,
             PenConverter,
-            MicroBitConverter,
             MicroBitMoreConverter,
             EV3Converter,
             Wedo2Converter,
@@ -108,7 +107,8 @@ class RubyToBlocksConverter {
 
         [
             EventConverter,
-            ControlConverter
+            ControlConverter,
+            MicroBitConverter
         ].forEach(x => x.register(this));
     }
 
@@ -486,6 +486,10 @@ class RubyToBlocksConverter {
         return _.isString(value) || (value && value.type === 'str');
     }
 
+    isNumber (value) {
+        return this._isNumber(value);
+    }
+
     _isNumber (value) {
         return _.isNumber(value) || (value && (value.type === 'int' || value.type === 'float'));
     }
@@ -655,6 +659,10 @@ class RubyToBlocksConverter {
         return value;
     }
 
+    createRubyExpressionBlock (expression, node) {
+        return this._createRubyExpressionBlock(expression, node);
+    }
+
     _createRubyExpressionBlock (expression, node) {
         const block = this._createBlock('ruby_expression', 'value_boolean');
         block.node = node;
@@ -734,12 +742,20 @@ class RubyToBlocksConverter {
         return value;
     }
 
+    addTextInput (block, name, inputValue, shadowValue) {
+        return this._addTextInput(block, name, inputValue, shadowValue);
+    }
+
     _addTextInput (block, name, inputValue, shadowValue) {
         let shadowBlock;
         if (!this._isString(inputValue)) {
             shadowBlock = this._createTextBlock(shadowValue);
         }
         this._addInput(block, name, this._createTextBlock(inputValue), shadowBlock);
+    }
+
+    addFieldInput (block, name, opcode, fieldName, inputValue, shadowValue) {
+        return this._addFieldInput(block, name, opcode, fieldName, inputValue, shadowValue);
     }
 
     _addFieldInput (block, name, opcode, fieldName, inputValue, shadowValue) {
@@ -942,6 +958,10 @@ class RubyToBlocksConverter {
         block.opcode = opcode;
         this._setBlockType(block, blockType);
         return block;
+    }
+
+    changeRubyExpressionBlock (block, opcode, blockType) {
+        return this._changeRubyExpressionBlock(block, opcode, blockType);
     }
 
     _changeRubyExpressionBlock (block, opcode, blockType) {

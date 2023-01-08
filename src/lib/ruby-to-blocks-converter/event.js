@@ -113,10 +113,12 @@ const EventConverter = {
         };
         converter.registerCallMethod(
             'self', 'broadcast', 1,
-            params => createBroadcastBlockFunc(params, 'event_broadcast'));
+            params => createBroadcastBlockFunc(params, 'event_broadcast')
+        );
         converter.registerCallMethod(
             'self', 'broadcast_and_wait', 1,
-            params => createBroadcastBlockFunc(params, 'event_broadcastandwait'));
+            params => createBroadcastBlockFunc(params, 'event_broadcastandwait')
+        );
 
         // backward compatibility
         converter.registerCallMethodWithBlock('self', 'when', 1, 0, params => {
@@ -128,11 +130,13 @@ const EventConverter = {
             case 'flag_clicked':
                 return converter.callMethod(
                     params.receiver, 'when_flag_clicked', params.args.slice(1),
-                    params.rubyBlockArgs, params.rubyBlock, params.node);
+                    params.rubyBlockArgs, params.rubyBlock, params.node
+                );
             case 'clicked':
                 return converter.callMethod(
                     params.receiver, 'when_clicked', params.args.slice(1),
-                    params.rubyBlockArgs, params.rubyBlock, params.node);
+                    params.rubyBlockArgs, params.rubyBlock, params.node
+                );
             }
 
             return null;
@@ -148,15 +152,18 @@ const EventConverter = {
             case 'key_pressed':
                 return converter.callMethod(
                     params.receiver, 'when_key_pressed', params.args.slice(1),
-                    params.rubyBlockArgs, params.rubyBlock, params.node);
+                    params.rubyBlockArgs, params.rubyBlock, params.node
+                );
             case 'backdrop_switches':
                 return converter.callMethod(
                     params.receiver, 'when_backdrop_switches', params.args.slice(1),
-                    params.rubyBlockArgs, params.rubyBlock, params.node);
+                    params.rubyBlockArgs, params.rubyBlock, params.node
+                );
             case 'receive':
                 return converter.callMethod(
                     params.receiver, 'when_receive', params.args.slice(1),
-                    params.rubyBlockArgs, params.rubyBlock, params.node);
+                    params.rubyBlockArgs, params.rubyBlock, params.node
+                );
             }
 
             return null;
@@ -172,7 +179,8 @@ const EventConverter = {
             case 'greater_than':
                 return converter.callMethod(
                     params.receiver, 'when_greater_than', params.args.slice(1),
-                    params.rubyBlockArgs, params.rubyBlock, params.node);
+                    params.rubyBlockArgs, params.rubyBlock, params.node
+                );
             }
 
             return null;
