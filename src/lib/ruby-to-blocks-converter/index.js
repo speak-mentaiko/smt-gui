@@ -87,7 +87,6 @@ class RubyToBlocksConverter {
             PenConverter,
             MicroBitMoreConverter,
             EV3Converter,
-            Wedo2Converter,
             GdxForConverter,
             MeshConverter,
             SmalrubotS1Converter,
@@ -112,7 +111,8 @@ class RubyToBlocksConverter {
             ControlConverter,
             MicroBitConverter,
             VideoConverter,
-            Text2SpeechConverter
+            Text2SpeechConverter,
+            Wedo2Converter
         ].forEach(x => x.register(this));
     }
 
