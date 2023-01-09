@@ -24,7 +24,7 @@ const VideoStateMenu = [
  */
 const VideoConverter = {
     register: function (converter) {
-        converter.registerCallMethod('self', 'video_sensing', 0, params => {
+        converter.registerCallMethod('self', VideoSensing, 0, params => {
             const {node} = params;
 
             return converter.createRubyExpressionBlock(VideoSensing, node);

@@ -31,6 +31,7 @@ import BoostConverter from './boost';
 import TranslateConverter from './translate';
 import MakeyMakeyConverter from './makeymakey';
 import VideoConverter from './video';
+import Text2SpeechConverter from './text2speech';
 
 const messages = defineMessages({
     couldNotConvertPremitive: {
@@ -110,7 +111,8 @@ class RubyToBlocksConverter {
             EventConverter,
             ControlConverter,
             MicroBitConverter,
-            VideoConverter
+            VideoConverter,
+            Text2SpeechConverter
         ].forEach(x => x.register(this));
     }
 
