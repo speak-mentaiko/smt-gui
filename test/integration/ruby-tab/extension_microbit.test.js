@@ -4,6 +4,8 @@ import RubyHelper from '../../helpers/ruby-helper';
 
 const seleniumHelper = new SeleniumHelper();
 const {
+    clickText,
+    clickXpath,
     getDriver,
     loadUri,
     urlFor
@@ -11,6 +13,8 @@ const {
 
 const rubyHelper = new RubyHelper(seleniumHelper);
 const {
+    fillInRubyProgram,
+    currentRubyProgram,
     expectInterconvertBetweenCodeAndRuby
 } = rubyHelper;
 
@@ -28,25 +32,25 @@ describe('Ruby Tab: micro:bit extension blocks', () => {
     test('Ruby -> Code -> Ruby', async () => {
         await loadUri(urlFor('/'));
 
-        const code = dedent`
-            self.when(:microbit_button_pressed, "A") do
+        const ruby = dedent`
+            microbit.when_button_pressed("A") do
             end
 
-            self.when(:microbit_button_pressed, "B") do
+            microbit.when_button_pressed("B") do
             end
 
-            self.when(:microbit_button_pressed, "any") do
+            microbit.when_button_pressed("any") do
             end
 
             microbit.button_pressed?("A")
 
-            self.when(:microbit_gesture, "moved") do
+            microbit.when("moved") do
             end
 
-            self.when(:microbit_gesture, "shaken") do
+            microbit.when("shaken") do
             end
 
-            self.when(:microbit_gesture, "jumped") do
+            microbit.when("jumped") do
             end
 
             microbit.display(
@@ -58,6 +62,59 @@ describe('Ruby Tab: micro:bit extension blocks', () => {
             )
             microbit.display_text("Hello!")
             microbit.clear_display
+
+            microbit.when_tilted("any") do
+            end
+
+            microbit.when_tilted("front") do
+            end
+
+            microbit.when_tilted("back") do
+            end
+
+            microbit.when_tilted("left") do
+            end
+
+            microbit.when_tilted("right") do
+            end
+
+            microbit.tilted?("any")
+
+            microbit.tilt_angle("front")
+
+            microbit.when_pin_connected(0) do
+            end
+
+            microbit.when_pin_connected(1) do
+            end
+
+            microbit.when_pin_connected(2) do
+            end
+        `;
+        await expectInterconvertBetweenCodeAndRuby(ruby);
+    });
+
+    test('Ruby -> Code -> Ruby (backward compatibility) ', async () => {
+        await loadUri(urlFor('/'));
+
+        const oldRuby = dedent`
+            self.when(:microbit_button_pressed, "A") do
+            end
+
+            self.when(:microbit_button_pressed, "B") do
+            end
+
+            self.when(:microbit_button_pressed, "any") do
+            end
+
+            self.when(:microbit_gesture, "moved") do
+            end
+
+            self.when(:microbit_gesture, "shaken") do
+            end
+
+            self.when(:microbit_gesture, "jumped") do
+            end
 
             self.when(:microbit_tilted, "any") do
             end
@@ -74,10 +131,6 @@ describe('Ruby Tab: micro:bit extension blocks', () => {
             self.when(:microbit_tilted, "right") do
             end
 
-            microbit.tilted?("any")
-
-            microbit.tilt_angle("front")
-
             self.when(:microbit_pin_connected, 0) do
             end
 
@@ -87,6 +140,60 @@ describe('Ruby Tab: micro:bit extension blocks', () => {
             self.when(:microbit_pin_connected, 2) do
             end
         `;
-        await expectInterconvertBetweenCodeAndRuby(code);
+
+        const newRuby = dedent`
+            microbit.when_button_pressed("A") do
+            end
+
+            microbit.when_button_pressed("B") do
+            end
+
+            microbit.when_button_pressed("any") do
+            end
+
+            microbit.when("moved") do
+            end
+
+            microbit.when("shaken") do
+            end
+
+            microbit.when("jumped") do
+            end
+
+            microbit.when_tilted("any") do
+            end
+
+            microbit.when_tilted("front") do
+            end
+
+            microbit.when_tilted("back") do
+            end
+
+            microbit.when_tilted("left") do
+            end
+
+            microbit.when_tilted("right") do
+            end
+
+            microbit.when_pin_connected(0) do
+            end
+
+            microbit.when_pin_connected(1) do
+            end
+
+            microbit.when_pin_connected(2) do
+            end
+        `;
+
+        await clickText('Ruby', '*[@role="tab"]');
+        await fillInRubyProgram(oldRuby);
+        await clickText('Code', '*[@role="tab"]');
+        await clickXpath(
+            '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
+                '/*/span[text()="Edit"]'
+        );
+        await clickText('Generate Ruby from Code');
+        await clickText('Ruby', '*[@role="tab"]');
+        expect(await currentRubyProgram()).toEqual(`${newRuby}\n`);
     });
 });

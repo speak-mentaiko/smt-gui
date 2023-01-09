@@ -25,26 +25,26 @@ describe('Ruby Tab: Video Sensing extension blocks', () => {
         await driver.quit();
     });
 
-    // not implemented Ruby to Code yet
-    test.skip('Ruby -> Code -> Ruby', async () => {
+    test('Ruby -> Code -> Ruby', async () => {
         await loadUri(urlFor('/'));
 
         const code = dedent`
-            self.when(:video_motion_greater_than, 10) do
+            video_sensing.when_video_motion_greater_than(10) do
             end
 
-            video_motion
+            video_sensing.when_video_motion_greater_than(x) do
+            end
 
-            video_turn("on")
-            video_turn("off")
-            video_turn("on-flipped")
-            self.video_transparency = 50
+            video_sensing.video_on("motion", "this sprite")
 
-            video_direction
+            video_sensing.video_on("direction", "this sprite")
 
-            stage.video_motion
+            video_sensing.video_on("direction", "Stage")
 
-            stage.video_direction
+            video_sensing.video_turn("on")
+            video_sensing.video_turn("off")
+            video_sensing.video_turn("on-flipped")
+            video_sensing.video_transparency = 50
         `;
         await expectInterconvertBetweenCodeAndRuby(code);
     });

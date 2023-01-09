@@ -7,7 +7,7 @@ export default function (Generator) {
     Generator.microbit_whenButtonPressed = function (block) {
         block.isStatement = true;
         const btn = Generator.valueToCode(block, 'BTN', Generator.ORDER_NONE) || null;
-        return `${Generator.spriteName()}.when(:microbit_button_pressed, ${btn}) do\n`;
+        return `microbit.when_button_pressed(${btn}) do\n`;
     };
 
     Generator.microbit_isButtonPressed = function (block) {
@@ -18,7 +18,7 @@ export default function (Generator) {
     Generator.microbit_whenGesture = function (block) {
         block.isStatement = true;
         const gesture = Generator.valueToCode(block, 'GESTURE', Generator.ORDER_NONE) || null;
-        return `${Generator.spriteName()}.when(:microbit_gesture, ${gesture}) do\n`;
+        return `microbit.when(${gesture}) do\n`;
     };
 
     Generator.microbit_displaySymbol = function (block) {
@@ -39,7 +39,7 @@ export default function (Generator) {
     Generator.microbit_whenTilted = function (block) {
         block.isStatement = true;
         const direction = Generator.valueToCode(block, 'DIRECTION', Generator.ORDER_NONE) || null;
-        return `${Generator.spriteName()}.when(:microbit_tilted, ${direction}) do\n`;
+        return `microbit.when_tilted(${direction}) do\n`;
     };
 
     Generator.microbit_isTilted = function (block) {
@@ -55,7 +55,7 @@ export default function (Generator) {
     Generator.microbit_whenPinConnected = function (block) {
         block.isStatement = true;
         const pin = Generator.valueToCode(block, 'PIN', Generator.ORDER_NONE) || null;
-        return `${Generator.spriteName()}.when(:microbit_pin_connected, ${pin}) do\n`;
+        return `microbit.when_pin_connected(${pin}) do\n`;
     };
 
     Generator.microbit_menu_buttons = function (block) {

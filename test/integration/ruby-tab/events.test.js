@@ -4,6 +4,8 @@ import RubyHelper from '../../helpers/ruby-helper';
 
 const seleniumHelper = new SeleniumHelper();
 const {
+    clickText,
+    clickXpath,
     getDriver,
     loadUri,
     urlFor
@@ -11,6 +13,8 @@ const {
 
 const rubyHelper = new RubyHelper(seleniumHelper);
 const {
+    fillInRubyProgram,
+    currentRubyProgram,
     expectInterconvertBetweenCodeAndRuby
 } = rubyHelper;
 
@@ -25,40 +29,180 @@ describe('Ruby Tab: Events category blocks', () => {
         await driver.quit();
     });
 
-    test('Ruby -> Code -> Ruby', async () => {
-        await loadUri(urlFor('/'));
+    const eventsRuby = dedent`
+        when_flag_clicked do
+          bounce_if_on_edge
+        end
+        
+        when_key_pressed("space") do
+          bounce_if_on_edge
+        end
+        
+        when_key_pressed("any") do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        when_key_pressed("a") do
+        end
+        
+        when_clicked do
+          bounce_if_on_edge
+        end
+        
+        when_clicked do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        when_backdrop_switches("backdrop1") do
+          bounce_if_on_edge
+        end
+        
+        when_backdrop_switches("backdrop1") do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        when_greater_than("loudness", 10) do
+        end
+        
+        when_greater_than("loudness", 10) do
+          bounce_if_on_edge
+        end
+        
+        when_greater_than("timer", x) do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        when_receive("message1") do
+        end
+        
+        when_receive("message1") do
+          bounce_if_on_edge
+        end
+        
+        when_receive("message1") do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        broadcast("message1")
+        broadcast(x)
+        broadcast_and_wait("message1")
+        broadcast_and_wait(x)
+    `;
 
-        const code = dedent`
-            when_flag_clicked do
-            end
+    const eventsOldRuby = dedent`
+        self.when(:flag_clicked) do
+          bounce_if_on_edge
+        end
+        
+        self.when(:key_pressed, "space") do
+          bounce_if_on_edge
+        end
+        
+        self.when(:key_pressed, "any") do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        self.when(:key_pressed, "a") do
+        end
+        
+        self.when(:clicked) do
+          bounce_if_on_edge
+        end
+        
+        self.when(:clicked) do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        self.when(:backdrop_switches, "backdrop1") do
+          bounce_if_on_edge
+        end
+        
+        self.when(:backdrop_switches, "backdrop1") do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        self.when(:greater_than, "loudness", 10) do
+        end
+        
+        self.when(:greater_than, "loudness", 10) do
+          bounce_if_on_edge
+        end
+        
+        self.when(:greater_than, "timer", x) do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        self.when(:receive, "message1") do
+        end
+        
+        self.when(:receive, "message1") do
+          bounce_if_on_edge
+        end
+        
+        self.when(:receive, "message1") do
+          bounce_if_on_edge
+          move(10)
+        end
+        
+        broadcast("message1")
+        broadcast(x)
+        broadcast_and_wait("message1")
+        broadcast_and_wait(x)
+    `;
 
-            self.when(:key_pressed, "space") do
-            end
+    describe('sprite', () => {
+        test('Ruby -> Code -> Ruby', async () => {
+            await loadUri(urlFor('/'));
+            await expectInterconvertBetweenCodeAndRuby(eventsRuby);
+        });
 
-            self.when(:clicked) do
-            end
+        test('Ruby -> Code -> Ruby (backward compatibility) ', async () => {
+            await loadUri(urlFor('/'));
 
-            self.when(:key_pressed, "any") do
-            end
+            await clickText('Ruby', '*[@role="tab"]');
+            await fillInRubyProgram(eventsOldRuby);
+            await clickText('Code', '*[@role="tab"]');
+            await clickXpath(
+                '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
+                    '/*/span[text()="Edit"]'
+            );
+            await clickText('Generate Ruby from Code');
+            await clickText('Ruby', '*[@role="tab"]');
+            expect(await currentRubyProgram()).toEqual(`${eventsRuby}\n`);
+        });
+    });
 
-            self.when(:key_pressed, "a") do
-            end
+    describe('stage', () => {
+        test('Ruby -> Code -> Ruby', async () => {
+            await loadUri(urlFor('/'));
+            await clickXpath('//span[text()="Stage"]');
 
-            self.when(:backdrop_switches, "backdrop1") do
-            end
+            await expectInterconvertBetweenCodeAndRuby(eventsRuby);
+        });
 
-            self.when(:greater_than, "loudness", 10) do
-            end
+        test('Ruby -> Code -> Ruby (backward compatibility) ', async () => {
+            await loadUri(urlFor('/'));
+            await clickXpath('//span[text()="Stage"]');
 
-            self.when(:greater_than, "timer", 10) do
-            end
-
-            self.when(:receive, "message1") do
-            end
-
-            broadcast("message1")
-            broadcast_and_wait("message1")
-        `;
-        await expectInterconvertBetweenCodeAndRuby(code);
+            await clickText('Ruby', '*[@role="tab"]');
+            await fillInRubyProgram(eventsOldRuby);
+            await clickText('Code', '*[@role="tab"]');
+            await clickXpath(
+                '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
+                    '/*/span[text()="Edit"]'
+            );
+            await clickText('Generate Ruby from Code');
+            await clickText('Ruby', '*[@role="tab"]');
+            expect(await currentRubyProgram()).toEqual(`${eventsRuby}\n`);
+        });
     });
 });

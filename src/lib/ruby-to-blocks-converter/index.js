@@ -30,6 +30,7 @@ import SmalrubotS1Converter from './smalrubot_s1';
 import BoostConverter from './boost';
 import TranslateConverter from './translate';
 import MakeyMakeyConverter from './makeymakey';
+import VideoConverter from './video';
 
 const messages = defineMessages({
     couldNotConvertPremitive: {
@@ -83,7 +84,6 @@ class RubyToBlocksConverter {
         this._converters = [
             MusicConverter,
             PenConverter,
-            MicroBitConverter,
             MicroBitMoreConverter,
             EV3Converter,
             Wedo2Converter,
@@ -92,19 +92,26 @@ class RubyToBlocksConverter {
             SmalrubotS1Converter,
             BoostConverter,
             TranslateConverter,
+            MakeyMakeyConverter,
 
             MotionConverter,
             LooksConverter,
             SoundConverter,
-            EventConverter,
             ControlConverter,
             SensingConverter,
             OperatorsConverter,
             VariablesConverter,
-            MyBlocksConverter,
-            MakeyMakeyConverter
+            MyBlocksConverter
         ];
+        this._receiverToMethods = {};
         this.reset();
+
+        [
+            EventConverter,
+            ControlConverter,
+            MicroBitConverter,
+            VideoConverter
+        ].forEach(x => x.register(this));
     }
 
     get errors () {
@@ -270,6 +277,93 @@ class RubyToBlocksConverter {
         });
     }
 
+    registerCallMethodWithBlock (receiverName, name, numArgs, numRubyBlockArgs, createBlockFunc) {
+        if (receiverName === 'self') {
+            this.registerCallMethodWithBlock('sprite', name, numArgs, numRubyBlockArgs, createBlockFunc);
+            this.registerCallMethodWithBlock('stage', name, numArgs, numRubyBlockArgs, createBlockFunc);
+            return;
+        }
+        let methodToNumArgs = this._receiverToMethods[receiverName];
+        if (!methodToNumArgs) methodToNumArgs = this._receiverToMethods[receiverName] = {};
+
+        let numArgsToNumRubyBlockArgs = methodToNumArgs[name];
+        if (!numArgsToNumRubyBlockArgs) numArgsToNumRubyBlockArgs = methodToNumArgs[name] = {};
+
+        let numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[numArgs];
+        if (!numRubyBlockArgsToCreateBlockFuncs) {
+            numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[numArgs] = {};
+        }
+
+        let createBlockFuncs = numRubyBlockArgsToCreateBlockFuncs[numRubyBlockArgs];
+        if (!createBlockFuncs) createBlockFuncs = numRubyBlockArgsToCreateBlockFuncs[numRubyBlockArgs] = [];
+
+        createBlockFuncs.push(createBlockFunc);
+    }
+
+    registerCallMethod (receiverName, name, numArgs, createBlockFunc) {
+        this.registerCallMethodWithBlock(receiverName, name, numArgs, 'none', createBlockFunc);
+    }
+
+    callMethod (receiver, name, args, rubyBlockArgs, rubyBlock, node) {
+        const receiverName = this._getReceiverName(receiver);
+        if (!receiverName) return null;
+
+        const methodToNumArgs = this._receiverToMethods[receiverName];
+        if (!methodToNumArgs) return null;
+
+        const numArgsToNumRubyBlockArgs = methodToNumArgs[name];
+        if (!numArgsToNumRubyBlockArgs) return null;
+
+        const numRubyBlockArgsToCreateBlockFuncs = numArgsToNumRubyBlockArgs[args.length];
+        if (!numRubyBlockArgsToCreateBlockFuncs) return null;
+
+        let numRubyBlockArgs = 'none';
+        if (rubyBlock) numRubyBlockArgs = rubyBlockArgs.length;
+        const createBlockFuncs = numRubyBlockArgsToCreateBlockFuncs[numRubyBlockArgs];
+        if (!createBlockFuncs) return null;
+
+        const params = {
+            receiver: receiver,
+            receiverName: receiverName,
+            name: name,
+            args: args,
+            rubyBlockArgs: rubyBlockArgs,
+            rubyBlock: rubyBlock,
+            node: node
+        };
+        for (let i = 0; i < createBlockFuncs.length; i++) {
+            const createBlockFunc = createBlockFuncs[i];
+            const block = createBlockFunc.apply(this, [params]);
+            if (block) return block;
+        }
+
+        return null;
+    }
+
+    _getReceiverName (receiver) {
+        if (this._isSelf(receiver) || receiver === Opal.nil) {
+            if (this._context.target && this._context.target.isStage) {
+                return 'stage';
+            }
+            return 'sprite';
+        }
+
+        if (this._isBlock(receiver) && receiver.opcode === 'ruby_expression') {
+            const textBlock = this._context.blocks[receiver.inputs.EXPRESSION.block];
+            return textBlock.fields.TEXT.value;
+        }
+
+        return null;
+    }
+
+    createBlock (opcode, type, attributes = {}) {
+        return this._createBlock(opcode, type, attributes);
+    }
+
+    setParent (block, parent) {
+        return this._setParent(block, parent);
+    }
+
     _callConvertersHandler (handlerName, ...args) {
         for (let i = 0; i < this._converters.length; i++) {
             const converter = this._converters[i];
@@ -386,8 +480,16 @@ class RubyToBlocksConverter {
         return block instanceof Primitive && block.type === 'self';
     }
 
+    isString (value) {
+        return this._isString(value);
+    }
+
     _isString (value) {
         return _.isString(value) || (value && value.type === 'str');
+    }
+
+    isNumber (value) {
+        return this._isNumber(value);
     }
 
     _isNumber (value) {
@@ -434,8 +536,16 @@ class RubyToBlocksConverter {
         return /^value/.test(this._getBlockType(block));
     }
 
+    isNumberOrBlock (numberOrBlock) {
+        return this._isNumberOrBlock(numberOrBlock);
+    }
+
     _isNumberOrBlock (numberOrBlock) {
         return this._isNumber(numberOrBlock) || this._isValueBlock(numberOrBlock);
+    }
+
+    isStringOrBlock (stringOrBlock) {
+        return this._isStringOrBlock(stringOrBlock);
     }
 
     _isStringOrBlock (stringOrBlock) {
@@ -551,6 +661,10 @@ class RubyToBlocksConverter {
         return value;
     }
 
+    createRubyExpressionBlock (expression, node) {
+        return this._createRubyExpressionBlock(expression, node);
+    }
+
     _createRubyExpressionBlock (expression, node) {
         const block = this._createBlock('ruby_expression', 'value_boolean');
         block.node = node;
@@ -565,6 +679,10 @@ class RubyToBlocksConverter {
         return block;
     }
 
+    addField (block, name, value, attributes = {}) {
+        return this._addField(block, name, value, attributes);
+    }
+
     _addField (block, name, value, attributes = {}) {
         if (!this._isBlock(block)) {
             return;
@@ -573,6 +691,10 @@ class RubyToBlocksConverter {
             name: name,
             value: value.toString()
         }, attributes);
+    }
+
+    addInput (block, name, inputBlock, shadowBlock) {
+        return this._addInput(block, name, inputBlock, shadowBlock);
     }
 
     _addInput (block, name, inputBlock, shadowBlock) {
@@ -592,6 +714,10 @@ class RubyToBlocksConverter {
             block: inputBlock.id,
             shadow: inputBlock.shadow ? inputBlock.id : shadowBlockId
         };
+    }
+
+    addNumberInput (block, name, opcode, inputValue, shadowValue) {
+        return this._addNumberInput(block, name, opcode, inputValue, shadowValue);
     }
 
     _addNumberInput (block, name, opcode, inputValue, shadowValue) {
@@ -618,12 +744,20 @@ class RubyToBlocksConverter {
         return value;
     }
 
+    addTextInput (block, name, inputValue, shadowValue) {
+        return this._addTextInput(block, name, inputValue, shadowValue);
+    }
+
     _addTextInput (block, name, inputValue, shadowValue) {
         let shadowBlock;
         if (!this._isString(inputValue)) {
             shadowBlock = this._createTextBlock(shadowValue);
         }
         this._addInput(block, name, this._createTextBlock(inputValue), shadowBlock);
+    }
+
+    addFieldInput (block, name, opcode, fieldName, inputValue, shadowValue) {
+        return this._addFieldInput(block, name, opcode, fieldName, inputValue, shadowValue);
     }
 
     _addFieldInput (block, name, opcode, fieldName, inputValue, shadowValue) {
@@ -696,6 +830,10 @@ class RubyToBlocksConverter {
         return this._lookupOrCreateVariableOrList(name, Variable.LIST_TYPE);
     }
 
+    lookupOrCreateBroadcastMsg (name) {
+        return this._lookupOrCreateBroadcastMsg(name);
+    }
+
     _lookupOrCreateBroadcastMsg (name) {
         name = name.toString();
         const key = name.toLowerCase();
@@ -709,6 +847,10 @@ class RubyToBlocksConverter {
             this._context.broadcastMsgs[key] = broadcastMsg;
         }
         return broadcastMsg;
+    }
+
+    defaultBroadcastMsg () {
+        return this._defaultBroadcastMsg();
     }
 
     _defaultBroadcastMsg () {
@@ -818,6 +960,10 @@ class RubyToBlocksConverter {
         block.opcode = opcode;
         this._setBlockType(block, blockType);
         return block;
+    }
+
+    changeRubyExpressionBlock (block, opcode, blockType) {
+        return this._changeRubyExpressionBlock(block, opcode, blockType);
     }
 
     _changeRubyExpressionBlock (block, opcode, blockType) {
@@ -996,7 +1142,10 @@ class RubyToBlocksConverter {
             rubyBlock = this._processStatement(rubyBlockNode);
         }
 
-        let block = this._callConvertersHandler('onSend', receiver, name, args, rubyBlockArgs, rubyBlock, node);
+        let block = this.callMethod(receiver, name, args, rubyBlockArgs, rubyBlock, node);
+        if (!block) {
+            block = this._callConvertersHandler('onSend', receiver, name, args, rubyBlockArgs, rubyBlock, node);
+        }
         if (!block) {
             if ((this._isSelf(receiver) || receiver === Opal.nil) && !rubyBlock) {
                 switch (name) {
