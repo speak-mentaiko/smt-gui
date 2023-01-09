@@ -29,13 +29,13 @@ const MicroBitConverter = {
     register: function (converter) {
         const createMicrobitBlock = node => converter.createRubyExpressionBlock(MicroBit, node);
 
-        converter.registerCallMethod('self', 'microbit', 0, params => {
+        converter.registerCallMethod('self', MicroBit, 0, params => {
             const {node} = params;
 
             return createMicrobitBlock(node);
         });
 
-        converter.registerCallMethodWithBlock('microbit', 'when_button_pressed', 1, 0, params => {
+        converter.registerCallMethodWithBlock(MicroBit, 'when_button_pressed', 1, 0, params => {
             const {receiver, args, rubyBlock} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
@@ -47,7 +47,7 @@ const MicroBitConverter = {
             return block;
         });
 
-        converter.registerCallMethod('microbit', 'button_pressed?', 1, params => {
+        converter.registerCallMethod(MicroBit, 'button_pressed?', 1, params => {
             const {receiver, args} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
@@ -58,7 +58,7 @@ const MicroBitConverter = {
             return block;
         });
 
-        converter.registerCallMethodWithBlock('microbit', 'when', 1, 0, params => {
+        converter.registerCallMethodWithBlock(MicroBit, 'when', 1, 0, params => {
             const {receiver, args, rubyBlock} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
@@ -70,7 +70,7 @@ const MicroBitConverter = {
             return block;
         });
 
-        converter.registerCallMethod('microbit', 'display', 5, params => {
+        converter.registerCallMethod(MicroBit, 'display', 5, params => {
             const {receiver, args} = params;
 
             if (!args.every(x => converter.isString(x))) return null;
@@ -86,7 +86,7 @@ const MicroBitConverter = {
             return block;
         });
 
-        converter.registerCallMethod('microbit', 'display_text', 1, params => {
+        converter.registerCallMethod(MicroBit, 'display_text', 1, params => {
             const {receiver, args} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
@@ -96,13 +96,13 @@ const MicroBitConverter = {
             return block;
         });
 
-        converter.registerCallMethod('microbit', 'clear_display', 0, params => {
+        converter.registerCallMethod(MicroBit, 'clear_display', 0, params => {
             const {receiver} = params;
 
             return converter.changeRubyExpressionBlock(receiver, 'microbit_displayClear', 'statement');
         });
 
-        converter.registerCallMethodWithBlock('microbit', 'when_tilted', 1, 0, params => {
+        converter.registerCallMethodWithBlock(MicroBit, 'when_tilted', 1, 0, params => {
             const {receiver, args, rubyBlock} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
@@ -116,7 +116,7 @@ const MicroBitConverter = {
             return block;
         });
 
-        converter.registerCallMethod('microbit', 'tilted?', 1, params => {
+        converter.registerCallMethod(MicroBit, 'tilted?', 1, params => {
             const {receiver, args} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
@@ -129,7 +129,7 @@ const MicroBitConverter = {
             return block;
         });
 
-        converter.registerCallMethod('microbit', 'tilt_angle', 1, params => {
+        converter.registerCallMethod(MicroBit, 'tilt_angle', 1, params => {
             const {receiver, args} = params;
 
             if (!converter.isStringOrBlock(args[0])) return null;
@@ -142,7 +142,7 @@ const MicroBitConverter = {
             return block;
         });
 
-        converter.registerCallMethodWithBlock('microbit', 'when_pin_connected', 1, 0, params => {
+        converter.registerCallMethodWithBlock(MicroBit, 'when_pin_connected', 1, 0, params => {
             const {receiver, args, rubyBlock} = params;
 
             if (!converter.isNumberOrBlock(args[0])) return null;

@@ -30,6 +30,7 @@ import SmalrubotS1Converter from './smalrubot_s1';
 import BoostConverter from './boost';
 import TranslateConverter from './translate';
 import MakeyMakeyConverter from './makeymakey';
+import VideoConverter from './video';
 
 const messages = defineMessages({
     couldNotConvertPremitive: {
@@ -91,6 +92,7 @@ class RubyToBlocksConverter {
             SmalrubotS1Converter,
             BoostConverter,
             TranslateConverter,
+            MakeyMakeyConverter,
 
             MotionConverter,
             LooksConverter,
@@ -99,8 +101,7 @@ class RubyToBlocksConverter {
             SensingConverter,
             OperatorsConverter,
             VariablesConverter,
-            MyBlocksConverter,
-            MakeyMakeyConverter
+            MyBlocksConverter
         ];
         this._receiverToMethods = {};
         this.reset();
@@ -108,7 +109,8 @@ class RubyToBlocksConverter {
         [
             EventConverter,
             ControlConverter,
-            MicroBitConverter
+            MicroBitConverter,
+            VideoConverter
         ].forEach(x => x.register(this));
     }
 
