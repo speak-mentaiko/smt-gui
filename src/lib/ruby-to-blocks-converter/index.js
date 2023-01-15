@@ -85,7 +85,6 @@ class RubyToBlocksConverter {
         this._converters = [
             MusicConverter,
             PenConverter,
-            MicroBitMoreConverter,
             EV3Converter,
             GdxForConverter,
             MeshConverter,
@@ -112,7 +111,8 @@ class RubyToBlocksConverter {
             MicroBitConverter,
             VideoConverter,
             Text2SpeechConverter,
-            Wedo2Converter
+            Wedo2Converter,
+            MicroBitMoreConverter
         ].forEach(x => x.register(this));
     }
 
@@ -518,6 +518,10 @@ class RubyToBlocksConverter {
         return value && value.type === 'const';
     }
 
+    isBlock (block) {
+        return this._isBlock(block);
+    }
+
     _isBlock (block) {
         try {
             return block.hasOwnProperty('opcode');
@@ -647,6 +651,10 @@ class RubyToBlocksConverter {
             },
             shadow: true
         });
+    }
+
+    createTextBlock (value) {
+        return this._createTextBlock(value);
     }
 
     _createTextBlock (value) {

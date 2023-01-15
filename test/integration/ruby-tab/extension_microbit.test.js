@@ -60,6 +60,7 @@ describe('Ruby Tab: micro:bit extension blocks', () => {
               ".1.1.",
               "..1.."
             )
+            microbit.display(x)
             microbit.display_text("Hello!")
             microbit.clear_display
 
