@@ -12,23 +12,23 @@ export default function (Generator) {
     Generator.wedo2_motorOnFor = function (block) {
         const motorId = Generator.valueToCode(block, 'MOTOR_ID', Generator.ORDER_NONE) || null;
         const duration = Generator.valueToCode(block, 'DURATION', Generator.ORDER_NONE) || null;
-        return `wedo2_turn_motor_on_for(${motorId}, ${duration})\n`;
+        return `wedo2.turn_on_for(${motorId}, ${duration})\n`;
     };
 
     Generator.wedo2_motorOn = function (block) {
         const motorId = Generator.valueToCode(block, 'MOTOR_ID', Generator.ORDER_NONE) || null;
-        return `wedo2_trun_motor_on(${motorId})\n`;
+        return `wedo2.turn_on(${motorId})\n`;
     };
 
     Generator.wedo2_motorOff = function (block) {
         const motorId = Generator.valueToCode(block, 'MOTOR_ID', Generator.ORDER_NONE) || null;
-        return `wedo2_trun_motor_off(${motorId})\n`;
+        return `wedo2.turn_off(${motorId})\n`;
     };
 
     Generator.wedo2_startMotorPower = function (block) {
         const motorId = Generator.valueToCode(block, 'MOTOR_ID', Generator.ORDER_NONE) || null;
         const power = Generator.valueToCode(block, 'POWER', Generator.ORDER_NONE) || null;
-        return `wedo2_set_motor_power(${motorId}, ${power})\n`;
+        return `wedo2.set_power(${motorId}, ${power})\n`;
     };
 
     Generator.wedo2_menu_MOTOR_DIRECTION = function (block) {
@@ -39,12 +39,12 @@ export default function (Generator) {
     Generator.wedo2_setMotorDirection = function (block) {
         const motorId = Generator.valueToCode(block, 'MOTOR_ID', Generator.ORDER_NONE) || null;
         const motorDirection = Generator.valueToCode(block, 'MOTOR_DIRECTION', Generator.ORDER_NONE) || null;
-        return `wedo2_set_motor_direction(${motorId}, ${motorDirection})\n`;
+        return `wedo2.set_direction(${motorId}, ${motorDirection})\n`;
     };
 
     Generator.wedo2_setLightHue = function (block) {
         const hue = Generator.valueToCode(block, 'HUE', Generator.ORDER_NONE) || null;
-        return `wedo2_set_light_color(${hue})\n`;
+        return `wedo2.light_color = ${hue}\n`;
     };
 
     Generator.wedo2_menu_OP = function (block) {
@@ -56,7 +56,7 @@ export default function (Generator) {
         block.isStatement = true;
         const op = Generator.valueToCode(block, 'OP', Generator.ORDER_NONE) || null;
         const reference = Generator.valueToCode(block, 'REFERENCE', Generator.ORDER_NONE) || null;
-        return `${Generator.spriteName()}.when(:wedo2_distance, ${op}, ${reference}) do\n`;
+        return `wedo2.when_distance(${op}, ${reference}) do\n`;
     };
 
     Generator.wedo2_menu_TILT_DIRECTION_ANY = function (block) {
@@ -67,16 +67,16 @@ export default function (Generator) {
     Generator.wedo2_whenTilted = function (block) {
         block.isStatement = true;
         const tiltDirectionAny = Generator.valueToCode(block, 'TILT_DIRECTION_ANY', Generator.ORDER_NONE) || null;
-        return `${Generator.spriteName()}.when(:wedo2_tilted, ${tiltDirectionAny}) do\n`;
+        return `wedo2.when_tilted(${tiltDirectionAny}) do\n`;
     };
 
     Generator.wedo2_getDistance = function () {
-        return [`wedo2_distance`, Generator.ORDER_ATOMIC];
+        return [`wedo2.distance`, Generator.ORDER_ATOMIC];
     };
 
     Generator.wedo2_isTilted = function (block) {
         const tiltDirectionAny = Generator.valueToCode(block, 'TILT_DIRECTION_ANY', Generator.ORDER_NONE) || null;
-        return `wedo2_tilted(${tiltDirectionAny})\n`;
+        return `wedo2.tilted?(${tiltDirectionAny})\n`;
     };
 
     Generator.wedo2_menu_TILT_DIRECTION = function (block) {
@@ -86,7 +86,7 @@ export default function (Generator) {
 
     Generator.wedo2_getTiltAngle = function (block) {
         const tiltDirection = Generator.valueToCode(block, 'TILT_DIRECTION', Generator.ORDER_NONE) || null;
-        return [`wedo2_tilt_angle(${tiltDirection})`, Generator.ORDER_ATOMIC];
+        return [`wedo2.tilt_angle(${tiltDirection})`, Generator.ORDER_ATOMIC];
     };
 
     return Generator;

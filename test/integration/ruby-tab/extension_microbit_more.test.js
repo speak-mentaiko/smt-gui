@@ -25,147 +25,203 @@ describe('Ruby Tab: micro:bit MORE v0.4.3 extension blocks', () => {
         await driver.quit();
     });
 
-    // not implemented Ruby to Code yet
-    test.skip('Ruby -> Code -> Ruby', async () => {
+    test('Ruby -> Code -> Ruby', async () => {
         await loadUri(urlFor('/'));
 
         const code = dedent`
-            self.when(:mbit_more_button_pressed, "A") do
+            microbit_more.when_button_pressed("A") do
             end
 
-            self.when(:mbit_more_button_pressed, "B") do
+            microbit_more.when_button_pressed("B") do
             end
 
-            self.when(:mbit_more_button_pressed, "any") do
+            microbit_more.when_button_pressed("any") do
             end
 
-            mbit_more.button_pressed?("A")
-
-            self.when(:mbit_more_gesture, "moved") do
+            microbit_more.when_button_pressed(x) do
             end
 
-            self.when(:mbit_more_gesture, "shaken") do
+            microbit_more.button_pressed?("A")
+
+            microbit_more.button_pressed?(x)
+
+            microbit_more.when("moved") do
             end
 
-            self.when(:mbit_more_gesture, "jumped") do
-              mbit_more.display(
+            microbit_more.when("shaken") do
+            end
+
+            microbit_more.when("jumped") do
+              microbit_more.display(
                 ".1.1.",
                 "1.1.1",
                 "1...1",
                 ".1.1.",
                 "..1.."
               )
-              mbit_more.display_text("Hello!")
-              mbit_more.clear_display
+              microbit_more.display(x)
+              microbit_more.display_text("Hello!")
+              microbit_more.display_text(x)
+              microbit_more.clear_display
             end
 
-            self.when(:mbit_more_tilted, "any") do
+            microbit_more.when(x) do
             end
 
-            self.when(:mbit_more_tilted, "front") do
+            microbit_more.when_tilted("any") do
             end
 
-            self.when(:mbit_more_tilted, "back") do
+            microbit_more.when_tilted("front") do
             end
 
-            self.when(:mbit_more_tilted, "left") do
+            microbit_more.when_tilted("back") do
             end
 
-            self.when(:mbit_more_tilted, "right") do
+            microbit_more.when_tilted("left") do
             end
 
-            mbit_more.tilted?("any")
-
-            mbit_more.tilt_angle("front")
-
-            self.when(:mbit_more_pin_connected, 0) do
+            microbit_more.when_tilted("right") do
             end
 
-            self.when(:mbit_more_pin_connected, 1) do
+            microbit_more.when_tilted(x) do
             end
 
-            self.when(:mbit_more_pin_connected, 2) do
+            microbit_more.tilted?("any")
+
+            microbit_more.tilted?(x)
+
+            microbit_more.tilt_angle("front")
+
+            microbit_more.tilt_angle(x)
+
+            microbit_more.when_pin_connected(0) do
             end
 
-            self.when(:mbit_more_pin_connected, 8) do
+            microbit_more.when_pin_connected(1) do
             end
 
-            self.when(:mbit_more_pin_connected, 13) do
+            microbit_more.when_pin_connected(2) do
             end
 
-            self.when(:mbit_more_pin_connected, 14) do
+            microbit_more.when_pin_connected(8) do
             end
 
-            self.when(:mbit_more_pin_connected, 15) do
+            microbit_more.when_pin_connected(13) do
             end
 
-            self.when(:mbit_more_pin_connected, 16) do
+            microbit_more.when_pin_connected(14) do
             end
 
-            mbit_more.pin_connected?(0)
-
-            mbit_more.light_level
-
-            mbit_more.temperature
-
-            mbit_more.compass_heading
-
-            mbit_more.pitch
-
-            mbit_more.roll
-
-            mbit_more.get_magnetic_force(null)
-
-            mbit_more.get_acceleration("x")
-
-            mbit_more.get_acceleration("y")
-
-            mbit_more.get_acceleration("z")
-
-            mbit_more.get_acceleration("absolute")
-
-            mbit_more.get_analog_value(0)
-
-            mbit_more.get_analog_value(1)
-
-            mbit_more.get_analog_value(2)
-
-            mbit_more.get_digital_value(0)
-
-            mbit_more.set_pin_mode(0, "pullUp")
-            mbit_more.set_pin_mode(1, "pullNone")
-            mbit_more.set_pin_mode(2, "pullDown")
-            mbit_more.set_output(8, 0)
-            mbit_more.set_output(13, 1)
-            mbit_more.set_pwm(14, 0)
-            mbit_more.set_servo(15, 0, 2000, 1500)
-            mbit_more.set_pin_event_type(0, 0)
-            mbit_more.set_pin_event_type(1, 2)
-            mbit_more.set_pin_event_type(2, 1)
-
-            self.when(:mbit_more_pin_event, 0, 5) do
+            microbit_more.when_pin_connected(15) do
             end
 
-            self.when(:mbit_more_pin_event, 1, 4) do
+            microbit_more.when_pin_connected(16) do
             end
 
-            self.when(:mbit_more_pin_event, 2, 3) do
+            microbit_more.when_pin_connected(x) do
             end
 
-            self.when(:mbit_more_pin_event, 8, 2) do
+            microbit_more.pin_connected?(0)
+
+            microbit_more.pin_connected?(x)
+
+            microbit_more.light_intensity
+
+            microbit_more.temperature
+
+            microbit_more.angle_with_the_north
+
+            microbit_more.pitch
+
+            microbit_more.roll
+
+            microbit_more.magnetic_force
+
+            microbit_more.acceleration("x")
+
+            microbit_more.acceleration("y")
+
+            microbit_more.acceleration("z")
+
+            microbit_more.acceleration("absolute")
+
+            microbit_more.acceleration(x)
+
+            microbit_more.analog_value_of_pin(0)
+
+            microbit_more.analog_value_of_pin(1)
+
+            microbit_more.analog_value_of_pin(2)
+
+            microbit_more.analog_value_of_pin(x)
+
+            microbit_more.digital_value_of_pin(0)
+
+            microbit_more.digital_value_of_pin(8)
+
+            microbit_more.digital_value_of_pin(13)
+
+            microbit_more.digital_value_of_pin(14)
+
+            microbit_more.digital_value_of_pin(15)
+
+            microbit_more.digital_value_of_pin(16)
+
+            microbit_more.digital_value_of_pin(x)
+
+            microbit_more.set_pin_to_input_pull(0, "up")
+            microbit_more.set_pin_to_input_pull(1, "none")
+            microbit_more.set_pin_to_input_pull(2, "down")
+            microbit_more.set_pin_to_input_pull(x, "down")
+            microbit_more.set_digital(0, 0)
+            microbit_more.set_digital(16, 1)
+            microbit_more.set_digital(x, 1)
+            microbit_more.set_pwm(0, 0)
+            microbit_more.set_pwm(16, x)
+            microbit_more.set_pwm(x, y)
+            microbit_more.set_servo(0, 0)
+            microbit_more.set_servo(16, x)
+            microbit_more.set_servo(x, y)
+            microbit_more.catch_event_on("none", 0)
+            microbit_more.catch_event_on("pulse", 16)
+            microbit_more.catch_event_on("edge", x)
+
+            microbit_more.when_catch_at_pin("low pulse", 0) do
             end
 
-            mbit_more.get_pin_event_timestamp(0, 5)
+            microbit_more.when_catch_at_pin("high pulse", 16) do
+            end
 
-            mbit_more.get_shared_data("0")
+            microbit_more.when_catch_at_pin("fall", x) do
+            end
 
-            mbit_more.set_shared_data("0", 0)
+            microbit_more.when_catch_at_pin("rise", y) do
+            end
 
-            mbit_more.get_shared_data("1")
+            microbit_more.timestamp_of("low pulse", 0)
 
-            mbit_more.get_shared_data("2")
+            microbit_more.timestamp_of("rise", 16)
 
-            mbit_more.get_shared_data("3")
+            microbit_more.timestamp_of("rise", x)
+
+            microbit_more.shared_data[0]
+
+            microbit_more.shared_data[1]
+
+            microbit_more.shared_data[2]
+
+            microbit_more.shared_data[3]
+
+            microbit_more.shared_data[x]
+
+            microbit_more.shared_data[0] = 0
+            microbit_more.shared_data[3] = x
+
+            microbit_more.when_microbit("connected") do
+            end
+
+            microbit_more.when_microbit("disconnected") do
+            end
         `;
         await expectInterconvertBetweenCodeAndRuby(code);
     });

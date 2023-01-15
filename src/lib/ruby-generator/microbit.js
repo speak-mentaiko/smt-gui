@@ -23,8 +23,10 @@ export default function (Generator) {
 
     Generator.microbit_displaySymbol = function (block) {
         let matrix = Generator.valueToCode(block, 'MATRIX', Generator.ORDER_NONE) || null;
-        matrix = Generator.prefixLines(matrix, Generator.INDENT);
-        return `microbit.display(\n${matrix}\n)\n`;
+        if (matrix.indexOf('\n') >= 0) {
+            matrix = `\n${Generator.prefixLines(matrix, Generator.INDENT)}\n`;
+        }
+        return `microbit.display(${matrix})\n`;
     };
 
     Generator.microbit_displayText = function (block) {

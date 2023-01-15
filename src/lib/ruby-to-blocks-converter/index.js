@@ -31,6 +31,7 @@ import BoostConverter from './boost';
 import TranslateConverter from './translate';
 import MakeyMakeyConverter from './makeymakey';
 import VideoConverter from './video';
+import Text2SpeechConverter from './text2speech';
 
 const messages = defineMessages({
     couldNotConvertPremitive: {
@@ -84,9 +85,7 @@ class RubyToBlocksConverter {
         this._converters = [
             MusicConverter,
             PenConverter,
-            MicroBitMoreConverter,
             EV3Converter,
-            Wedo2Converter,
             GdxForConverter,
             MeshConverter,
             SmalrubotS1Converter,
@@ -110,7 +109,10 @@ class RubyToBlocksConverter {
             EventConverter,
             ControlConverter,
             MicroBitConverter,
-            VideoConverter
+            VideoConverter,
+            Text2SpeechConverter,
+            Wedo2Converter,
+            MicroBitMoreConverter
         ].forEach(x => x.register(this));
     }
 
@@ -516,6 +518,10 @@ class RubyToBlocksConverter {
         return value && value.type === 'const';
     }
 
+    isBlock (block) {
+        return this._isBlock(block);
+    }
+
     _isBlock (block) {
         try {
             return block.hasOwnProperty('opcode');
@@ -645,6 +651,10 @@ class RubyToBlocksConverter {
             },
             shadow: true
         });
+    }
+
+    createTextBlock (value) {
+        return this._createTextBlock(value);
     }
 
     _createTextBlock (value) {
