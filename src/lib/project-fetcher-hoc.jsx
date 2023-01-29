@@ -83,7 +83,7 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                         method: 'GET',
                         uri: `https://api.smalruby.app/scratch-api-proxy/projects/${projectId}`,
                         json: true
-                    }
+                    };
                     xhr(options, (error, response) => {
                         if (error || response.statusCode !== 200) {
                             return reject(new Error(response.status));
