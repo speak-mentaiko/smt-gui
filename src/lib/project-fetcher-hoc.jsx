@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {intlShape, injectIntl} from 'react-intl';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
+import xhr from 'xhr';
 
 import {setProjectUnchanged} from '../reducers/project-changed';
 import {
@@ -72,6 +73,41 @@ const ProjectFetcherHOC = function (WrappedComponent) {
             }
         }
         fetchProject (projectId, loadingState) {
+            if (!this.props.projectToken) {
+                const errorHandler = err => {
+                    this.props.onError(err);
+                    log.error(err);
+                };
+                return new Promise((resolve, reject) => {
+                    const options = {
+                        method: 'GET',
+                        uri: `https://api.smalruby.app/scratch-api-proxy/projects/${projectId}`,
+                        json: true
+                    }
+                    xhr(options, (error, response) => {
+                        if (error || response.statusCode !== 200) {
+                            return reject(new Error(response.status));
+                        }
+                        resolve(response.body.project_token);
+                    });
+                })
+                    .then(projectToken => {
+                        storage.setProjectToken(projectToken);
+                        storage
+                            .load(storage.AssetType.Project, projectId, storage.DataFormat.JSON)
+                            .then(projectAsset => {
+                                if (projectAsset) {
+                                    this.props.onFetchedProjectData(projectAsset.data, loadingState);
+                                } else {
+                                    // Treat failure to load as an error
+                                    // Throw to be caught by catch later on
+                                    throw new Error('Could not find project');
+                                }
+                            })
+                            .catch(errorHandler);
+                    }, errorHandler)
+                    .catch(errorHandler);
+            }
             return storage
                 .load(storage.AssetType.Project, projectId, storage.DataFormat.JSON)
                 .then(projectAsset => {
