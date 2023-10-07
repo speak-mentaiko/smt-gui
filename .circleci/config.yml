@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   browser-tools: circleci/browser-tools@1.2.4
   commitlint: conventional-changelog/commitlint@1.0.0
-  node: circleci/node@5.0.2
+  node: circleci/node@5.1.0
 aliases:
   - &save_git_cache
     save_cache:
@@ -36,16 +36,18 @@ aliases:
     save_cache:
       paths:
         - node_modules
-      key: v3-npm-{{ checksum "package-lock.json" }}-1
+        - src/generated
+        - static/microbit
+      key: v4-npm-{{ checksum "package-lock.json" }}
   - &restore_npm_cache
     restore_cache:
       keys:
-        - v3-npm-{{ checksum "package-lock.json" }}-1
-        - v3-npm-
+        - v4-npm-{{ checksum "package-lock.json" }}
+        - v4-npm-
   - &defaults
     docker:
       # TODO: fix scratch-audio and change this to `cimg/node:lts-browsers`
-      - image: cimg/node:14.20-browsers
+      - image: cimg/node:14.21-browsers
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
@@ -75,7 +77,7 @@ jobs:
           name: Unit
           environment:
             JEST_JUNIT_OUTPUT_NAME: unit-results.xml
-          command: npm run test:unit -- --reporters="default" --reporters="jest-junit" --coverage --coverageReporters=text --coverageReporters=lcov --maxWorkers="4"
+          command: npm run test:unit -- --reporters="default" --reporters="jest-junit" --coverage --coverageReporters=text --coverageReporters=lcov --maxWorkers="2"
       - run:
           name: Build
           environment:
@@ -93,6 +95,7 @@ jobs:
           path: coverage
       - store_test_results:
           path: test-results
+      - run: npx --no -- semantic-release --dry-run
   setup:
     <<: *defaults
     environment:
@@ -185,22 +188,6 @@ jobs:
       - store_test_results:
           path: test-results
 
-  deploy-npm:
-    <<: *defaults
-    steps:
-      - *restore_git_cache
-      - checkout
-      - *restore_npm_cache
-      - *restore_dist_cache
-      - run:
-          name: adjust config for hotfix if necessary
-          command: |
-            # double brackets are important for matching the wildcard
-            if [[ "$CIRCLE_BRANCH" == hotfix/* ]]; then
-              sed -e "s|hotfix/REPLACE|${CIRCLE_BRANCH}|" --in-place release.config.js
-            fi
-      - run: npx semantic-release
-
   deploy-gh-pages:
     <<: *defaults
     steps:
@@ -225,8 +212,8 @@ workflows:
               ignore:
                 - master
                 - develop
+                - beta
                 - /^hotfix\/.*/
-
   build-test-no-deploy:
     jobs:
       - build-test-no-cache:
@@ -237,6 +224,7 @@ workflows:
               ignore:
                 - master
                 - develop
+                - beta
                 - /^hotfix\/.*/
   build-test-deploy:
     jobs:
@@ -248,6 +236,7 @@ workflows:
               only:
                 - master
                 - develop
+                - beta
                 - /^hotfix\/.*/
       - lint:
           context:
@@ -279,6 +268,7 @@ workflows:
               only:
                 - master
                 - develop
+                - beta
                 - /^hotfix\/.*/
       - store_dist:
           context:
@@ -290,6 +280,7 @@ workflows:
               only:
                 - master
                 - develop
+                - beta
                 - /^hotfix\/.*/
       - deploy-gh-pages:
           context:

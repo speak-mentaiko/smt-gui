@@ -53,9 +53,9 @@ class SeleniumHelper {
             reportedValue: '*[@class="blocklyDropDownContent"]',
             soundsTab: "*[@id='react-tabs-5']",
             spriteTile: '*[starts-with(@class,"react-contextmenu-wrapper")]',
+            menuBar: '*[contains(@class,"menu-bar_menu-bar_")]',
             monitors: '*[starts-with(@class,"stage_monitor-wrapper")]',
-            contextMenu: '*[starts-with(@class,"react-contextmenu")]',
-            spriteItems: '*[starts-with(@class,"sprite-selector_items-wrapper")]'
+            contextMenu: '*[starts-with(@class,"react-contextmenu")]'
         };
     }
 

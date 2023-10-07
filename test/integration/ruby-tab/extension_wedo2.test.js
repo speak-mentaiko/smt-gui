@@ -1,6 +1,7 @@
 import dedent from 'dedent';
 import SeleniumHelper from '../../helpers/selenium-helper';
 import RubyHelper from '../../helpers/ruby-helper';
+import {EDIT_MENU_XPATH} from '../../helpers/menu-xpaths';
 
 const seleniumHelper = new SeleniumHelper();
 const {
@@ -113,10 +114,7 @@ describe('Ruby Tab: LEGO Education WeDo 2.0 extension blocks', () => {
         await clickText('Ruby', '*[@role="tab"]');
         await fillInRubyProgram(beforeRuby);
         await clickText('Code', '*[@role="tab"]');
-        await clickXpath(
-            '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
-                '/*/span[text()="Edit"]'
-        );
+        await clickXpath(EDIT_MENU_XPATH);
         await clickText('Generate Ruby from Code');
         await clickText('Ruby', '*[@role="tab"]');
         expect(await currentRubyProgram()).toEqual(`${afterRuby}\n`);
