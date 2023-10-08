@@ -48,6 +48,7 @@ describe('ProjectFetcherHOC', () => {
         );
         mounted.setProps({
             reduxProjectId: '100',
+            projectToken: '12345',
             isFetchingWithId: true,
             loadingState: LoadingState.FETCHING_WITH_ID
         });
