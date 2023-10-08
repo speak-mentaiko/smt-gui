@@ -1,6 +1,7 @@
 import dedent from 'dedent';
 import SeleniumHelper from '../../helpers/selenium-helper';
 import RubyHelper from '../../helpers/ruby-helper';
+import {EDIT_MENU_XPATH} from '../../helpers/menu-xpaths';
 
 const seleniumHelper = new SeleniumHelper();
 const {
@@ -33,61 +34,61 @@ describe('Ruby Tab: Events category blocks', () => {
         when_flag_clicked do
           bounce_if_on_edge
         end
-        
+
         when_key_pressed("space") do
           bounce_if_on_edge
         end
-        
+
         when_key_pressed("any") do
           bounce_if_on_edge
           move(10)
         end
-        
+
         when_key_pressed("a") do
         end
-        
+
         when_clicked do
           bounce_if_on_edge
         end
-        
+
         when_clicked do
           bounce_if_on_edge
           move(10)
         end
-        
+
         when_backdrop_switches("backdrop1") do
           bounce_if_on_edge
         end
-        
+
         when_backdrop_switches("backdrop1") do
           bounce_if_on_edge
           move(10)
         end
-        
+
         when_greater_than("loudness", 10) do
         end
-        
+
         when_greater_than("loudness", 10) do
           bounce_if_on_edge
         end
-        
+
         when_greater_than("timer", x) do
           bounce_if_on_edge
           move(10)
         end
-        
+
         when_receive("message1") do
         end
-        
+
         when_receive("message1") do
           bounce_if_on_edge
         end
-        
+
         when_receive("message1") do
           bounce_if_on_edge
           move(10)
         end
-        
+
         broadcast("message1")
         broadcast(x)
         broadcast_and_wait("message1")
@@ -98,61 +99,61 @@ describe('Ruby Tab: Events category blocks', () => {
         self.when(:flag_clicked) do
           bounce_if_on_edge
         end
-        
+
         self.when(:key_pressed, "space") do
           bounce_if_on_edge
         end
-        
+
         self.when(:key_pressed, "any") do
           bounce_if_on_edge
           move(10)
         end
-        
+
         self.when(:key_pressed, "a") do
         end
-        
+
         self.when(:clicked) do
           bounce_if_on_edge
         end
-        
+
         self.when(:clicked) do
           bounce_if_on_edge
           move(10)
         end
-        
+
         self.when(:backdrop_switches, "backdrop1") do
           bounce_if_on_edge
         end
-        
+
         self.when(:backdrop_switches, "backdrop1") do
           bounce_if_on_edge
           move(10)
         end
-        
+
         self.when(:greater_than, "loudness", 10) do
         end
-        
+
         self.when(:greater_than, "loudness", 10) do
           bounce_if_on_edge
         end
-        
+
         self.when(:greater_than, "timer", x) do
           bounce_if_on_edge
           move(10)
         end
-        
+
         self.when(:receive, "message1") do
         end
-        
+
         self.when(:receive, "message1") do
           bounce_if_on_edge
         end
-        
+
         self.when(:receive, "message1") do
           bounce_if_on_edge
           move(10)
         end
-        
+
         broadcast("message1")
         broadcast(x)
         broadcast_and_wait("message1")
@@ -171,10 +172,7 @@ describe('Ruby Tab: Events category blocks', () => {
             await clickText('Ruby', '*[@role="tab"]');
             await fillInRubyProgram(eventsOldRuby);
             await clickText('Code', '*[@role="tab"]');
-            await clickXpath(
-                '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
-                    '/*/span[text()="Edit"]'
-            );
+            await clickXpath(EDIT_MENU_XPATH);
             await clickText('Generate Ruby from Code');
             await clickText('Ruby', '*[@role="tab"]');
             expect(await currentRubyProgram()).toEqual(`${eventsRuby}\n`);
@@ -196,10 +194,7 @@ describe('Ruby Tab: Events category blocks', () => {
             await clickText('Ruby', '*[@role="tab"]');
             await fillInRubyProgram(eventsOldRuby);
             await clickText('Code', '*[@role="tab"]');
-            await clickXpath(
-                '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
-                    '/*/span[text()="Edit"]'
-            );
+            await clickXpath(EDIT_MENU_XPATH);
             await clickText('Generate Ruby from Code');
             await clickText('Ruby', '*[@role="tab"]');
             expect(await currentRubyProgram()).toEqual(`${eventsRuby}\n`);

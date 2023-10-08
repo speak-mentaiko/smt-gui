@@ -1,6 +1,7 @@
 import path from 'path';
 import SeleniumHelper from '../helpers/selenium-helper';
 import RubyHelper from '../helpers/ruby-helper';
+import {FILE_MENU_XPATH, EDIT_MENU_XPATH} from '../helpers/menu-xpaths';
 
 const seleniumHelper = new SeleniumHelper();
 const {
@@ -45,10 +46,7 @@ describe('convert Code from Ruby', () => {
 
         await clickText('Code', '*[@role="tab"]');
 
-        await clickXpath(
-            '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
-                '/*/span[text()="Edit"]'
-        );
+        await clickXpath(EDIT_MENU_XPATH);
         await clickText('Generate Ruby from Code');
 
         await clickText('Ruby', '*[@role="tab"]');
@@ -93,10 +91,7 @@ describe('convert Code from Ruby', () => {
         });
 
         test('clicked "Download to your computer" menu', async () => {
-            await clickXpath(
-                '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
-                    '/span[text()="File"]'
-            );
+            await clickXpath(FILE_MENU_XPATH);
             await clickText('Save to your computer');
 
             await findByXpath(
@@ -140,10 +135,7 @@ describe('convert Code from Ruby', () => {
             );
             await clickXpath('//div[contains(@class, "alert_alert-close-button")]');
 
-            await clickXpath(
-                '//div[contains(@class, "menu-bar_menu-bar-item") and contains(@class, "menu-bar_hoverable")]' +
-                    '/*/span[text()="Edit"]'
-            );
+            await clickXpath(EDIT_MENU_XPATH);
             await clickText('Generate Ruby from Code');
 
             expect(await currentRubyProgram()).toEqual('move(10)\n');

@@ -1,4 +1,4 @@
-const eslintrc = require('../.eslintrc.js')
+const eslintrc = require('../.eslintrc.js');
 
 Object.assign(eslintrc.rules, {
     'max-len': [0],
