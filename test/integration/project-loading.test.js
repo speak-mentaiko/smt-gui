@@ -9,6 +9,7 @@ const {
     getDriver,
     getLogs,
     loadUri,
+    notExistsByXpath,
     scope
 } = new SeleniumHelper();
 
@@ -79,28 +80,31 @@ describe('Loading scratch gui', () => {
             await expect(logs).toEqual([]);
         });
 
-        // skipping because this test fails frequently on CI; might need "wait(until.elementLocated" or similar
-        // error message is "stale element reference: element is not attached to the page document"
-        test.skip('Creating new project resets active tab to Code tab', async () => {
+        test('Creating new project resets active tab to Code tab', async () => {
             await loadUri(uri);
+            await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
             await findByXpath('//*[span[text()="Costumes"]]');
             await clickText('Costumes');
             await clickXpath(FILE_MENU_XPATH);
             await clickXpath('//li[span[text()="New"]]');
+            await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
             await findByXpath('//div[@class="scratchCategoryMenu"]');
             await clickText('Operators', scope.blocksTab);
         });
 
         test('Not logged in->made no changes to project->create new project should not show alert', async () => {
             await loadUri(uri);
+            await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
             await clickXpath(FILE_MENU_XPATH);
             await clickXpath('//li[span[text()="New"]]');
+            await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
             await findByXpath('//*[div[@class="scratchCategoryMenu"]]');
             await clickText('Operators', scope.blocksTab);
         });
 
-        test.skip('Not logged in->made a change to project->create new project should show alert', async () => {
+        test('Not logged in->made a change to project->create new project should show alert', async () => {
             await loadUri(uri);
+            await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
             await clickText('Sounds');
             await clickXpath('//button[@aria-label="Choose a Sound"]');
             await clickText('A Bass', scope.modal); // Should close the modal
@@ -110,6 +114,7 @@ describe('Loading scratch gui', () => {
             driver.switchTo()
                 .alert()
                 .accept();
+            await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
             await findByXpath('//*[div[@class="scratchCategoryMenu"]]');
             await clickText('Operators', scope.blocksTab);
         });
