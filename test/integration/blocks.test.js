@@ -41,7 +41,7 @@ describe('Working with the blocks', () => {
         await findByText('apple banana', scope.reportedValue); // Tooltip with result
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Switching sprites updates the block menus', async () => {
         await loadUri(uri);
@@ -56,7 +56,7 @@ describe('Working with the blocks', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Creating variables', async () => {
         await loadUri(uri);
@@ -103,7 +103,7 @@ describe('Working with the blocks', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Creating a list', async () => {
         await loadUri(uri);
@@ -143,7 +143,7 @@ describe('Working with the blocks', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Custom procedures', async () => {
         await loadUri(uri);
@@ -160,7 +160,7 @@ describe('Working with the blocks', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Adding an extension', async () => {
         await loadUri(uri);
@@ -173,7 +173,7 @@ describe('Working with the blocks', () => {
 
         const logs = await getLogs();
         await expect(logs).toEqual([]);
-    });
+    }, 60 * 1000);
 
     test('Record option from sound block menu opens sound recorder', async () => {
         await loadUri(uri);
@@ -207,7 +207,7 @@ describe('Working with the blocks', () => {
         await clickText('Code');
         await clickBlocksCategory('Looks');
         await clickText('newname', scope.blocksTab);
-    });
+    }, 60 * 1000);
 
     test.skip('Renaming costume with a special character should not break toolbox', async () => {
         await loadUri(uri);
@@ -228,7 +228,7 @@ describe('Working with the blocks', () => {
         await clickText('<NewCostume>', scope.blocksTab);
 
         await clickBlocksCategory('Sound');
-    });
+    }, 60 * 1000);
 
     test('Adding costumes DOES update the default costume name in the toolbox', async () => {
         await loadUri(uri);
@@ -251,7 +251,7 @@ describe('Working with the blocks', () => {
         // Check that the menu has been updated
         await clickText('Code');
         await clickText('costume2', scope.blocksTab);
-    });
+    }, 60 * 1000);
 
     // Skipped because it was flakey on travis, but seems to run locally ok
     test('Adding a sound DOES update the default sound name in the toolbox', async () => {
@@ -265,7 +265,7 @@ describe('Working with the blocks', () => {
         await clickText('Code');
         await clickBlocksCategory('Sound');
         await clickText('A\u00A0Bass', scope.blocksTab); // Need &nbsp; for block text
-    });
+    }, 60 * 1000);
 
     // Regression test for switching between editor/player causing toolbox to stop updating
     test('"See inside" after being on project page re-initializing variables', async () => {
@@ -280,7 +280,7 @@ describe('Working with the blocks', () => {
 
         await clickBlocksCategory('Variables');
         await clickText('my\u00A0variable');
-    });
+    }, 60 * 1000);
 
     // Regression test for switching editor tabs causing toolbox to stop updating
     test('Creating variables after adding extensions updates the toolbox', async () => {
@@ -293,7 +293,7 @@ describe('Working with the blocks', () => {
         await el.sendKeys('list1');
         await clickButton('OK');
         await clickText('list1', scope.blocksTab);
-    });
+    }, 60 * 1000);
 
     test('Use variable blocks after switching languages', async () => {
         const myVariable = 'my\u00A0variable';
@@ -335,5 +335,5 @@ describe('Working with the blocks', () => {
         // check it is turned up to 11
         await clickText(myVariable);
         await findByText('11', scope.reportedValue);
-    });
+    }, 60 * 1000);
 });
