@@ -9,6 +9,7 @@ const {
     scope,
     getDriver,
     loadUri,
+    notExistsByXpath,
     urlFor
 } = seleniumHelper;
 
@@ -30,6 +31,7 @@ describe('Ruby Tab: Control category blocks', () => {
 
     test('Ruby -> Code -> Ruby', async () => {
         await loadUri(urlFor('/'));
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await clickXpath('//button[@aria-label="Choose a Sprite"]');
         await clickText('Abby', scope.modal);
         await clickText('Sprite1', scope.spriteItems);
