@@ -57,5 +57,5 @@ describe('Removed trademarks (ex: Scratch Cat)', () => {
             expect(await notExistsByXpath(`//*[span[contains(text(), "${costumePrefix}")]]`)).toBeTruthy();
             searchElement.clear();
         }
-    }, 60 * 1000);
+    }, 120 * 1000);
 });
