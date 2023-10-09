@@ -9,6 +9,7 @@ const {
     getDriver,
     getLogs,
     loadUri,
+    notExistsByXpath,
     rightClickText,
     scope
 } = new SeleniumHelper();
@@ -33,6 +34,7 @@ describe('Localization', () => {
 
     test('Switching languages', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
 
         // Add a sprite to make sure it stays when switching languages
         await clickXpath('//button[@aria-label="Choose a Sprite"]');
@@ -64,6 +66,7 @@ describe('Localization', () => {
     // Regression test for #4476, blocks in wrong language when loaded with locale
     test('Loading with locale shows correct blocks', async () => {
         await loadUri(`${uri}?locale=de`);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await clickText('Fühlen'); // Sensing category in German
         await new Promise(resolve => setTimeout(resolve, 1000)); // wait for blocks to scroll
         await clickText('Antwort'); // Find the "answer" block in German
@@ -74,6 +77,7 @@ describe('Localization', () => {
     // test for #5445
     test('Loading with locale shows correct translation for string length block parameter', async () => {
         await loadUri(`${uri}?locale=ja`);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await clickText('演算'); // Operators category in Japanese
         await new Promise(resolve => setTimeout(resolve, 1000)); // wait for blocks to scroll
         await clickText('の長さ', scope.blocksTab); // Click "length <apple>" block
@@ -85,6 +89,7 @@ describe('Localization', () => {
     // Regression test for ENA-142, monitor can lag behind language selection
     test('Monitor labels update on locale change', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await clickXpath(FILE_MENU_XPATH);
         await clickText('Load from your computer');
         const input = await findByXpath('//input[@accept=".sb,.sb2,.sb3"]');
