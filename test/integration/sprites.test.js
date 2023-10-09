@@ -10,6 +10,7 @@ const {
     getDriver,
     getLogs,
     loadUri,
+    notExistsByXpath,
     rightClickText,
     scope
 } = new SeleniumHelper();
@@ -29,6 +30,7 @@ describe('Working with sprites', () => {
 
     test('Adding a sprite through the library', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await clickText('Costumes');
         await clickXpath('//button[@aria-label="Choose a Sprite"]');
         await clickText('Apple', scope.modal); // Closes modal
@@ -51,6 +53,7 @@ describe('Working with sprites', () => {
 
     test('Adding a sprite by paint button', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -63,6 +66,7 @@ describe('Working with sprites', () => {
 
     test('Deleting only sprite does not crash', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for scroll animation
         await rightClickText('Sprite1', scope.spriteTile);
         await clickText('delete', scope.spriteTile);
@@ -74,6 +78,7 @@ describe('Working with sprites', () => {
 
     test('Deleting by x button on sprite tile', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for scroll animation
         await clickXpath('//*[@aria-label="Delete"]'); // Only visible close button is on the sprite
         // Confirm that the stage has been switched to
@@ -84,6 +89,7 @@ describe('Working with sprites', () => {
 
     test('Adding a sprite by uploading a png', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -99,6 +105,7 @@ describe('Working with sprites', () => {
     // Enable when this is fixed issues/3608
     test('Adding a sprite by uploading an svg (gh-3608)', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -117,6 +124,7 @@ describe('Working with sprites', () => {
 
     test('Adding a sprite by uploading a gif', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -139,6 +147,7 @@ describe('Working with sprites', () => {
 
     test('Adding a letter sprite through the Letters filter in the library', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await driver.manage()
             .window()
             .setSize(1244, 768); // Letters filter not visible at 1024 width
@@ -154,6 +163,7 @@ describe('Working with sprites', () => {
     test('Use browser back button to close library', async () => {
         await driver.get('https://www.google.com');
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         await clickText('Costumes');
         await clickXpath('//button[@aria-label="Choose a Sprite"]');
         const abbyElement = await findByText('Abby'); // Should show editor for new costume
@@ -178,6 +188,7 @@ describe('Working with sprites', () => {
             path.resolve(__dirname, '../fixtures/100-100.svg')
         ];
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -194,6 +205,7 @@ describe('Working with sprites', () => {
 
     test('Load a sprite3 with a missing svg costume', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -207,6 +219,7 @@ describe('Working with sprites', () => {
 
     test('Load a sprite3 with a currupt svg costume', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -220,6 +233,7 @@ describe('Working with sprites', () => {
 
     test('Load a scratch3 corrupt svg as a sprite', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -233,6 +247,7 @@ describe('Working with sprites', () => {
 
     test('Load a sprite2 with a missing svg costume', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -246,6 +261,7 @@ describe('Working with sprites', () => {
 
     test('Load a sprite2 with a currupt svg costume', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -259,6 +275,7 @@ describe('Working with sprites', () => {
 
     test('Load a corrupt scratch2 svg as a sprite', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -272,6 +289,7 @@ describe('Working with sprites', () => {
 
     test('Load a sprite3 with a missing bmp costume', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
@@ -285,6 +303,7 @@ describe('Working with sprites', () => {
 
     test('Load a sprite3 with a currupt bmp costume', async () => {
         await loadUri(uri);
+        await notExistsByXpath('//*[div[contains(@class, "loader_background")]]');
         const el = await findByXpath('//button[@aria-label="Choose a Sprite"]');
         await driver.actions().mouseMove(el)
             .perform();
