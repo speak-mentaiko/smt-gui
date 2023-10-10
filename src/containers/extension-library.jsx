@@ -25,6 +25,17 @@ const messages = defineMessages({
 class ExtensionLibrary extends React.PureComponent {
     constructor (props) {
         super(props);
+        extensionLibraryContent.forEach(extension => {
+            if (extension.setFormatMessage) {
+                extension.setFormatMessage(this.props.intl.formatMessage);
+            }
+            if (extension.translationMap) {
+                Object.assign(
+                    this.props.intl.messages,
+                    extension.translationMap[this.props.intl.locale]
+                );
+            }
+        });
         bindAll(this, [
             'handleItemSelect'
         ]);
