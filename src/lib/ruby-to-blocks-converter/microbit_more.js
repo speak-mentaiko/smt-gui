@@ -45,23 +45,6 @@ const GestureMenu = {
 const GestureMenuLower = Object.entries(GestureMenu).map(x => x[1].toLowerCase());
 const GestureMenuValue = Object.entries(GestureMenu).map(x => x[0]);
 
-const ButtonsMenu = [
-    'A',
-    'B',
-    'any'
-];
-const ButtonsMenuLower = ButtonsMenu.map(x => x.toLowerCase());
-
-const TiltDirectionAnyMenu = [
-    'front',
-    'back',
-    'left',
-    'right',
-    'any'
-];
-
-const TiltDirectionMenu = TiltDirectionAnyMenu.slice(0, 4);
-
 const AnalogIn = [0, 1, 2];
 const AnalogInPin = AnalogIn.map(x => `p${x}`);
 const Gpio = [
@@ -108,26 +91,6 @@ const PinEventMenu = {
 };
 const PinEventMenuLower = Object.entries(PinEventMenu).map(x => x[1]);
 const PinEventMenuValue = Object.keys(PinEventMenu);
-
-const EventType = {
-    none: 0,
-    pulse: 2,
-    edge: 1
-};
-const EventTypeMenu = Object.keys(EventType);
-
-const EventMenu = [
-    'rise',
-    'fall',
-    'high pulse',
-    'low pulse'
-];
-const Event = [
-    2,
-    3,
-    4,
-    5
-];
 
 const ConnectionStateMenu = [
     'connected',
@@ -453,7 +416,8 @@ const MicrobitMoreConverter = {
 
             const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setDigitalOut', 'statement');
             converter.addField(block, 'PIN', args[0]);
-            converter.addFieldInput(block, 'LEVEL', 'microbitMore_menu_digitalValueMenu', 'digitalValueMenu', args[1], 'false');
+            converter.addFieldInput(block, 'LEVEL', 'microbitMore_menu_digitalValueMenu', 'digitalValueMenu',
+                args[1], 'false');
             return block;
         });
 
