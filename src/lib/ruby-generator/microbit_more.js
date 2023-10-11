@@ -1,5 +1,5 @@
 /**
- * Define Ruby code generator for micro:bit MORE Blocks
+ * Define Ruby code generator for Microbit More Blocks
  * @param {RubyGenerator} Generator The RubyGenerator
  * @return {RubyGenerator} same as param.
  */
