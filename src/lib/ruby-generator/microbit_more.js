@@ -22,11 +22,17 @@ export default function (Generator) {
         return [`microbit_more.button_pressed?(${name})`, Generator.ORDER_FUNCTION_CALL];
     };
 
+    const TouchEventLabel = {
+        DOWN: 'touched',
+        UP: 'released',
+        CLICK: 'tapped'
+    };
     Generator.microbitMore_whenTouchEvent = function (block) {
         block.isStatement = true;
         const name = Generator.quote_(Generator.getFieldValue(block, 'NAME', 'LOGO'));
-        const event = Generator.quote_(Generator.getFieldValue(block, 'EVENT', 'touched').toLowerCase());
-        return `microbit_more.when_pin_is(${name}, ${event}) do\n`;
+        const event = Generator.getFieldValue(block, 'EVENT', 'DOWN');
+        const eventLabel = Generator.quote_(TouchEventLabel[event]);
+        return `microbit_more.when_pin_is(${name}, ${eventLabel}) do\n`;
     };
 
     Generator.microbitMore_isPinTouched = function (block) {
