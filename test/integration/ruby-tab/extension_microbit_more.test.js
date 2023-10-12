@@ -16,7 +16,7 @@ const {
 
 let driver;
 
-describe('Ruby Tab: Microbit More v2-0.2.5 extension blocks', () => {
+describe('Ruby Tab: Microbit More v2 extension blocks', () => {
     beforeAll(() => {
         driver = getDriver();
     });
