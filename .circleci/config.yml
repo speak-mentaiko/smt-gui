@@ -315,6 +315,7 @@ workflows:
             branches:
               only:
                 - beta
+                - /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - build:
           context:
             - dockerhub-credentials
@@ -329,6 +330,7 @@ workflows:
             branches:
               only:
                 - beta
+                - /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - store_dist:
           context:
             - dockerhub-credentials
@@ -338,6 +340,7 @@ workflows:
             branches:
               only:
                 - beta
+                - /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - deploy-gh-pages-branch:
           context:
             - dockerhub-credentials
