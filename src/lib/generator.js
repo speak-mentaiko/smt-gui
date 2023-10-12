@@ -582,8 +582,9 @@ class Generator {
         return this.getField(block, name).id;
     }
 
-    getFieldValue (block, name) {
-        return this.getField(block, name).value;
+    getFieldValue (block, name, defaultValue = null) {
+        const field = this.getField(block, name);
+        return field ? field.value : defaultValue;
     }
 
     isConnectedValue (block) {

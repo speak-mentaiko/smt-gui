@@ -11,6 +11,7 @@ module.exports = {
             terms: ['todo'],
             location: 'start'
         }],
+        'jest/no-disabled-tests': 0,
         'jest/valid-describe': 0
     }
 };

@@ -1,37 +1,58 @@
 import Primitive from './primitive';
 
-const MicroBitMore = 'microbit_more';
-const SharedData = 'microbit_more.shared_data';
+const MicrobitMore = 'microbit_more';
+const MicrobitMoreData = 'microbit_more.data';
 
-const ButtonsMenu = [
+const ButtonIDMenu = [
     'A',
-    'B',
-    'any'
+    'B'
 ];
-const ButtonsMenuLower = ButtonsMenu.map(x => x.toLowerCase());
+const ButtonIDMenuLower = ButtonIDMenu.map(x => x.toLowerCase());
 
-const GesturesMenu = [
-    'moved',
-    'shaken',
-    'jumped'
-];
-
-const TiltDirectionAnyMenu = [
-    'front',
-    'back',
-    'left',
-    'right',
-    'any'
+const ButtonEventMenu = [
+    'down',
+    'up',
+    'click'
 ];
 
-const TiltDirectionMenu = TiltDirectionAnyMenu.slice(0, 4);
+const TouchIDMenu = [
+    'LOGO',
+    'P0',
+    'P1',
+    'P2'
+];
+const TouchIDMenuLower = TouchIDMenu.map(x => x.toLowerCase());
+
+const TouchEventMenu = {
+    touched: 'DOWN',
+    released: 'UP',
+    tapped: 'CLICK'
+};
+
+const GestureMenu = {
+    TILT_UP: 'tilt up',
+    TILT_DOWN: 'tilt down',
+    TILT_LEFT: 'tilt left',
+    TILT_RIGHT: 'tilt right',
+    FACE_UP: 'face up',
+    FACE_DOWN: 'face down',
+    FREEFALL: 'freefall',
+    G3: '3G',
+    G6: '6G',
+    G8: '8G',
+    SHAKE: 'shake'
+};
+const GestureMenuLower = Object.entries(GestureMenu).map(x => x[1].toLowerCase());
+const GestureMenuValue = Object.entries(GestureMenu).map(x => x[0]);
 
 const AnalogIn = [0, 1, 2];
+const AnalogInPin = AnalogIn.map(x => `p${x}`);
 const Gpio = [
     0, 1, 2,
     8,
     13, 14, 15, 16
 ];
+const GpioPin = Gpio.map(x => `p${x}`);
 
 const AccelerationMenu = [
     'x',
@@ -40,32 +61,36 @@ const AccelerationMenu = [
     'absolute'
 ];
 
-const PinMode = {
-    none: 'pullNone',
-    up: 'pullUp',
-    down: 'pullDown'
-};
-const PinModeMenu = Object.keys(PinMode);
-
-const EventType = {
-    none: 0,
-    pulse: 2,
-    edge: 1
-};
-const EventTypeMenu = Object.keys(EventType);
-
-const EventMenu = [
-    'rise',
-    'fall',
-    'high pulse',
-    'low pulse'
+const PinModeMenu = [
+    'NONE',
+    'UP',
+    'DOWN'
 ];
-const Event = [
-    2,
-    3,
-    4,
-    5
-];
+const PinModeMenuLower = PinModeMenu.map(x => x.toLowerCase());
+
+const DigitalValueMenu = {
+    high: 'true',
+    low: 'false'
+};
+const DigitalValueMenuLower = Object.keys(DigitalValueMenu);
+const DigitalValueMenuValue = Object.entries(DigitalValueMenu).map(x => x[1]);
+
+const PinEventTypeMenu = {
+    none: 'NONE',
+    pulse: 'ON_PULSE',
+    edge: 'ON_EDGE'
+};
+const PinEventTypeMenuLower = Object.keys(PinEventTypeMenu);
+const PinEventTypeMenuValue = Object.entries(PinEventTypeMenu).map(x => x[1]);
+
+const PinEventMenu = {
+    PULSE_LOW: 'low pulse',
+    PULSE_HIGH: 'high pulse',
+    FALL: 'fall',
+    RISE: 'rise'
+};
+const PinEventMenuLower = Object.entries(PinEventMenu).map(x => x[1]);
+const PinEventMenuValue = Object.keys(PinEventMenu);
 
 const ConnectionStateMenu = [
     'connected',
@@ -73,403 +98,17 @@ const ConnectionStateMenu = [
 ];
 
 /**
- * MicroBitMore converter
+ * MicrobitMore converter
  */
-const MicroBitMoreConverter = {
+const MicrobitMoreConverter = {
     register: function (converter) {
-        converter.registerCallMethod('self', MicroBitMore, 0, params => {
+        converter.registerCallMethod('self', MicrobitMore, 0, params => {
             const {node} = params;
 
-            return converter.createRubyExpressionBlock(MicroBitMore, node);
+            return converter.createRubyExpressionBlock(MicrobitMore, node);
         });
 
-        converter.registerCallMethodWithBlock(MicroBitMore, 'when_button_pressed', 1, 0, params => {
-            const {receiver, args, rubyBlock} = params;
-
-            if (!converter.isStringOrBlock(args[0])) return null;
-            if (converter.isString(args[0])) {
-                const index = ButtonsMenuLower.indexOf(args[0].toString().toLowerCase());
-                if (index < 0) return null;
-
-                args[0] = new Primitive('str', ButtonsMenu[index], args[0].node);
-            }
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenButtonPressed', 'hat');
-            converter.addFieldInput(block, 'BTN', 'microbitMore_menu_buttons', 'buttons', args[0], 'A');
-            converter.setParent(rubyBlock, block);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'button_pressed?', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isStringOrBlock(args[0])) return null;
-            if (converter.isString(args[0])) {
-                const index = ButtonsMenuLower.indexOf(args[0].toString().toLowerCase());
-                if (index < 0) return null;
-
-                args[0] = new Primitive('str', ButtonsMenu[index], args[0].node);
-            }
-
-            const block =
-                  converter.changeRubyExpressionBlock(receiver, 'microbitMore_isButtonPressed', 'value_boolean');
-            converter.addFieldInput(block, 'BTN', 'microbitMore_menu_buttons', 'buttons', args[0], 'A');
-            return block;
-        });
-
-        converter.registerCallMethodWithBlock(MicroBitMore, 'when', 1, 0, params => {
-            const {receiver, args, rubyBlock} = params;
-
-            if (!converter.isStringOrBlock(args[0])) return null;
-            if (converter.isString(args[0])) {
-                const index = GesturesMenu.indexOf(args[0].toString().toLowerCase());
-                if (index < 0) return null;
-
-                args[0] = new Primitive('str', GesturesMenu[index], args[0].node);
-            }
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenGesture', 'hat');
-            converter.addFieldInput(block, 'GESTURE', 'microbitMore_menu_gestures', 'gestures', args[0], 'moved');
-            converter.setParent(rubyBlock, block);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'display', 5, params => {
-            const {receiver, args} = params;
-
-            if (!args.every(x => converter.isString(x))) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_displaySymbol', 'statement');
-
-            let matrix = '';
-            for (const arg of args) {
-                matrix += arg;
-            }
-            matrix = matrix.replace(/[1-9]/g, '1').replace(/[^1-9]/g, '0');
-            converter.addFieldInput(block, 'MATRIX', 'matrix', 'MATRIX', matrix, null);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'display', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isBlock(args[0])) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_displaySymbol', 'statement');
-            converter.addFieldInput(block, 'MATRIX', 'matrix', 'MATRIX', args[0], '0101010101100010101000100');
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'display_text', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isStringOrBlock(args[0])) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_displayText', 'statement');
-            converter.addTextInput(block, 'TEXT', args[0], 'Hello!');
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'clear_display', 0, params => {
-            const {receiver} = params;
-
-            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_displayClear', 'statement');
-        });
-
-        converter.registerCallMethodWithBlock(MicroBitMore, 'when_tilted', 1, 0, params => {
-            const {receiver, args, rubyBlock} = params;
-
-            if (!converter.isStringOrBlock(args[0])) return null;
-            if (converter.isString(args[0])) {
-                const index = TiltDirectionAnyMenu.indexOf(args[0].toString().toLowerCase());
-                if (index < 0) return null;
-
-                args[0] = new Primitive('str', TiltDirectionAnyMenu[index], args[0].node);
-            }
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenTilted', 'hat');
-            converter.addFieldInput(
-                block, 'DIRECTION', 'microbitMore_menu_tiltDirectionAny', 'tiltDirectionAny', args[0], 'any'
-            );
-            converter.setParent(rubyBlock, block);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'tilted?', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isStringOrBlock(args[0])) return null;
-            if (converter.isString(args[0])) {
-                const index = TiltDirectionAnyMenu.indexOf(args[0].toString().toLowerCase());
-                if (index < 0) return null;
-
-                args[0] = new Primitive('str', TiltDirectionAnyMenu[index], args[0].node);
-            }
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_isTilted', 'value_boolean');
-            converter.addFieldInput(
-                block, 'DIRECTION', 'microbitMore_menu_tiltDirectionAny', 'tiltDirectionAny', args[0], 'any'
-            );
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'tilt_angle', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isStringOrBlock(args[0])) return null;
-            if (converter.isString(args[0])) {
-                const index = TiltDirectionMenu.indexOf(args[0].toString().toLowerCase());
-                if (index < 0) return null;
-
-                args[0] = new Primitive('str', TiltDirectionMenu[index], args[0].node);
-            }
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getTiltAngle', 'value');
-            converter.addFieldInput(
-                block, 'DIRECTION', 'microbitMore_menu_tiltDirection', 'tiltDirection', args[0], 'front'
-            );
-            return block;
-        });
-
-        converter.registerCallMethodWithBlock(MicroBitMore, 'when_pin_connected', 1, 0, params => {
-            const {receiver, args, rubyBlock} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && Gpio.indexOf(args[0].value) < 0) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenPinConnected', 'hat');
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[0], '0');
-            converter.setParent(rubyBlock, block);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'pin_connected?', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && Gpio.indexOf(args[0].value) < 0) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_isPinConnected', 'value_boolean');
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[0], '0');
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'light_intensity', 0, params => {
-            const {receiver} = params;
-
-            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getLightLevel', 'value');
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'temperature', 0, params => {
-            const {receiver} = params;
-
-            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getTemperature', 'value');
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'angle_with_the_north', 0, params => {
-            const {receiver} = params;
-
-            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getCompassHeading', 'value');
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'pitch', 0, params => {
-            const {receiver} = params;
-
-            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getPitch', 'value');
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'roll', 0, params => {
-            const {receiver} = params;
-
-            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getRoll', 'value');
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'magnetic_force', 0, params => {
-            const {receiver} = params;
-
-            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getMagneticForce', 'value');
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'acceleration', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isStringOrBlock(args[0])) return null;
-            if (converter.isString(args[0])) {
-                const index = AccelerationMenu.indexOf(args[0].toString().toLowerCase());
-                if (index < 0) return null;
-
-                args[0] = new Primitive('str', AccelerationMenu[index], args[0].node);
-            }
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getAcceleration', 'value');
-            converter.addFieldInput(block, 'AXIS', 'microbitMore_menu_axis', 'axis', args[0], 'x');
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'analog_value_of_pin', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && AnalogIn.indexOf(args[0].value) < 0) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getAnalogValue', 'value');
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_analogIn', 'analogIn', args[0], '0');
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'digital_value_of_pin', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && Gpio.indexOf(args[0].value) < 0) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getDigitalValue', 'value');
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[0], '0');
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'set_pin_to_input_pull', 2, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && AnalogIn.indexOf(args[0].value) < 0) return null;
-            if (!converter.isString(args[1])) return null;
-            const index = PinModeMenu.indexOf(args[1].toString().toLowerCase());
-            if (index < 0) return null;
-            args[1] = new Primitive('str', PinMode[PinModeMenu[index]], args[1].node);
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setPinMode', 'statement');
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_analogIn', 'analogIn', args[0], '0');
-            converter.addField(block, 'MODE', args[1]);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'set_digital', 2, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && Gpio.indexOf(args[0].value) < 0) return null;
-            if (!converter.isNumberOrBlock(args[1])) return null;
-            if (converter.isNumber(args[1]) && args[1].value !== 0 && args[1].value !== 1) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setOutput', 'statement');
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[0], '0');
-            converter.addFieldInput(block, 'LEVEL', 'microbitMore_menu_digitalValue', 'digitalValue', args[1], '0');
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'set_pwm', 2, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && Gpio.indexOf(args[0].value) < 0) return null;
-            if (!converter.isNumberOrBlock(args[1])) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setPWM', 'statement');
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[0], '0');
-            converter.addNumberInput(block, 'LEVEL', 'math_number', args[1], 0);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'set_servo', 2, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && Gpio.indexOf(args[0].value) < 0) return null;
-            if (!converter.isNumberOrBlock(args[1])) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setServo', 'statement');
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[0], '0');
-            converter.addNumberInput(block, 'ANGLE', 'math_number', args[1], 0);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'catch_event_on', 2, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isString(args[0])) return null;
-            const index = EventTypeMenu.indexOf(args[0].toString().toLowerCase());
-            if (index < 0) return null;
-            args[0] = new Primitive('int', EventType[EventTypeMenu[index]], args[0].node);
-            if (!converter.isNumberOrBlock(args[1])) return null;
-            if (converter.isNumber(args[1]) && Gpio.indexOf(args[1].value) < 0) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setPinEventType', 'statement');
-            converter.addField(block, 'EVENT_TYPE', args[0]);
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[1], '0');
-            return block;
-        });
-
-        converter.registerCallMethodWithBlock(MicroBitMore, 'when_catch_at_pin', 2, 0, params => {
-            const {receiver, args, rubyBlock} = params;
-
-            if (!converter.isString(args[0])) return null;
-            const index = EventMenu.indexOf(args[0].toString().toLowerCase());
-            if (index < 0) return null;
-            args[0] = new Primitive('int', Event[index], args[0].node);
-            if (!converter.isNumberOrBlock(args[1])) return null;
-            if (converter.isNumber(args[1]) && Gpio.indexOf(args[1].value) < 0) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenPinEvent', 'hat');
-            converter.addField(block, 'EVENT', args[0]);
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[1], '0');
-            converter.setParent(rubyBlock, block);
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'timestamp_of', 2, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isString(args[0])) return null;
-            const index = EventMenu.indexOf(args[0].toString().toLowerCase());
-            if (index < 0) return null;
-            args[0] = new Primitive('int', Event[index], args[0].node);
-            if (!converter.isNumberOrBlock(args[1])) return null;
-            if (converter.isNumber(args[1]) && Gpio.indexOf(args[1].value) < 0) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getPinEventTimestamp', 'value');
-            converter.addField(block, 'EVENT', args[0]);
-            converter.addFieldInput(block, 'PIN', 'microbitMore_menu_gpio', 'gpio', args[1], '0');
-            return block;
-        });
-
-        converter.registerCallMethod(MicroBitMore, 'shared_data', 0, params => {
-            const {receiver, node} = params;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'ruby_expression', 'value_boolean');
-            block.node = node;
-            converter.addInput(block, 'EXPRESSION', converter.createTextBlock(SharedData));
-            return block;
-        });
-
-        converter.registerCallMethod(SharedData, '[]', 1, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && (args[0].value < 0 || args[0].value > 3)) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getSharedData', 'value');
-            converter.addFieldInput(
-                block, 'INDEX', 'microbitMore_menu_sharedDataIndex', 'sharedDataIndex', args[0], '0'
-            );
-            return block;
-        });
-
-        converter.registerCallMethod(SharedData, '[]=', 2, params => {
-            const {receiver, args} = params;
-
-            if (!converter.isNumberOrBlock(args[0])) return null;
-            if (converter.isNumber(args[0]) && (args[0].value < 0 || args[0].value > 3)) return null;
-            if (!converter.isNumberOrBlock(args[1])) return null;
-
-            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setSharedData', 'statement');
-            converter.addFieldInput(
-                block, 'INDEX', 'microbitMore_menu_sharedDataIndex', 'sharedDataIndex', args[0], '0'
-            );
-            converter.addNumberInput(block, 'VALUE', 'math_number', args[1], 0);
-            return block;
-        });
-
-        converter.registerCallMethodWithBlock(MicroBitMore, 'when_microbit', 1, 0, params => {
+        converter.registerCallMethodWithBlock(MicrobitMore, 'when_microbit', 1, 0, params => {
             const {receiver, args, rubyBlock} = params;
 
             if (!converter.isString(args[0])) return null;
@@ -482,7 +121,487 @@ const MicroBitMoreConverter = {
             converter.setParent(rubyBlock, block);
             return block;
         });
+
+        converter.registerCallMethodWithBlock(MicrobitMore, 'when_button_is', 2, 0, params => {
+            const {receiver, args, rubyBlock} = params;
+
+            if (converter.isString(args[0])) {
+                const index = ButtonIDMenuLower.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', ButtonIDMenu[index], args[0].node);
+            } else {
+                return null;
+            }
+            if (converter.isString(args[1])) {
+                const index = ButtonEventMenu.indexOf(args[1].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[1] = new Primitive('str', ButtonEventMenu[index], args[1].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenButtonEvent', 'hat');
+            converter.addField(block, 'NAME', args[0]);
+            converter.addField(block, 'EVENT', args[1]);
+            converter.setParent(rubyBlock, block);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'button_pressed?', 1, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = ButtonIDMenuLower.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', ButtonIDMenu[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            const block =
+                  converter.changeRubyExpressionBlock(receiver, 'microbitMore_isButtonPressed', 'value_boolean');
+            converter.addField(block, 'NAME', args[0]);
+            return block;
+        });
+
+        converter.registerCallMethodWithBlock(MicrobitMore, 'when_pin_is', 2, 0, params => {
+            const {receiver, args, rubyBlock} = params;
+
+            if (converter.isString(args[0])) {
+                const index = TouchIDMenuLower.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', TouchIDMenu[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            if (converter.isString(args[1])) {
+                const event = TouchEventMenu[args[1].toString().toLowerCase()];
+                if (!event) return null;
+
+                args[1] = new Primitive('str', event, args[1].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenTouchEvent', 'hat');
+            converter.addField(block, 'NAME', args[0]);
+            converter.addField(block, 'EVENT', args[1]);
+            converter.setParent(rubyBlock, block);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'pin_is_touched?', 1, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = TouchIDMenuLower.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', TouchIDMenu[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            const block =
+                  converter.changeRubyExpressionBlock(receiver, 'microbitMore_isPinTouched', 'value_boolean');
+            converter.addField(block, 'NAME', args[0]);
+            return block;
+        });
+
+        converter.registerCallMethodWithBlock(MicrobitMore, 'when', 1, 0, params => {
+            const {receiver, args, rubyBlock} = params;
+
+            if (converter.isString(args[0])) {
+                const index = GestureMenuLower.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', GestureMenuValue[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenGesture', 'hat');
+            converter.addField(block, 'GESTURE', args[0]);
+            converter.setParent(rubyBlock, block);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'display_pattern', 5, params => {
+            const {receiver, args} = params;
+
+            if (!args.every(x => converter.isString(x))) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_displayMatrix', 'statement');
+
+            let matrix = '';
+            for (const arg of args) {
+                matrix += arg;
+            }
+            matrix = matrix.replace(/[1-9]/g, '1').replace(/[^1-9]/g, '0');
+            converter.addFieldInput(block, 'MATRIX', 'matrix', 'MATRIX', matrix, null);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'display_pattern', 1, params => {
+            const {receiver, args} = params;
+
+            if (!converter.isBlock(args[0])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_displayMatrix', 'statement');
+            converter.addFieldInput(block, 'MATRIX', 'matrix', 'MATRIX', args[0], '0101010101100010101000100');
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'display_text_delay', 2, params => {
+            const {receiver, args} = params;
+
+            if (!converter.isStringOrBlock(args[0])) return null;
+            if (!converter.isNumberOrBlock(args[1])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_displayText', 'statement');
+            converter.addTextInput(block, 'TEXT', args[0], 'Hello!');
+            converter.addNumberInput(block, 'DELAY', 'math_number', args[1], 120);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'clear_display', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_displayClear', 'statement');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'light_intensity', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getLightLevel', 'value');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'temperature', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getTemperature', 'value');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'angle_with_north', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getCompassHeading', 'value');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'pitch', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getPitch', 'value');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'roll', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getRoll', 'value');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'sound_level', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getSoundLevel', 'value');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'magnetic_force', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getMagneticForce', 'value');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'acceleration', 1, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = AccelerationMenu.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', AccelerationMenu[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getAcceleration', 'value');
+            converter.addField(block, 'AXIS', args[0]);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'analog_value', 1, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = AnalogInPin.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('int', AnalogIn[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getAnalogValue', 'value');
+            converter.addField(block, 'PIN', args[0]);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'set_pin_to_input_pull', 2, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = GpioPin.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('int', Gpio[index], args[0].node);
+            } else {
+                return null;
+            }
+            if (converter.isString(args[1])) {
+                const index = PinModeMenuLower.indexOf(args[1].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[1] = new Primitive('str', PinModeMenu[index], args[1].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setPullMode', 'statement');
+            converter.addField(block, 'PIN', args[0]);
+            converter.addField(block, 'MODE', args[1]);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'is_pin_high?', 1, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = GpioPin.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('int', Gpio[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_isPinHigh', 'value_boolean');
+            converter.addField(block, 'PIN', args[0]);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'set_digital', 2, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = GpioPin.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('int', Gpio[index], args[0].node);
+            } else {
+                return null;
+            }
+            if (converter.isString(args[1])) {
+                const index = DigitalValueMenuLower.indexOf(args[1].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[1] = new Primitive('str', DigitalValueMenuValue[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setDigitalOut', 'statement');
+            converter.addField(block, 'PIN', args[0]);
+            converter.addFieldInput(block, 'LEVEL', 'microbitMore_menu_digitalValueMenu', 'digitalValueMenu',
+                args[1], 'false');
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'set_analog', 2, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = GpioPin.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('int', Gpio[index], args[0].node);
+            } else {
+                return null;
+            }
+            if (!converter.isNumberOrBlock(args[1])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setAnalogOut', 'statement');
+            converter.addField(block, 'PIN', args[0]);
+            converter.addNumberInput(block, 'LEVEL', 'math_number', args[1], 0);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'set_servo', 2, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = GpioPin.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('int', Gpio[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            if (!converter.isNumberOrBlock(args[1])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_setServo', 'statement');
+            converter.addField(block, 'PIN', args[0]);
+            converter.addNumberInput(block, 'ANGLE', 'math_number', args[1], 0);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'play_tone', 2, params => {
+            const {receiver, args} = params;
+
+            if (!converter.isNumberOrBlock(args[0])) return null;
+            if (!converter.isNumberOrBlock(args[1])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_playTone', 'statement');
+            converter.addNumberInput(block, 'FREQ', 'math_number', args[0], 440);
+            converter.addNumberInput(block, 'VOL', 'math_number', args[1], 100);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'stop_tone', 0, params => {
+            const {receiver} = params;
+
+            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_stopTone', 'statement');
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'listen_event_on', 2, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = PinEventTypeMenuLower.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', PinEventTypeMenuValue[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            if (converter.isString(args[1])) {
+                const index = GpioPin.indexOf(args[1].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[1] = new Primitive('int', Gpio[index], args[1].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_listenPinEventType', 'statement');
+            converter.addField(block, 'EVENT_TYPE', args[0]);
+            converter.addField(block, 'PIN', args[1]);
+            return block;
+        });
+
+        converter.registerCallMethodWithBlock(MicrobitMore, 'when_catch_at_pin', 2, 0, params => {
+            const {receiver, args, rubyBlock} = params;
+
+            if (converter.isString(args[0])) {
+                const index = PinEventMenuLower.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', PinEventMenuValue[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            if (converter.isString(args[1])) {
+                const index = GpioPin.indexOf(args[1].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[1] = new Primitive('int', Gpio[index], args[1].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenPinEvent', 'hat');
+            converter.addField(block, 'EVENT', args[0]);
+            converter.addField(block, 'PIN', args[1], '0');
+            converter.setParent(rubyBlock, block);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'value_of', 2, params => {
+            const {receiver, args} = params;
+
+            if (converter.isString(args[0])) {
+                const index = PinEventMenuLower.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', PinEventMenuValue[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            if (converter.isString(args[1])) {
+                const index = GpioPin.indexOf(args[1].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[1] = new Primitive('int', Gpio[index], args[1].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getPinEventValue', 'value');
+            converter.addField(block, 'EVENT', args[0]);
+            converter.addField(block, 'PIN', args[1], '0');
+            return block;
+        });
+
+        converter.registerCallMethodWithBlock(MicrobitMore, 'when_data_received_from_microbit', 1, 0, params => {
+            const {receiver, args, rubyBlock} = params;
+
+            if (!converter.isStringOrBlock(args[0])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_whenDataReceived', 'hat');
+            converter.addTextInput(block, 'LABEL', args[0], 'label-01');
+            converter.setParent(rubyBlock, block);
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'data', 0, params => {
+            const {receiver, node} = params;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'ruby_expression', 'value_boolean');
+            block.node = node;
+            converter.addInput(block, 'EXPRESSION', converter.createTextBlock(MicrobitMoreData));
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMoreData, '[]', 1, params => {
+            const {receiver, args} = params;
+
+            if (!converter.isStringOrBlock(args[0])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getDataLabeled', 'value');
+            converter.addTextInput(block, 'LABEL', args[0], 'label-01');
+            return block;
+        });
+
+        converter.registerCallMethod(MicrobitMore, 'send_data_to_microbit', 2, params => {
+            const {receiver, args} = params;
+
+            if (!converter.isStringOrBlock(args[0])) return null;
+            if (!converter.isStringOrBlock(args[1])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_sendData', 'statement');
+            converter.addTextInput(block, 'LABEL', args[1], 'label-01');
+            converter.addTextInput(block, 'DATA', args[0], 'data');
+            return block;
+        });
     }
 };
 
-export default MicroBitMoreConverter;
+export default MicrobitMoreConverter;

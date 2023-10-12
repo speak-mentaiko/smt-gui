@@ -400,7 +400,7 @@ const extensions = [
 ];
 
 // Injected for extra extensions
-import microbitMore from './microbitMore/entry.jsx';
+import microbitMore from './microbitMore/index.jsx';
 extensions.push(microbitMore);
 
 export default extensions;
