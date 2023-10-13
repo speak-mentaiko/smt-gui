@@ -1,6 +1,6 @@
 {
   "name": "smalruby3-gui",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "GraphicaL User Interface for creating and running Smalruby 3.0 projects",
   "author": "Ruby Programming Shounendan",
   "license": "BSD-3-Clause",
