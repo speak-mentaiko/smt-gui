@@ -1,52 +1,72 @@
-/**
- * Define Ruby code completer for Control Blocks
- */
-class ControlCompleter {
+import BaseCompleter from './base-completer';
+
+class ControlCompleter extends BaseCompleter {
     getCompletions (editor, session, pos, prefix, callback) {
         const words = [
             {
+                caption: 'sleep',
                 value: 'sleep(1)',
-                meta: '一秒待つ'
+                description: '(1) 秒待つ'
             },
             {
-                value: '10.times do\nend',
-                meta: '10回繰り返す'
+                caption: 'times',
+                value: '10.times do\n\nend\n',
+                description: '(10) 回繰り返す'
             },
             {
-                value: 'loop do\nend',
-                meta: 'ずっと繰り返す'
+                caption: 'loop',
+                value: 'loop do\n\nend\n',
+                description: 'ずっと'
             },
             {
-                value: 'if false\nend',
-                meta: 'もし~なら'
+                caption: 'if',
+                value: 'if false\n\nend\n',
+                description: 'もし < > なら'
             },
             {
-                value: 'if false\nelse\nend',
-                meta: 'もし~なら　でなければ'
+                caption: 'if-else',
+                value: 'if false\n\nelse\n\nend\n',
+                description: 'もし < > なら、でなければ'
             },
             {
-                value: 'self.when(:start_as_a_clone) do\nend',
-                meta: 'クローンされたとき'
+                caption: 'wait-until',
+                value: 'wait until false',
+                description: '< > まで待つ'
             },
             {
-                value: 'create_clone("_myself_")',
-                meta: '自分自身のクローンを作る'
+                caption: 'until',
+                value: 'until false\n\nend\n',
+                description: '< > まで繰り返す'
             },
             {
-                value: 'delete_this_clone',
-                meta: 'このクローンを削除する'
-            },
-            {
+                caption: 'stop-all',
                 value: 'stop("all")',
-                meta: 'すべてを止める'
+                description: '[すべてを止める▼]'
             },
             {
+                caption: 'stop-this',
                 value: 'stop("this script")',
-                meta: 'このスクリプトを止める'
+                description: '[このスクリプトを止める▼]'
             },
             {
+                caption: 'stop-other',
                 value: 'stop("other scripts in sprite")',
-                meta: 'スプライトの他のスクリプトをを止める'
+                description: '[スプライトの他のスクリプトを止める▼]'
+            },
+            {
+                caption: 'when_start_as_a_clone',
+                value: 'when_start_as_a_clone do\n\nend\n',
+                description: 'クローンされたとき'
+            },
+            {
+                caption: 'create_clone',
+                value: 'create_clone("_myself_")',
+                description: '(自分自身▼) のクローンを作る'
+            },
+            {
+                caption: 'delete_this_clone',
+                value: 'delete_this_clone',
+                description: 'このクローンを削除する'
             }
         ];
         const completions = [];

@@ -20,12 +20,23 @@ import 'ace-builds/src-noconflict/ext-searchbox';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
 import MotionCompleter from './ruby-tab/motion-completer';
-import EventsCompleter from './ruby-tab/events-completer';
-import SensingCompleter from './ruby-tab/sensing-completer';
+import LooksCompleter from './ruby-tab/looks-completer';
 import SoundCompleter from './ruby-tab/sound-completer';
-import GdxForCompleter from './ruby-tab/gdx-for-completer';
-import MicrobitCompleter from './ruby-tab/microbit';
+import EventsCompleter from './ruby-tab/events-completer';
 import ControlCompleter from './ruby-tab/control-completer';
+import SensingCompleter from './ruby-tab/sensing-completer';
+import OperatorsCompleter from './ruby-tab/operators-completer';
+import VariablesCompleter from './ruby-tab/variables-completer';
+
+import MusicCompleter from './ruby-tab/music-completer';
+import PenCompleter from './ruby-tab/pen-completer';
+import VideoSensingCompleter from './ruby-tab/video-sensing-completer';
+import TextToSpeechCompleter from './ruby-tab/text-to-speech-completer';
+import TranslateCompleter from './ruby-tab/translate-completer';
+import MicrobitCompleter from './ruby-tab/microbit-completer';
+import MeshCompleter from './ruby-tab/mesh-completer';
+import SmalrubotS1Completer from './ruby-tab/smalrubot-s1-completer';
+import MicrobitMoreCompleter from './ruby-tab/microbit-more-completer';
 
 class RubyTab extends React.Component {
     constructor (props) {
@@ -98,13 +109,23 @@ class RubyTab extends React.Component {
 
         const completers = [
             new MotionCompleter(),
-            new EventsCompleter(),
-            new SensingCompleter()
+            new LooksCompleter(),
             new SoundCompleter(),
+            new EventsCompleter(),
+            new ControlCompleter(),
             new SensingCompleter(),
-            new GdxForCompleter(),
-            new MicrobitCompleter()
-            new ControlCompleter()
+            new OperatorsCompleter(),
+            new VariablesCompleter(),
+
+            new MusicCompleter(),
+            new PenCompleter(),
+            new VideoSensingCompleter(),
+            new TextToSpeechCompleter(),
+            new TranslateCompleter(),
+            new MicrobitCompleter(),
+            new MeshCompleter(),
+            new SmalrubotS1Completer(),
+            new MicrobitMoreCompleter()
         ];
 
         return (
@@ -121,6 +142,7 @@ class RubyTab extends React.Component {
                     tabSize: 2,
                     useSoftTabs: true,
                     showInvisibles: true,
+                    enableAutoIndent: true,
                     enableBasicAutocompletion: completers,
                     enableLiveAutocompletion: true
                 }}

@@ -1,90 +1,92 @@
-/**
- * Define Ruby code completer for Sensing Blocks
- */
-class SensingCompleter {
+import BaseCompleter from './base-completer';
+
+class SensingCompleter extends BaseCompleter {
     getCompletions (editor, session, pos, prefix, callback) {
         const words = [
             {
+                caption: 'touching?',
                 value: 'touching?("_mouse_")',
-                meta: 'マウスのポインターに触れた'
+                description: '(マウスのポインター▼) に触れた'
             },
             {
+                caption: 'touching_color?',
                 value: 'touching_color?("#571332")',
-                meta: '#571332の色に触れた'
+                description: '(#571332▼) 色に触れた'
             },
             {
+                cation: 'color_is_touching_color?',
                 value: 'color_is_touching_color?("#ce2ef7", "#6a7a0e")',
-                meta: '#ce2ef7が#6a7a0eの色に触れた'
+                description: '(#ce2ef7▼) 色が (#6a7a0e▼) 色に触れた'
             },
             {
+                caption: 'distance',
                 value: 'distance("_mouse_")',
-                meta: 'マウスのポインターまでの距離'
+                description: '(マウスのポインター▼) までの距離'
             },
             {
+                caption: 'ask',
                 value: 'ask("あなたの名前は何ですか?")',
-                meta: 'あなたの名前は何ですかと聞いて待つ'
+                description: '(あなたの名前は何ですか？) と聞いて待つ'
             },
             {
                 value: 'answer',
-                meta: '答え'
+                description: '答え'
             },
             {
                 value: 'Keyboard.pressed?("space")',
-                meta: 'スペースキーが押された'
+                description: 'スペースキーが押された'
             },
             {
                 value: 'Mouse.down?',
-                meta: 'マウスが押された'
+                description: 'マウスが押された'
             },
             {
                 value: 'Mouse.x',
-                meta: 'マウスのx座標'
+                description: 'マウスのx座標'
             },
             {
                 value: 'Mouse.y',
-                meta: 'マウスのy座標'
+                description: 'マウスのy座標'
             },
             {
                 value: 'self.drag_mode = "draggable"',
-                meta: 'ドラッグできるようにする'
+                description: 'ドラッグできるようにする'
             },
             {
                 value: 'loudness',
-                meta: '音量'
+                description: '音量'
             },
             {
                 value: 'Timer.value',
-                meta: 'タイマー'
+                description: 'タイマー'
             },
             {
                 value: 'Timer.reset',
-                meta: 'タイマーをリセット'
+                description: 'タイマーをリセット'
             },
             {
                 value: 'stage.backdrop_number',
-                meta: 'ステージの背景#'
+                description: 'ステージの背景#'
             },
             {
                 value: 'stage.backdrop_number',
-                meta: 'ステージの背景#'
+                description: 'ステージの背景#'
             },
             {
                 value: 'Time.now.year',
-                meta: '現在の年'
+                description: '現在の年'
             },
             {
                 value: 'days_since_2000',
-                meta: '2000年からの日数'
+                description: '2000年からの日数'
             },
             {
                 value: 'user_name',
-                meta: 'ユーザー名'
+                description: 'ユーザー名'
             }
         ];
         const completions = [];
-        words.forEach(
-            w => completions.push(w)
-        );
+        words.forEach(w => completions.push(w));
         callback(null, completions);
     }
 }

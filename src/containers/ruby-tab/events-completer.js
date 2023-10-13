@@ -1,46 +1,51 @@
-/**
- * Define Ruby code completer for Motion Blocks
- */
-class EventsCompleter {
+import BaseCompleter from './base-completer';
+
+class EventsCompleter extends BaseCompleter {
     getCompletions (editor, session, pos, prefix, callback) {
         const words = [
             {
-                value: 'self.when(:flag_clicked) do\nend',
-                meta: '旗が押されたとき'
+                caption: 'when_flag_clicked',
+                value: 'when_flag_clicked do\n\nend\n',
+                description: '旗が押されたとき'
             },
             {
-                value: 'self.when(:key_pressed, "space") do\nend',
-                meta: 'スペースキーが押されたとき'
+                caption: 'when_key_pressed',
+                value: 'when_key_pressed("space") do\n\nend\n',
+                description: '[スペース▼] キーが押されたとき'
             },
             {
-                value: 'self.when(:clicked) do\nend',
-                meta: 'このスプライトがクリックされたとき'
+                caption: 'when_clicked',
+                value: 'when_clicked do\n\nend\n',
+                description: 'このスプライトが押されたとき'
             },
             {
-                value: 'self.when(:backdrop_switches, "背景1") do\nend',
-                meta: '背景が背景1になったとき'
+                caption: 'when_backdrop_switches',
+                value: 'when_backdrop_switches("背景1") do\n\nend\n',
+                description: '背景が [背景1▼] になったとき'
             },
             {
-                value: 'self.when(:greater_than, "loudness", 10) do\nend',
-                meta: '音量が10より小さいとき'
+                caption: 'when_greater_than',
+                value: 'when_greater_than("loudness", 10) do\n\nend\n',
+                description: '[音量▼] > (10) のとき'
             },
             {
-                value: 'self.when(:receive, "メッセージ1") do\nend',
-                meta: 'メッセージ1を受け取ったとき'
+                caption: 'when_receive',
+                value: 'when_receive("メッセージ1") do\n\nend\n',
+                description: '[メッセージ1▼] を受け取ったとき'
             },
             {
+                caption: 'broadcast',
                 value: 'broadcast("メッセージ1")',
-                meta: 'メッセージ1を送る'
+                description: '(メッセージ1) を送る'
             },
             {
+                caption: 'broadcast_and_wait',
                 value: 'broadcast_and_wait("メッセージ1")',
-                meta: 'メッセージ1を送って待つ'
+                description: '(メッセージ1) を送って待つ'
             }
         ];
         const completions = [];
-        words.forEach(
-            w => completions.push(w)
-        );
+        words.forEach(w => completions.push(w));
         callback(null, completions);
     }
 }

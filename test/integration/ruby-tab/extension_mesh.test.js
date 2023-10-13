@@ -29,7 +29,7 @@ describe('Ruby Tab: Mesh extension blocks', () => {
         await loadUri(urlFor('/'));
 
         const code = dedent`
-            mesh_sensor_value("mesh variable")
+            mesh.sensor_value("mesh variable")
         `;
         await expectInterconvertBetweenCodeAndRuby(code);
     });
