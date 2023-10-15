@@ -1,0 +1,18 @@
+{
+    "video_sensing.when_video_motion>": {
+        "snippet": "video_sensing.when_video_motion_greater_than(${1:10}) do\n${2}\nend\n",
+        "description": "ビデオモーション > (10) のとき"
+    },
+    "video_sensing.video": {
+        "snippet": "video_sensing.video_on(\"${1:motion}\", \"${2:this sprite}\")",
+        "description": "(スプライト▼) のビデオの (モーション▼)"
+    },
+    "video_sensing.turn_video": {
+        "snippet": "video_sensing.video_turn(\"${1:on}\")",
+        "description": "ビデオを (入▼) にする"
+    },
+    "video_sensing.video_transparency=": {
+        "snippet": "video_sensing.video_transparency = ${1:50}",
+        "description": "ビデオの透明度を (50) にする"
+    }
+}

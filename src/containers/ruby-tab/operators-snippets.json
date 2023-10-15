@@ -1,0 +1,86 @@
+{
+    "rand": {
+        "snippet": "rand(${1:1}..${2:10})",
+        "description": "(1) から (10) までの乱数"
+    },
+    "and": {
+        "snippet": "${1:false} && ${2:false}",
+        "description": "< > かつ < >"
+    },
+    "or": {
+        "snippet": "${1:false} || ${2:false}",
+        "description": "< > または < >"
+    },
+    "not": {
+        "snippet": "!${1:false}",
+        "description": "< > ではない"
+    },
+    "string+": {
+        "snippet": "\"${1:りんご}\" + \"${2:バナナ}\"",
+        "description": "(りんご) と (バナナ)"
+    },
+    "string[]": {
+        "snippet": "\"${1:りんご}\"[${2:1}]",
+        "description": "(りんご) の (1) 番目の文字"
+    },
+    "string.length": {
+        "snippet": "\"${1:りんご}\".length",
+        "description": "(りんご) の長さ"
+    },
+    "string.include?": {
+        "snippet": "\"${1:りんご}\".include?(\"${2:り}\")",
+        "description": "(りんご) に (り) が含まれる"
+    },
+    "round": {
+        "snippet": "${1:0}.round",
+        "description": "(0) を四捨五入"
+    },
+    "abs": {
+        "snippet": "${1:0}.abs",
+        "description": "(0) の [絶対値▼]"
+    },
+    "floor": {
+        "snippet": "${1:0}.floor",
+        "description": "(0) の [切り下げ▼]"
+    },
+    "ceil": {
+        "snippet": "${1:0}.ceil",
+        "description": "(0) の [切り上げ▼]"
+    },
+    "sqrt": {
+        "snippet": "Math.sqrt(${1:0})",
+        "description": "(0) の [平方根▼]"
+    },
+    "sin": {
+        "snippet": "Math.sin(${1:0})",
+        "description": "(0) の [sin▼]"
+    },
+    "cos": {
+        "snippet": "Math.cos(${1:0})",
+        "description": "(0) の [cons▼]"
+    },
+    "tan": {
+        "snippet": "Math.tan(${1:0})",
+        "description": "(0) の [tan▼]"
+    },
+    "asin": {
+        "snippet": "Math.asin(${1:0})",
+        "description": "(0) の [asin▼]"
+    },
+    "acos": {
+        "snippet": "Math.acos(${1:0})",
+        "description": "(0) の [acos▼]"
+    },
+    "atan": {
+        "snippet": "Math.atan(${1:0})",
+        "description": "(0) の [atan▼]"
+    },
+    "log": {
+        "snippet": "Math.log(${1:0})",
+        "description": "(0) の [In▼]"
+    },
+    "log10": {
+        "snippet": "Math.log10(${1:0})",
+        "description": "(0) の [log▼]"
+    }
+}

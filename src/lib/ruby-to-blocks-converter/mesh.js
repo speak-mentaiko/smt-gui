@@ -1,27 +1,25 @@
-/* global Opal */
-import _ from 'lodash';
+const Mesh = 'mesh';
 
 /**
  * Mesh extension converter
  */
 const MeshConverter = {
-    // eslint-disable-next-line no-unused-vars
-    onSend: function (receiver, name, args, rubyBlockArgs, rubyBlock) {
-        let block;
-        if ((this._isSelf(receiver) || receiver === Opal.nil) && !rubyBlock) {
-            switch (name) {
-            case 'mesh_sensor_value':
-                if (args.length === 1 && this._isStringOrBlock(args[0])) {
-                    block = this._createBlock('mesh_getSensorValue', 'statement');
-                    this._addFieldInput(
-                        block, 'NAME', 'mesh_menu_variableNames', 'variableNames',
-                        args[0], ' '
-                    );
-                }
-                break;
-            }
-        }
-        return block;
+    register: function (converter) {
+        converter.registerCallMethod('self', Mesh, 0, params => {
+            const {node} = params;
+
+            return converter.createRubyExpressionBlock(Mesh, node);
+        });
+
+        converter.registerCallMethod(Mesh, 'sensor_value', 1, params => {
+            const {receiver, args} = params;
+
+            if (!converter.isStringOrBlock(args[0])) return null;
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'mesh_getSensorValue', 'value');
+            converter.addFieldInput(block, 'NAME', 'mesh_menu_variableNames', 'variableNames', args[0], ' ');
+            return block;
+        });
     }
 };
 

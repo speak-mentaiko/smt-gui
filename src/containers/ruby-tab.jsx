@@ -19,6 +19,8 @@ import 'ace-builds/src-noconflict/theme-clouds';
 import 'ace-builds/src-noconflict/ext-searchbox';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
+import SnippetsCompleter from './ruby-tab/snippets-completer';
+
 class RubyTab extends React.Component {
     constructor (props) {
         super(props);
@@ -87,6 +89,9 @@ class RubyTab extends React.Component {
             errors,
             markers
         } = rubyCode;
+
+        const completers = [new SnippetsCompleter()];
+
         return (
             <AceEditor
                 annotations={errors}
@@ -100,7 +105,10 @@ class RubyTab extends React.Component {
                 setOptions={{
                     tabSize: 2,
                     useSoftTabs: true,
-                    showInvisibles: true
+                    showInvisibles: true,
+                    enableAutoIndent: true,
+                    enableBasicAutocompletion: completers,
+                    enableLiveAutocompletion: true
                 }}
                 style={{
                     border: '1px solid hsla(0, 0%, 0%, 0.15)',
