@@ -8,6 +8,7 @@ import ControlSnippets from './control-snippets.json';
 import SensingSnippets from './sensing-snippets.json';
 import OperatorsSnippets from './operators-snippets.json';
 import VariablesSnippets from './variables-snippets.json';
+import ProcedureSnippets from './procedure-snippets.json';
 
 import MusicSnippets from './music-snippets.json';
 import PenSnippets from './pen-snippets.json';
@@ -34,6 +35,7 @@ class SnippetsCompleter extends BaseCompleter {
             SensingSnippets,
             OperatorsSnippets,
             VariablesSnippets,
+            ProcedureSnippets,
 
             MusicSnippets,
             PenSnippets,
