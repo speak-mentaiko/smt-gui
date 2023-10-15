@@ -1,0 +1,6 @@
+{
+    "music.play_drum": {
+        "snippet": "play_drum(drum: ${1:1}, beats: ${2:0.25})",
+        "description": "((1)スネアドラム▼) のドラムを (0.25) 拍鳴らす"
+    }
+}

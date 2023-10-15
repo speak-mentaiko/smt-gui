@@ -1,0 +1,6 @@
+{
+    "microbit_more.when_button_is": {
+        "snippet": "microbit_more.when_button_is(\"${1:A}\", \"${2:down}\") do\n${3}\nend\n",
+        "description": "ボタン [A▼] が [押された▼] とき"
+    }
+}

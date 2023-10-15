@@ -1,0 +1,6 @@
+{
+    "smalrubot_s1.action": {
+        "snippet": "smalrubot_s1.action(\"${1:forward}\")",
+        "description": "[進める▼]"
+    }
+}

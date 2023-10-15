@@ -1,0 +1,18 @@
+{
+    "say-for": {
+        "snippet": "say(\"${1:こんにちは!}\", ${2:2})",
+        "description": "(こんにちは!) と (2) 秒言う"
+    },
+    "say": {
+        "snippet": "say(\"${1:こんにちは!}\")",
+        "description": "(こんにちは!) と言う"
+    },
+    "think-for": {
+        "snippet": "think(\"${1:うーん...}\", ${2:2})",
+        "description": "(うーん...) と (2) 秒考える"
+    },
+    "think": {
+        "snippet": "think(\"${1:うーん...}\")",
+        "description": "(うーん...) と考える"
+    }
+}

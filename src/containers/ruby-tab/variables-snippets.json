@@ -1,0 +1,70 @@
+{
+    "$": {
+        "snippet": "$${1:変数}",
+        "description": "変数"
+    },
+    "$=": {
+        "snippet": "$${1:変数} = ${2:0}",
+        "description": "[変数▼] を (0) にする"
+    },
+    "$+=": {
+        "snippet": "$${1:変数} += ${2:1}",
+        "description": "[変数▼] を (1) ずつ変える"
+    },
+    "show_variable": {
+        "snippet": "show_variable(\"$${1:変数}\")",
+        "description": "変数 [変数▼] を表示する"
+    },
+    "hide_variable": {
+        "snippet": "hide_variable(\"$${1:変数}\")",
+        "description": "変数 [変数▼] を隠す"
+    },
+    "list.push": {
+        "snippet": "list(\"$${1:リスト}\").push(\"${2:なにか}\")",
+        "description": "(なにか) を [リスト▼] に追加する"
+    },
+    "list.delete_at": {
+        "snippet": "list(\"$${1:リスト}\").delete_at(${2:1})",
+        "description": "[リスト▼] の (1) 番目を削除する"
+    },
+    "list.clear": {
+        "snippet": "list(\"$${1:リスト}\").clear",
+        "description": "[リスト▼] のすべてを削除する"
+    },
+    "list.insert": {
+        "snippet": "list(\"$${1:リスト}\").insert(${2:1}, \"${3:なにか}\")",
+        "description": "[リスト▼] の (1) 番目に (なにか) を挿入する"
+    },
+    "list[]=": {
+        "snippet": "list(\"$${1:リスト}\")[${2:1}] = \"${3:なにか}\"",
+        "description": "[リスト▼] の (1) 番目を (なにか) で置き換える"
+    },
+    "list": {
+        "snippet": "list(\"$${1:リスト}\")",
+        "description": "リスト"
+    },
+    "list[]": {
+        "snippet": "list(\"$${1:リスト}\")[${2:1}]",
+        "description": "[リスト▼] の (1) 番目"
+    },
+    "list.index": {
+        "snippet": "list(\"$${1:リスト}\").index(\"${2:なにか}\")",
+        "description": "[リスト▼] 中の (なにか) の場所"
+    },
+    "list.length": {
+        "snippet": "list(\"$${1:リスト}\").length",
+        "description": "[リスト▼] の長さ"
+    },
+    "list.include?": {
+        "snippet": "list(\"$${1:リスト}\").include?(\"${2:なにか}\")",
+        "description": "[リスト▼] に (なにか) が含まれる"
+    },
+    "show_list": {
+        "snippet": "show_list(\"$${1:リスト}\")",
+        "description": "リスト [リスト▼] を表示する"
+    },
+    "hide_list": {
+        "snippet": "hide_list(\"$${1:リスト}\")",
+        "description": "リスト [リスト▼] を隠す"
+    }
+}
