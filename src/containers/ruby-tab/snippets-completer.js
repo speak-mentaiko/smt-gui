@@ -22,7 +22,7 @@ import MicrobitMoreSnippets from './microbit-more-snippets.json';
 class SnippetsCompleter extends BaseCompleter {
     #completions = [];
 
-    constructor() {
+    constructor () {
         super();
 
         const snippetsList = [
