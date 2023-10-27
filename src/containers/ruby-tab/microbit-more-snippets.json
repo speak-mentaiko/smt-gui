@@ -1,10 +1,10 @@
 {
     "microbit_more.when_microbit": {
-        "snippet": "microbit_more.when_microbit(\"${1:connected}\") do\n\t${2}\nend\n",
+        "snippet": "microbit_more.when_microbit(\"${1:connected}\") do\n\t${2}\nend",
         "description": "micro:bit と [つながった▼] とき"
     },
     "microbit_more.when_button_is": {
-        "snippet": "microbit_more.when_button_is(\"${1:A}\", \"${2:down}\") do\n\t${3}\nend\n",
+        "snippet": "microbit_more.when_button_is(\"${1:A}\", \"${2:down}\") do\n\t${3}\nend",
         "description": "ボタン [A▼] が [押された▼] とき"
     },
     "microbit_more.button_pressed?": {
@@ -12,7 +12,7 @@
         "description": "ボタン [A▼] が押されている"
     },
     "microbit_more.when_pin_is": {
-        "snippet": "microbit_more.when_pin_is(\"${1:LOGO}\", \"${2:touched}\") do\n\t${3}\nend\n",
+        "snippet": "microbit_more.when_pin_is(\"${1:LOGO}\", \"${2:touched}\") do\n\t${3}\nend",
         "description": "ピン [ロゴ▼] が [タッチされた▼] とき"
     },
     "microbit_more.pin_is_touched?": {
@@ -20,11 +20,11 @@
         "description": "ピン [ログ▼] がタッチされている"
     },
     "microbit_more.when": {
-        "snippet": "microbit_more.when(\"${1:shake}\") do\n\t${2}\nend\n",
+        "snippet": "microbit_more.when(\"${1:shake}\") do\n\t${2}\nend",
         "description": "[ゆさぶられた▼] とき"
     },
     "microbit_more.display_pattern": {
-        "snippet": "microbit_more.display_pattern(\n\t\"${1:.1.1.}\",\n\t\"${2:1.1.1}\",\n\t\"${3:1...1}\",\n\t\"${4:.1.1.}\",\n\t\"${5:..1..}\"\n)\n",
+        "snippet": "microbit_more.display_pattern(\n\t\"${1:.1.1.}\",\n\t\"${2:1.1.1}\",\n\t\"${3:1...1}\",\n\t\"${4:.1.1.}\",\n\t\"${5:..1..}\"\n)",
         "description": "パターン (♡▼) を表示する"
     },
     "microbit_more.display_text_delay": {
@@ -104,7 +104,7 @@
         "description": "ピン [P0▼] の [イベントを受けない▼]"
     },
     "microbit_more.when_catch_at_pin": {
-        "snippet": "microbit_more.when_catch_at_pin(\"${1:low pulse}\", \"${2:P0}\") do\n\t${3}\nend\n",
+        "snippet": "microbit_more.when_catch_at_pin(\"${1:low pulse}\", \"${2:P0}\") do\n\t${3}\nend",
         "description": "ピン [P0▼] で [ローパルス▼] イベントが起きたとき"
     },
     "microbit_more.value_of": {
@@ -112,7 +112,7 @@
         "description": "ピン [P0▼] の [ローパルスの期間▼]"
     },
     "microbit_more.when_data_received_from_microbit": {
-        "snippet": "microbit_more.when_data_received_from_microbit(\"${1:label-01}\") do\n\t${2}\nend\n",
+        "snippet": "microbit_more.when_data_received_from_microbit(\"${1:label-01}\") do\n\t${2}\nend",
         "description": "micro:bit からラベル (label-01) のデータを受け取ったとき"
     },
     "microbit_more.data": {

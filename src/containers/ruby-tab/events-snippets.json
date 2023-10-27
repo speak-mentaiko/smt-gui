@@ -1,26 +1,26 @@
 {
     "when_flag_clicked": {
-        "snippet": "when_flag_clicked do\n${1}\nend\n",
+        "snippet": "when_flag_clicked do\n\t${1}\nend",
         "description": "旗が押されたとき"
     },
     "when_key_pressed": {
-        "snippet": "when_key_pressed(\"${1:space}\") do\n${2}\nend\n",
+        "snippet": "when_key_pressed(\"${1:space}\") do\n\t${2}\nend",
         "description": "[スペース▼] キーが押されたとき"
     },
     "when_clicked": {
-        "snippet": "when_clicked do\n${1}\nend\n",
+        "snippet": "when_clicked do\n\t${1}\nend",
         "description": "このスプライトが押されたとき"
     },
     "when_backdrop_switches": {
-        "snippet": "when_backdrop_switches(\"${1:背景1}\") do\n${2}\nend\n",
+        "snippet": "when_backdrop_switches(\"${1:背景1}\") do\n\t${2}\nend",
         "description": "背景が [背景1▼] になったとき"
     },
     "when_greater_than": {
-        "snippet": "when_greater_than(\"${1:loudness}\", ${2:10}) do\n${3}\nend\n",
+        "snippet": "when_greater_than(\"${1:loudness}\", ${2:10}) do\n\t${3}\nend",
         "description": "[音量▼] > (10) のとき"
     },
     "when_receive": {
-        "snippet": "when_receive(\"${1:メッセージ1}\") do\n${2}\nend\n",
+        "snippet": "when_receive(\"${1:メッセージ1}\") do\n\t${2}\nend",
         "description": "[メッセージ1▼] を受け取ったとき"
     },
     "broadcast": {
