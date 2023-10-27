@@ -311,10 +311,21 @@ const MicrobitMoreConverter = {
             return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getSoundLevel', 'value');
         });
 
-        converter.registerCallMethod(MicrobitMore, 'magnetic_force', 0, params => {
-            const {receiver} = params;
+        converter.registerCallMethod(MicrobitMore, 'magnetic_force', 1, params => {
+            const {receiver, args} = params;
 
-            return converter.changeRubyExpressionBlock(receiver, 'microbitMore_getMagneticForce', 'value');
+            if (converter.isString(args[0])) {
+                const index = AccelerationMenu.indexOf(args[0].toString().toLowerCase());
+                if (index < 0) return null;
+
+                args[0] = new Primitive('str', AccelerationMenu[index], args[0].node);
+            } else {
+                return null;
+            }
+
+            const block = converter.changeRubyExpressionBlock(receiver, 'microbitMore_getMagneticForce', 'value');
+            converter.addField(block, 'AXIS', args[0]);
+            return block;
         });
 
         converter.registerCallMethod(MicrobitMore, 'acceleration', 1, params => {

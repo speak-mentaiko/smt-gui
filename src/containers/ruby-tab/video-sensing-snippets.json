@@ -1,6 +1,6 @@
 {
     "video_sensing.when_video_motion>": {
-        "snippet": "video_sensing.when_video_motion_greater_than(${1:10}) do\n${2}\nend\n",
+        "snippet": "video_sensing.when_video_motion_greater_than(${1:10}) do\n\t${2}\nend",
         "description": "ビデオモーション > (10) のとき"
     },
     "video_sensing.video": {
