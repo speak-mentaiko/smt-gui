@@ -331,7 +331,8 @@ RubyGenerator.scrubNakedValue = function (line) {
 };
 
 RubyGenerator.escapeChars_ = {
-    '"': '\\"'
+    '"': '\\"',
+    '\\': '\\\\'
 };
 
 RubyGenerator.quote_ = function (string) {
