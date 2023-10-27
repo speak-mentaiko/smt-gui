@@ -110,8 +110,9 @@ export default function (Generator) {
         return ['microbit_more.sound_level', Generator.ORDER_FUNCTION_CALL];
     };
 
-    Generator.microbitMore_getMagneticForce = function () {
-        return ['microbit_more.magnetic_force', Generator.ORDER_FUNCTION_CALL];
+    Generator.microbitMore_getMagneticForce = function (block) {
+        const axis = Generator.quote_(Generator.getFieldValue(block, 'AXIS', 'absolute'));
+        return [`microbit_more.magnetic_force(${axis})`, Generator.ORDER_FUNCTION_CALL];
     };
 
     Generator.microbitMore_getAcceleration = function (block) {

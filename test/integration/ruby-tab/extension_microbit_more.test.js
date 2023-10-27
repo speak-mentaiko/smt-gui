@@ -91,7 +91,9 @@ describe('Ruby Tab: Microbit More v2 extension blocks', () => {
 
             microbit_more.sound_level
 
-            microbit_more.magnetic_force
+            microbit_more.magnetic_force("absolute")
+
+            microbit_more.magnetic_force("x")
 
             microbit_more.acceleration("x")
 
