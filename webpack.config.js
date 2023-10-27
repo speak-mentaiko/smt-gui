@@ -7,11 +7,15 @@ const fs = require('fs');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 // PostCss
 const autoprefixer = require('autoprefixer');
 const postcssVars = require('postcss-simple-vars');
 const postcssImport = require('postcss-import');
+
+const assetsManifest = require('./src/assetsManifest.json');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 
@@ -223,6 +227,34 @@ module.exports = [
                         from: 'extension-worker.{js,js.map}',
                         context: 'node_modules/scratch-vm/dist/web',
                         noErrorOnMissing: true
+                    }
+                ]
+            }),
+            new WorkboxPlugin.GenerateSW({
+                clientsClaim: true,
+                skipWaiting: true,
+                additionalManifestEntries: assetsManifest,
+                exclude: [
+                    /\.DS_Store/
+                ],
+                maximumFileSizeToCacheInBytes: 32 * 1024 * 1024
+            }),
+            new WebpackPwaManifest({
+                name: 'Smalruby',
+                short_name: 'Smalruby',
+                description: 'GraphicaL User Interface for creating and running Smalruby 3.0 projects',
+                background_color: '#ffffff',
+                orientation: 'any',
+                crossorigin: 'use-credentials',
+                inject: true,
+                ios: {
+                    'apple-mobile-web-app-title': 'Smalruby',
+                    'apple-mobile-web-app-status-bar-style': 'default'
+                },
+                icons: [
+                    {
+                        src: path.resolve('static/pwa-icon.png'),
+                        sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
                     }
                 ]
             })
