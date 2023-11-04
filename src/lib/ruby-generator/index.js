@@ -34,6 +34,7 @@ import Mboard1Blocks from './mboard1.js';
 import Mboard2Blocks from './mboard2.js';
 import MicrocomBlocks from './microcom.js';
 import Kanirobo2Blocks from './kanirobo2.js';
+import ToolsBlocks from './tools.js';
 
 const SCALAR_TYPE = '';
 const LIST_TYPE = 'list';
@@ -470,5 +471,6 @@ Mboard1Blocks(RubyGenerator);
 Mboard2Blocks(RubyGenerator);
 MicrocomBlocks(RubyGenerator);
 Kanirobo2Blocks(RubyGenerator);
+ToolsBlocks(RubyGenerator);
 
 export default RubyGenerator;

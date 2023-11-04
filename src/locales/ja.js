@@ -61,7 +61,9 @@ export default {
     "gui.mboard1.name": "MBoard1",
     "gui.mboard1.description": "松江高専マイコンボード (簡単)",
     "gui.mboard2.name": "MBoard2",
-    "gui.mboard2.description": "松江高専マイコンボード (普通)",    
+    "gui.mboard2.description": "松江高専マイコンボード (普通)",
+    "gui.tools.name": "Tools",
+    "gui.tools.description": "デバッグツール", 
 //MBoard共通
     "mboard.sound_C": "ド",
     "mboard.sound_D": "レ",

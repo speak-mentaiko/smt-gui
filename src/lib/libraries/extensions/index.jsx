@@ -50,6 +50,26 @@ const extensions = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Tools"
+                description="Name for the 'Tools' extension"
+                id="gui.tools.name"
+            />
+        ),
+        extensionId: 'tools',
+        iconURL: sampleIconURL,
+        insetIconURL: sampleInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Tools (output, etc.)"
+                description="Description for the 'tools' extension"
+                id="gui.tools.description"
+            />
+        ),
+        featured: true
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Microcom"
                 description="Name for the 'Micro_Computer' extension"
                 id="gui.microcom.name"
