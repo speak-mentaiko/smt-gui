@@ -33,7 +33,8 @@ const projectData = translateFunction => {
                 name: 'Stage',
                 variables: {
                     '`jEk@4|i[#Fk?(8x)AV.-my variable': [
-                        translator(messages.variable),
+                        //translator(messages.variable),
+			"var1",
                         0
                     ]
                 },
@@ -64,6 +65,85 @@ const projectData = translateFunction => {
                 ],
                 volume: 100
             },
+            {
+                isStage: false,
+                name: "master",	// kani robot
+                variables: {},
+                lists: {},
+                broadcasts: {},
+                blocks: {},
+                currentCostume: 0,
+                costumes: [
+                    {
+                        assetId: '3eb0cf9328f7ae8f65aba0892806a3ba',
+                        name: "master",	// kani robot
+                        bitmapResolution: 1,
+                        md5ext: '3eb0cf9328f7ae8f65aba0892806a3ba.svg',
+                        dataFormat: 'svg',
+                        rotationCenterX: 130,
+                        rotationCenterY: 120
+                    }
+                ],
+                sounds: [
+                    {
+                        assetId: "83a9787d4cb6f3b7632b4ddfebf74367",
+                        name: "c3",
+                        dataFormat: "wav",
+                        rate: 48000,
+                        sampleCount: 480000,
+                        md5ext: "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+                    }
+                ],
+                volume: 100,
+                layerOrder: 1,
+                visible: true,
+                x: 0,
+                y: 0,
+                size: 100,
+                direction: 90,
+                draggable: false,
+                rotationStyle: 'all around'
+            },
+            {
+                isStage: false,
+                name: "slave",        // kani robot
+                variables: {},
+                lists: {},
+                broadcasts: {},
+                blocks: {},
+                currentCostume: 0,
+                costumes: [
+                    {
+                        assetId: '3eb0cf9328f7ae8f65aba0892806a3ba',
+                        name: "slave",
+                        bitmapResolution: 1,
+                        md5ext: '3eb0cf9328f7ae8f65aba0892806a3ba.svg',
+                        dataFormat: 'svg',
+                        rotationCenterX: 130,
+                        rotationCenterY: 120
+                    }
+                ],
+                sounds: [
+                    {
+                        assetId: "83a9787d4cb6f3b7632b4ddfebf74367",
+                        name: "c3",
+                        dataFormat: "wav",
+                        rate: 48000,
+                        sampleCount: 480000,
+                        md5ext: "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+                    }
+                ],
+                volume: 100,
+                layerOrder: 1,
+                visible: true,
+                x: 0,
+                y: 0,
+                size: 100,
+                direction: 90,
+                draggable: false,
+                rotationStyle: 'all around'
+            }
+/*	    
             {
                 isStage: false,
                 name: translator(messages.sprite, {index: 1}),
@@ -103,6 +183,7 @@ const projectData = translateFunction => {
                 draggable: false,
                 rotationStyle: 'all around'
             }
+*/
         ],
         meta: {
             semver: '3.0.0',
