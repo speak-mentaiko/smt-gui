@@ -30,6 +30,10 @@ import WeDo2Blocks from './wedo2.js';
 import GdxForBlocks from './gdx_for.js';
 import MeshBlocks from './mesh.js';
 import SmalrubotS1Blocks from './smalrubot_s1.js';
+import Mboard1Blocks from './mboard1.js';
+import Mboard2Blocks from './mboard2.js';
+import MicrocomBlocks from './microcom.js';
+import Kanirobo2Blocks from './kanirobo2.js';
 
 const SCALAR_TYPE = '';
 const LIST_TYPE = 'list';
@@ -462,5 +466,9 @@ WeDo2Blocks(RubyGenerator);
 GdxForBlocks(RubyGenerator);
 MeshBlocks(RubyGenerator);
 SmalrubotS1Blocks(RubyGenerator);
+Mboard1Blocks(RubyGenerator);
+Mboard2Blocks(RubyGenerator);
+MicrocomBlocks(RubyGenerator);
+Kanirobo2Blocks(RubyGenerator);
 
 export default RubyGenerator;
