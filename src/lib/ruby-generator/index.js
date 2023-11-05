@@ -32,9 +32,12 @@ import RubyBlocks from './ruby.js';
 //import SmalrubotS1Blocks from './smalrubot_s1.js';
 import Mboard1Blocks from './mboard1.js';
 import Mboard2Blocks from './mboard2.js';
+import Mboard3Blocks from './mboard3.js';
 import MicrocomBlocks from './microcom.js';
 import Kanirobo2Blocks from './kanirobo2.js';
 import ToolsBlocks from './tools.js';
+import M5stackBlocks from './m5stack.js';
+import SensorBlocks from './sensor.js';
 
 const SCALAR_TYPE = '';
 const LIST_TYPE = 'list';
@@ -469,8 +472,11 @@ RubyBlocks(RubyGenerator);
 //SmalrubotS1Blocks(RubyGenerator);
 Mboard1Blocks(RubyGenerator);
 Mboard2Blocks(RubyGenerator);
+Mboard3Blocks(RubyGenerator);
 MicrocomBlocks(RubyGenerator);
 Kanirobo2Blocks(RubyGenerator);
 ToolsBlocks(RubyGenerator);
+M5stackBlocks(RubyGenerator);
+SensorBlocks(RubyGenerator);
 
 export default RubyGenerator;

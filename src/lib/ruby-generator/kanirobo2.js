@@ -44,7 +44,7 @@ export default function (Generator) {
 
     Generator.kanirobo2_value0 = function (block) {
         const text = Generator.valueToCode(block, 'TEXT', Generator.ORDER_NONE) || null;
-        return `lux${text}.rawread\n`;
+	return [`lux${text}.rawread`, Generator.ORDER_ATOMIC];
     };
 
     Generator.kanirobo2_command7 = function (block) {

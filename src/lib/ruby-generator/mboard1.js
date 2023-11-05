@@ -18,8 +18,6 @@ export default function (Generator) {
 	       `led33 = GPIO.new( 33, GPIO::OUT )\n` + 
 	       `led32 = GPIO.new( 32, GPIO::OUT )\n` ;
     };
-
-
     
     Generator.mboard1_switch_init = function () {
         return `sw34 = GPIO.new( 34, GPIO::IN, GPIO::PULL_UP)\n`+
@@ -40,7 +38,7 @@ export default function (Generator) {
                `  return temp\n` +
                `end\n`;
     };
-
+    
     //各ブロックに対応する Ruby コードを書く
     Generator.mboard1_led1 = function (block) {
 	Generator.prepares_[`led`] = Generator.mboard1_led_init(null);
@@ -88,6 +86,7 @@ export default function (Generator) {
 	return [`sprintf("%.1f", adc_measure(adc)).to_f`, Generator.ORDER_ATOMIC];
     };
 
+    
     // メニューについては Ruby 側でも定義が必要のようだ
     Generator.mboard1_menu_menu1 = function (block) {
         const menu1 = Generator.getFieldValue(block, 'menu1') || null;

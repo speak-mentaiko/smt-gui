@@ -11,14 +11,14 @@ export default function (Generator) {
     };
 
     Generator.mboard2_led1 = function (block) {
-        const text = Generator.valueToCode(block, 'TEXT1', Generator.ORDER_NONE) || null;
-        const num  = Generator.valueToCode(block, 'NUM1', Generator.ORDER_NONE)  || 0;
-        return `led${text}.write(${num})\n`;
+        const text1 = Generator.valueToCode(block, 'TEXT1', Generator.ORDER_NONE) || null;
+        const num1  = Generator.valueToCode(block, 'NUM1', Generator.ORDER_NONE)  || 0;
+        return `led${text1}.write(${num1})\n`;
     };
 
     Generator.mboard2_switch0 = function (block) {
         const text1 = Generator.valueToCode(block, 'TEXT1', Generator.ORDER_NONE) || null;
-        return `led${text1} = GPIO.new( ${text1}, GPIO::OUT )\n`;
+	return `sw${text1} = GPIO.new( ${text1}, GPIO::IN, GPIO::PULL_UP)\n`;
     };
 
     Generator.mboard2_switch1 = function (block) {
@@ -46,7 +46,7 @@ export default function (Generator) {
     
     Generator.mboard2_temperature2 = function () {
 	return `voltage = adc.read()\n` + 
-               `temp = 1.0 / ( 1.0 / 3435.0 * Math.log( (3300.0 - voltage) / (voltage/ 10.0) / 10.0) + 1.0 / (25.0 + 273.0) ) - 273.0\n`;
+            `temp = 1.0 / ( 1.0 / 3435.0 * Math.log( (3300.0 - voltage) / (voltage/ 10.0) / 10.0) + 1.0 / (25.0 + 273.0) ) - 273.0\n`;
     };
 
     Generator.mboard2_temperature1 = function () {

@@ -24,7 +24,7 @@ export default function (Generator) {
 
     Generator.microcom_gpio_input = function (block) {
 	const num1 = Generator.valueToCode(block, 'NUM1', Generator.ORDER_NONE) || null;
-	return [`sw${num1}.read\n`, Generator.ORDER_ATOMIC];
+	return [`sw${num1}.read`, Generator.ORDER_ATOMIC];
     };
 
     Generator.microcom_pwm_init = function (block){
@@ -51,7 +51,7 @@ export default function (Generator) {
 
     Generator.microcom_adc_volt = function (block) {
 	const value = Generator.valueToCode(block, 'VALUE', Generator.ORDER_NONE) || null;
-        return [`adc${value}.read\n`, Generator.ORDER_ATOMIC];
+        return [`adc${value}.read`, Generator.ORDER_ATOMIC];
     }
 
     Generator.microcom_i2c_init = function (block) {
@@ -64,13 +64,13 @@ export default function (Generator) {
 	const num1 = Generator.valueToCode(block, 'NUM1', Generator.ORDER_NONE) || null;
 	const num2 = Generator.valueToCode(block, 'NUM2', Generator.ORDER_NONE) || null;
 	const num3 = Generator.valueToCode(block, 'NUM3', Generator.ORDER_NONE) || null;
-        return `i2c.writeto( ${num1}, [${num2}, ${num3}] )\n`;
+        return `i2c.writeto( 0x${num1}, [0x${num2}, 0x${num3}] )\n`;
     };
     
     Generator.microcom_i2c_read = function (block) {
 	const num1 = Generator.valueToCode(block, 'NUM1', Generator.ORDER_NONE) || null;
 	const num2 = Generator.valueToCode(block, 'NUM2', Generator.ORDER_NONE) || 1;
-        return [`i2c.readfrom( ${num1}, ${num2} )\n`, Generator.ORDER_ATOMIC];
+        return [`i2c.readfrom( 0x${num1}, ${num2} )`, Generator.ORDER_ATOMIC];
     };
 
     Generator.microcom_uart_init = function (block) {
@@ -87,9 +87,9 @@ export default function (Generator) {
 
     Generator.microcom_uart_read = function (block) {
 	const text = Generator.valueToCode(block, 'TEXT', Generator.ORDER_NONE) || null;
-        return [`uart${text}.gets()\n`, Generator.ORDER_ATOMIC];
+        return [`uart${text}.gets()`, Generator.ORDER_ATOMIC];
     };
-
+    
     // メニューについては Ruby 側でも定義が必要のようだ
     Generator.microcom_menu_menu1 = function (block) {
         const menu1 = Generator.getFieldValue(block, 'menu1') || null;
