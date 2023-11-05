@@ -64,7 +64,8 @@ export default {
     "gui.mboard2.name": "MBoard2",
     "gui.mboard2.description": "まつえこうせん マイコンボード (ふつう)", 
     "gui.tools.name": "Tools",
-    "gui.tools.description": "でばっぐつーる", 
+    "gui.tools.description": "でばっぐつーる",
+    "gui.menuBar.uploadToServer": "マイコンへかく",
 //MBoard共通
     "mboard.sound_C": "ド",
     "mboard.sound_D": "レ",
