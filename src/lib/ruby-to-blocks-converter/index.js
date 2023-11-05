@@ -9,29 +9,29 @@ import Variable from 'scratch-vm/src/engine/variable';
 import Primitive from './primitive';
 import {RubyToBlocksConverterError} from './errors';
 
-import MotionConverter from './motion';
-import LooksConverter from './looks';
-import SoundConverter from './sound';
-import EventConverter from './event';
+//import MotionConverter from './motion';
+//import LooksConverter from './looks';
+//import SoundConverter from './sound';
+//import EventConverter from './event';
 import ControlConverter from './control';
-import SensingConverter from './sensing';
+//import SensingConverter from './sensing';
 import OperatorsConverter from './operators';
 import VariablesConverter from './variables';
 import MyBlocksConverter from './my-blocks';
-import MusicConverter from './music';
-import PenConverter from './pen';
-import MicroBitConverter from './microbit';
-import MicrobitMoreConverter from './microbit_more';
-import EV3Converter from './ev3';
-import Wedo2Converter from './wedo2';
-import GdxForConverter from './gdx_for';
-import MeshConverter from './mesh';
-import SmalrubotS1Converter from './smalrubot_s1';
-import BoostConverter from './boost';
-import TranslateConverter from './translate';
-import MakeyMakeyConverter from './makeymakey';
-import VideoConverter from './video';
-import Text2SpeechConverter from './text2speech';
+//import MusicConverter from './music';
+//import PenConverter from './pen';
+//import MicroBitConverter from './microbit';
+//import MicrobitMoreConverter from './microbit_more';
+//import EV3Converter from './ev3';
+//import Wedo2Converter from './wedo2';
+//import GdxForConverter from './gdx_for';
+//import MeshConverter from './mesh';
+//import SmalrubotS1Converter from './smalrubot_s1';
+//import BoostConverter from './boost';
+//import TranslateConverter from './translate';
+//import MakeyMakeyConverter from './makeymakey';
+//import VideoConverter from './video';
+//import Text2SpeechConverter from './text2speech';
 
 const messages = defineMessages({
     couldNotConvertPremitive: {
@@ -52,17 +52,17 @@ const ColorRegexp = /^#[0-9a-fA-F]{6}$/;
 // from scratch-vm/src/serialization/sb3.js
 const CORE_EXTENSIONS = [
     'argument',
-    'colour',
+//    'colour',
     'control',
     'data',
-    'event',
-    'looks',
+//    'event',
+//    'looks',
     'math',
-    'motion',
+//    'motion',
     'operator',
     'procedures',
-    'sensing',
-    'sound'
+//    'sensing',
+//    'sound'
 ];
 
 // from scratch-vm/src/serialization/sb3.js
@@ -83,20 +83,20 @@ class RubyToBlocksConverter {
         this.vm = vm;
         this._translator = message => message.defaultMessage;
         this._converters = [
-            MusicConverter,
-            PenConverter,
-            EV3Converter,
-            GdxForConverter,
-            SmalrubotS1Converter,
-            BoostConverter,
-            TranslateConverter,
-            MakeyMakeyConverter,
+//          MusicConverter,
+//          PenConverter,
+//          EV3Converter,
+//          GdxForConverter,
+//          SmalrubotS1Converter,
+//          BoostConverter,
+//          TranslateConverter,
+//          MakeyMakeyConverter,
 
-            MotionConverter,
-            LooksConverter,
-            SoundConverter,
+//          MotionConverter,
+//          LooksConverter,
+//          SoundConverter,
             ControlConverter,
-            SensingConverter,
+//          SensingConverter,
             OperatorsConverter,
             VariablesConverter,
             MyBlocksConverter
@@ -105,14 +105,14 @@ class RubyToBlocksConverter {
         this.reset();
 
         [
-            EventConverter,
+//            EventConverter,
             ControlConverter,
-            MicroBitConverter,
-            VideoConverter,
-            Text2SpeechConverter,
-            Wedo2Converter,
-            MicrobitMoreConverter,
-            MeshConverter
+//            MicroBitConverter,
+//            VideoConverter,
+//            Text2SpeechConverter,
+//            Wedo2Converter,
+//            MicrobitMoreConverter,
+//            MeshConverter
         ].forEach(x => x.register(this));
     }
 
