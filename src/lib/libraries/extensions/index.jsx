@@ -105,7 +105,6 @@ const extensions = [
         ),
         featured: true
     },
-/*    
     {
         name: (
             <FormattedMessage
@@ -126,7 +125,6 @@ const extensions = [
         ),
         featured: true
     },
-*/
     {
         name: (
             <FormattedMessage

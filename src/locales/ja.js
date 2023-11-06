@@ -144,6 +144,15 @@ export default {
     "microcom.uart_write": "出力: UART-[TEXT1]: [TEXT2]",    
     "microcom.uart_read": "入力: UART-[TEXT]",
 //    
+    "kanirobo1.name": "かにロボ",
+    "kanirobo1.Menu1.forward": "前",
+    "kanirobo1.Menu1.backward": "後ろ",
+    "kanirobo1.menu2.right": "右",
+    "kanirobo1.menu2.left": "左",
+    "kanirobo1.motor": "モーター[TEXT1]を[TEXT2]方向にセット. スピード[TEXT3]",
+    "kanirobo1.value0": "ライトセンサー[TEXT]の値",
+    "kanirobo1.command9": "サーボモーター[TEXT]を[NUM]度にする",
+//
     "kanirobo2.name": "蟹ロボ",
     "kanirobo2.Menu1.forward": "前",
     "kanirobo2.Menu1.backward": "後ろ",

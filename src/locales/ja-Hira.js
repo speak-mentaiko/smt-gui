@@ -142,7 +142,16 @@ export default {
     "microcom.uart_init": "UART-[TEXT] をつかう. つうしんそくど [NUM]",
     "microcom.uart_write": "しゅつりょく UART-[TEXT1]: [TEXT2]",
     "microcom.uart_read": "にゅうりょく I2C-[TEXT]",
-//
+    //
+    "kanirobo1.name": "かにろぼ(ふつう)", 
+    "kanirobo1.Menu1.forward": "まえ",
+    "kanirobo1.Menu1.backward": "うしろ",
+    "kanirobo1.menu2.right": "みぎ",
+    "kanirobo1.menu2.left": "ひだり",        
+    "kanirobo1.motor": "もーたー[TEXT1]を[TEXT2]ほうこうにせっと. スピード[TEXT3]",
+    "kanirobo1.value0": "らいとせんさー[TEXT]のあたい",
+    "kanirobo1.command9": "さーぼもーたー[TEXT]を[NUM]どにする",
+    //
     "kanirobo2.name": "かにろぼ(ふつう)", 
     "kanirobo2.Menu1.forward": "まえ",
     "kanirobo2.Menu1.backward": "うしろ",
