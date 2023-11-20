@@ -8,18 +8,18 @@ export default function (Generator) {
     //
     // SCD30
     //
-    Generator.sensor_scd30_init = function (block) {
-	Generator.prepares_['i2c'] = Generator.mboard3_i2c_init(null);
-        return  `scd30 = SCD30.new(i2c)\n`;
+    Generator.sensor_scd30_init = function () {
+        Generator.prepares_.i2c = Generator.mboard3_i2c_init(null);
+        return `scd30 = SCD30.new(i2c)\n`;
     };
     
-    Generator.sensor_scd30_status = function (block) {
-        Generator.prepares_['i2c_scd30'] = Generator.sensor_scd30_init(null);
+    Generator.sensor_scd30_status = function () {
+        Generator.prepares_.i2c_scd30 = Generator.sensor_scd30_init(null);
         return [`scd30.is_ready?`, Generator.ORDER_ATOMIC];
     };
 
     Generator.sensor_scd30 = function (block) {
-        Generator.prepares_['i2c_scd30'] = Generator.sensor_scd30_init(null);
+        Generator.prepares_.i2c_scd30 = Generator.sensor_scd30_init(null);
         const type = Generator.getFieldValue(block, 'TYPE') || null;
         return [`scd30.${type}`, Generator.ORDER_ATOMIC];
     };
