@@ -25,6 +25,7 @@ class RubyUploader extends React.Component {
         }
         const options = {
             requires: [],
+
             withSpriteNew: false
         };
         if (this.props.rubyCode.modified) {
@@ -34,44 +35,50 @@ class RubyUploader extends React.Component {
         }
         // master 部分のみ抽出
         const targets1 = targets.splice(1, 1);
+
         const masterCode = RubyGenerator.targetsToCode(targets1, options);
+        const base64MasterCode = btoa(
+            String.fromCharCode.apply(
+                null,
+                new TextEncoder().encode(masterCode)
+            )
+        );
         // master部分を削除してslaveのコードを生成
         // targets.splice(1, 1);
-        const targets2 = targets.splice(1, 2);
-        const slaveCode = RubyGenerator.targetsToCode(targets2, options);
+        // const targets2 = targets.splice(1, 2);
+        // const slave_code = RubyGenerator.targetsToCode(targets2, options);
 
         // 確認
-        // lintでconsoleを禁止しているのでとりあえずコメントアウト
-        // console.log("master: " + masterCode);
-        // console.log("slave:  " + slaveCode );
+        // console.log(`master: ${base64MasterCode}`);
 
         // 送信
-        const ele = document.createElement('form');
-        ele.action = 'https://www.epi.it.matsue-ct.jp/j1819/convert/upload.php';
-        ele.method = 'post';
-        ele.setAttribute('target', '_blank');
-
-        const q = document.createElement('textarea');
-        q.value = masterCode;
-        q.name = 'master_code';
-
-        const r = document.createElement('textarea');
-        r.value = slaveCode;
-        r.name = 'slave_code';
-
-        ele.appendChild(q);
-        ele.appendChild(r);
-        document.body.appendChild(ele);
-
-        ele.submit();
-        ele.remove();
-
-        return;
+        const CompileServerURI = 'https://ceres.epi.it.matsue-ct.ac.jp/compile/code';
+        const res = fetch(CompileServerURI, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                code: base64MasterCode
+            })
+        }).then(r => r.json().then(j => {
+            // console.table(j);
+            window.open(`https://ceres.epi.it.matsue-ct.ac.jp/writer?id=${j.id}`, '_blank');
+        }))
+            .catch(r => {
+            // eslint-disable-next-line no-console
+                console.error(r);
+            });
+        return res;
     }
 
     render () {
         const {children} = this.props;
-        return children(this.props.className, this.downloadProject, this.uploadProject);
+        return children(
+            this.props.className,
+            this.downloadProject,
+            this.uploadProject
+        );
     }
 }
 
