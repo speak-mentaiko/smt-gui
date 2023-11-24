@@ -5,8 +5,8 @@
  */
 export default function (Generator) {
 
-    //各ブロックに対応する Ruby コードを書く
-    Generator.kanirobo2_command0 = function (block) {
+    // 各ブロックに対応する Ruby コードを書く
+    Generator.kanirobo2_command0 = function () {
         return `motorEn = GPIO.new(12, GPIO::OUT)\n`;
     };
 
@@ -33,7 +33,7 @@ export default function (Generator) {
 
     Generator.kanirobo2_command5 = function (block) {
         const text = Generator.valueToCode(block, 'TEXT', Generator.ORDER_NONE) || null;
-        const num  = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE)  || 0;
+        const num = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE) || 0;
         return `motor${text}_pwm.duty((${num} % 1024).to_i)\n`;
     };
 
@@ -44,29 +44,29 @@ export default function (Generator) {
 
     Generator.kanirobo2_value0 = function (block) {
         const text = Generator.valueToCode(block, 'TEXT', Generator.ORDER_NONE) || null;
-	return [`lux${text}.rawread`, Generator.ORDER_ATOMIC];
+        return [`lux${text}.rawread`, Generator.ORDER_ATOMIC];
     };
 
     Generator.kanirobo2_command7 = function (block) {
         const text = Generator.valueToCode(block, 'TEXT', Generator.ORDER_NONE) || null;
-	return `servo${text} = PWM.new(${text}, ch=${(text % 2) + 2})\n`;
+        return `servo${text} = PWM.new(${text}, ch=${(text % 2) + 2})\n`;
     };
 
     Generator.kanirobo2_command8 = function (block) {
         const text = Generator.valueToCode(block, 'TEXT', Generator.ORDER_NONE) || null;
-        const num  = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE)  || 0;
+        const num = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE) || 0;
         return `servo${text}.freq(${num})\n`;
     };
 
     Generator.kanirobo2_command9 = function (block) {
         const text = Generator.valueToCode(block, 'TEXT', Generator.ORDER_NONE) || null;
-        const num  = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE)  || 0;
+        const num = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE) || 0;
         return `servo${text}.duty((${num} % 1024).to_i)\n`;
     };
 
     Generator.kanirobo2_value1 = function (block) {
-        const num  = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE)  || 0;
-	return [`(((${num}.to_f - 90.0) * 0.95 / 90.0 + 1.45) / 20.0 * 1024).to_i`, Generator.ORDER_ATOMIC];
+        const num = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE) || 0;
+        return [`(((${num}.to_f - 90.0) * 0.95 / 90.0 + 1.45) / 20.0 * 1024).to_i`, Generator.ORDER_ATOMIC];
     };
 
     // メニューについては Ruby 側でも定義が必要のようだ

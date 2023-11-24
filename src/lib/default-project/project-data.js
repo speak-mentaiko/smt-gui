@@ -33,8 +33,8 @@ const projectData = translateFunction => {
                 name: 'Stage',
                 variables: {
                     '`jEk@4|i[#Fk?(8x)AV.-my variable': [
-                        //translator(messages.variable),
-			"var1",
+                        // translator(messages.variable),
+                        'var1',
                         0
                     ]
                 },
@@ -67,7 +67,7 @@ const projectData = translateFunction => {
             },
             {
                 isStage: false,
-                name: "master",	// kani robot
+                name: 'master', // kani robot
                 variables: {},
                 lists: {},
                 broadcasts: {},
@@ -76,7 +76,7 @@ const projectData = translateFunction => {
                 costumes: [
                     {
                         assetId: '3eb0cf9328f7ae8f65aba0892806a3ba',
-                        name: "master",	// kani robot
+                        name: 'master', // kani robot
                         bitmapResolution: 1,
                         md5ext: '3eb0cf9328f7ae8f65aba0892806a3ba.svg',
                         dataFormat: 'svg',
@@ -86,12 +86,12 @@ const projectData = translateFunction => {
                 ],
                 sounds: [
                     {
-                        assetId: "83a9787d4cb6f3b7632b4ddfebf74367",
-                        name: "c3",
-                        dataFormat: "wav",
+                        assetId: '83a9787d4cb6f3b7632b4ddfebf74367',
+                        name: 'c3',
+                        dataFormat: 'wav',
                         rate: 48000,
                         sampleCount: 480000,
-                        md5ext: "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+                        md5ext: '83a9787d4cb6f3b7632b4ddfebf74367.wav'
                     }
                 ],
                 volume: 100,
@@ -106,7 +106,7 @@ const projectData = translateFunction => {
             },
             {
                 isStage: false,
-                name: "slave",        // kani robot
+                name: 'slave', // kani robot
                 variables: {},
                 lists: {},
                 broadcasts: {},
@@ -115,7 +115,7 @@ const projectData = translateFunction => {
                 costumes: [
                     {
                         assetId: '3eb0cf9328f7ae8f65aba0892806a3ba',
-                        name: "slave",
+                        name: 'slave',
                         bitmapResolution: 1,
                         md5ext: '3eb0cf9328f7ae8f65aba0892806a3ba.svg',
                         dataFormat: 'svg',
@@ -125,12 +125,12 @@ const projectData = translateFunction => {
                 ],
                 sounds: [
                     {
-                        assetId: "83a9787d4cb6f3b7632b4ddfebf74367",
-                        name: "c3",
-                        dataFormat: "wav",
+                        assetId: '83a9787d4cb6f3b7632b4ddfebf74367',
+                        name: 'c3',
+                        dataFormat: 'wav',
                         rate: 48000,
                         sampleCount: 480000,
-                        md5ext: "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+                        md5ext: '83a9787d4cb6f3b7632b4ddfebf74367.wav'
                     }
                 ],
                 volume: 100,
@@ -143,7 +143,7 @@ const projectData = translateFunction => {
                 draggable: false,
                 rotationStyle: 'all around'
             }
-/*	    
+            /*
             {
                 isStage: false,
                 name: translator(messages.sprite, {index: 1}),
