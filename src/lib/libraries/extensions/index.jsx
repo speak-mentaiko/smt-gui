@@ -32,6 +32,26 @@ const extensions = [
     {
         name: (
             <FormattedMessage
+                defaultMessage="Kanirobo1v2"
+                description="Name for the 'Kanirobo1v2' extension"
+                id="gui.kanirobo1v2.name"
+            />
+        ),
+        extensionId: 'kanirobo1v2',
+        iconURL: menu1IconURL,
+        insetIconURL: menu1InsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Kanirobo Blocks (Easy)"
+                description="Description for the 'Kanirobo1v2' extension"
+                id="gui.kanirobo1v2.description"
+            />
+        ),
+        featured: true
+    },
+    {
+        name: (
+            <FormattedMessage
                 defaultMessage="Kanirobo2"
                 description="Name for the 'Kanirobo2' extension"
                 id="gui.kanirobo2.name"

@@ -25,6 +25,8 @@ export default {
 //
     "gui.kanirobo1.name": "かにロボ1",
     "gui.kanirobo1.description": "かにロボブロック (かんたん)",
+    "gui.kanirobo1v2.name": "かにロボ1v2",
+    "gui.kanirobo1v2.description": "かにロボブロック (かんたん v2)",
     "gui.kanirobo2.name": "かにロボ2",
     "gui.kanirobo2.description": "かにロボブロック (ふつう)",    
     "gui.microcom.name": "マイコン (はんよう)",
@@ -121,6 +123,15 @@ export default {
     "kanirobo1.motor": "もーたー[TEXT1]を[TEXT2]ほうこうにせっと. スピード[TEXT3]",
     "kanirobo1.value0": "らいとせんさー[TEXT]のあたい",
     "kanirobo1.command9": "さーぼもーたー[TEXT]を[NUM]どにする",
+//
+    "kanirobo1v2.name": "かにろぼ(ふつう)", 
+    "kanirobo1v2.Menu1.forward": "まえ",
+    "kanirobo1v2.Menu1.backward": "うしろ",
+    "kanirobo1v2.menu2.right": "みぎ",
+    "kanirobo1v2.menu2.left": "ひだり",        
+    "kanirobo1v2.motor": "もーたー[TEXT1]を[TEXT2]ほうこうにせっと. スピード[TEXT3]",
+    "kanirobo1v2.value0": "らいとせんさー[TEXT]のあたい",
+    "kanirobo1v2.command9": "さーぼもーたー[TEXT]を[NUM]どにする",
     //
     "kanirobo2.name": "かにろぼ(ふつう)", 
     "kanirobo2.Menu1.forward": "まえ",

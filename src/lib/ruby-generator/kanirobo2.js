@@ -66,7 +66,7 @@ export default function (Generator) {
 
     Generator.kanirobo2_value1 = function (block) {
         const num  = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE)  || 0;
-	return [`(((${num}.to_f - 90.0) * 0.95 / 90.0 + 1.45) / 20.0 * 1024).to_i`, Generator.ORDER_ATOMIC];
+	return [`( ${num}.to_f * (150 - 50) / 90.0 + 50).to_i`, Generator.ORDER_ATOMIC];
     };
 
     // メニューについては Ruby 側でも定義が必要のようだ
