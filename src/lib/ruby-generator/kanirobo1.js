@@ -20,13 +20,12 @@ export default function (Generator) {
            `lux35 = ADC.new(35, ADC::ATTEN_11DB, ADC::WIDTH_12BIT)\n` +
            `lux2  = ADC.new(2,  ADC::ATTEN_11DB, ADC::WIDTH_12BIT)\n`;
     };
-
     Generator.kanirobo1_servo_init = function () {
         return `servo27 = PWM.new(27, ch=3)\n` +
         `servo14 = PWM.new(14, ch=2)\n` +
         `servo27.freq( 80 )\n` +
         `servo14.freq( 80 )\n` +
-        `deg = ((( 0 - 90.0) * 0.95 / 90.0 + 1.45) / 20.0 * 1024).to_i\n` +
+        `deg = 50 \n` +
             `servo27.duty( deg )\n` +
             `servo14.duty( deg )\n` +
         `sleep 0.1\n` +
@@ -52,8 +51,8 @@ export default function (Generator) {
     Generator.kanirobo1_command9 = function (block) {
         Generator.prepares_.servo = Generator.kanirobo1_servo_init(null);
         const text = Generator.valueToCode(block, 'TEXT', Generator.ORDER_NONE) || null;
-        const num = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE) || 0;
-        return `deg = (((${num}.to_f - 90.0) * 0.95 / 90.0 + 1.45) / 20.0 * 1024).to_i\n` +
+        const num  = Generator.valueToCode(block, 'NUM', Generator.ORDER_NONE)  || 0;
+	      return  `deg = ( ( ${num}.to_f * (150 - 50) / 90.0 + 50).to_i ) \n`+
                `servo${text}.duty( ( deg % 1024 ).to_i )\n` +
             `sleep 0.1\n` +
             `servo${text}.deinit\n`;

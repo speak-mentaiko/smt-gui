@@ -25,6 +25,8 @@ export default {
     //
     "gui.kanirobo1.name": "かにロボ1",
     "gui.kanirobo1.description": "かにロボブロック (簡単)",
+    "gui.kanirobo1v2.name": "かにロボ1v2",
+    "gui.kanirobo1v2.description": "かにロボブロック (簡単 v2)",
     "gui.kanirobo2.name": "かにロボ2",
     "gui.kanirobo2.description": "かにロボブロック (普通)",
     "gui.microcom.name": "マイコン (汎用)",
@@ -122,6 +124,14 @@ export default {
     "kanirobo1.value0": "ライトセンサー[TEXT]の値",
     "kanirobo1.command9": "サーボモーター[TEXT]を[NUM]度にする",
     //
+    "kanirobo1v2.name": "かにロボ",
+    "kanirobo1v2.Menu1.forward": "前",
+    "kanirobo1v2.Menu1.backward": "後ろ",
+    "kanirobo1v2.menu2.right": "右",
+    "kanirobo1v2.menu2.left": "左",
+    "kanirobo1v2.motor": "モーター[TEXT1]を[TEXT2]方向にセット. スピード[TEXT3]",
+    "kanirobo1v2.value0": "ライトセンサー[TEXT]の値",
+    "kanirobo1v2.command9": "サーボモーター[TEXT]を[NUM]度にする",
     "kanirobo2.name": "蟹ロボ",
     "kanirobo2.Menu1.forward": "前",
     "kanirobo2.Menu1.backward": "後ろ",
