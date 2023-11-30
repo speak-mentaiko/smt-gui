@@ -2,11 +2,11 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import menu1IconURL from './smt/kani.png';
-import menu1InsetIconURL from  './smt/kani-small.png';
+import menu1InsetIconURL from './smt/kani-small.png';
 import menu2IconURL from './smt/mboard.png';
-import menu2InsetIconURL from  './smt/mboard-small.png';
+import menu2InsetIconURL from './smt/mboard-small.png';
 import menu3IconURL from './smt/microcom.png';
-import menu3InsetIconURL from  './smt/microcom-small.png';
+import menu3InsetIconURL from './smt/microcom-small.png';
 
 const extensions = [
 /*
@@ -210,7 +210,7 @@ const extensions = [
             />
         ),
         featured: true
-    },
+    }
 ];
 
 export default extensions;

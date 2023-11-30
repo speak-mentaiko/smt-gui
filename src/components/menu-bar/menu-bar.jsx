@@ -184,7 +184,7 @@ class MenuBar extends React.Component {
             'handleRestoreOption',
             'getSaveToComputerHandler',
             'restoreOptionMessage',
-	    'getSaveRubyToComputerHandler'
+            'getSaveRubyToComputerHandler'
         ]);
     }
     componentDidMount () {
@@ -273,20 +273,22 @@ class MenuBar extends React.Component {
             }
         };
     }
-    getSaveRubyToComputerHandler(uploadProjectCallback) {
+    getSaveRubyToComputerHandler (uploadProjectCallback) {
         return () => {
             this.props.onRequestCloseFile();
             uploadProjectCallback();
-//            if (this.props.onProjectTelemetryEvent) {
-//                const metadata = collectMetadata(
-//                    this.props.vm,
-//                    this.props.projectTitle,
-//                    this.props.locale
-//                );
-//                this.props.onProjectTelemetryEvent("projectDidSave", metadata);
-//            }
+            /*
+              if (this.props.onProjectTelemetryEvent) {
+                  const metadata = collectMetadata(
+                      this.props.vm,
+                      this.props.projectTitle,
+                      this.props.locale
+                  );
+                  this.props.onProjectTelemetryEvent("projectDidSave", metadata);
+              }
+            */
         };
-    }    
+    }
     restoreOptionMessage (deletedItem) {
         switch (deletedItem) {
         case 'Sprite':
@@ -514,17 +516,14 @@ class MenuBar extends React.Component {
                                             </MenuItem>
                                         )}</SB3Downloader>
                                     </MenuSection>
-				    <MenuSection>
+                                    <MenuSection>
                                         <RubyUploader>
                                             {(
-                                                className, _,
-						uploadProject
+                                                className, _, uploadProject
                                             ) => (
                                                 <MenuItem
                                                     className={className}
-                                                    onClick={this.getSaveRubyToComputerHandler(
-							uploadProject
-                                                    )}
+                                                    onClick={this.getSaveRubyToComputerHandler(uploadProject)}
                                                 >
                                                     <FormattedMessage
                                                         defaultMessage="Send to MicroComputer"
@@ -534,7 +533,7 @@ class MenuBar extends React.Component {
                                                 </MenuItem>
                                             )}
                                         </RubyUploader>
-                                    </MenuSection>				    
+                                    </MenuSection>
                                 </MenuBarMenu>
                             </div>
                         )}
