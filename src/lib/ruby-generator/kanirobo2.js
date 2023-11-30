@@ -28,7 +28,7 @@ export default function (Generator) {
     Generator.kanirobo2_command4 = function (block) {
         const text1 = Generator.valueToCode(block, 'TEXT1', Generator.ORDER_NONE) || null;
         const text2 = Generator.valueToCode(block, 'TEXT2', Generator.ORDER_NONE) || null;
-        return `motor${text1}.${text2}\n`;
+        return `motor${text1}.write(${text2})\n`;
     };
 
     Generator.kanirobo2_command5 = function (block) {

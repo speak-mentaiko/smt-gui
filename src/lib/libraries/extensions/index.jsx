@@ -9,6 +9,7 @@ import menu3IconURL from './smt/microcom.png';
 import menu3InsetIconURL from  './smt/microcom-small.png';
 
 const extensions = [
+/*
     {
         name: (
             <FormattedMessage
@@ -29,6 +30,7 @@ const extensions = [
         ),
         featured: true
     },
+*/
     {
         name: (
             <FormattedMessage
