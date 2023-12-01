@@ -45,7 +45,7 @@ const extensions = [
             />
         ),
         extensionId: 'kanirobo1v2',
-        iconURL: menu1IconURL,
+        iconURL: kani1,
         insetIconURL: menu1InsetIconURL,
         description: (
             <FormattedMessage
