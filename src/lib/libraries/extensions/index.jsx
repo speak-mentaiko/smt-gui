@@ -1,11 +1,16 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-
-import menu1IconURL from './smt/kani.png';
+import kani1 from './smt/kani1.png';
+import kani2 from './smt/kani2.png';
+import kani3 from './smt/kani3.png';
 import menu1InsetIconURL from './smt/kani-small.png';
-import menu2IconURL from './smt/mboard.png';
 import menu2InsetIconURL from './smt/mboard-small.png';
-import menu3IconURL from './smt/microcom.png';
+import mboard1 from './smt/mboard1.png';
+import mboard2 from './smt/mboard2.png';
+import mboard3 from './smt/mboard3.png';
+import microcom1 from './smt/microcom1.png';
+import microcom2 from './smt/microcom2.png';
+import microcom3 from './smt/microcom3.png';
 import menu3InsetIconURL from './smt/microcom-small.png';
 
 const extensions = [
@@ -19,7 +24,7 @@ const extensions = [
             />
         ),
         extensionId: 'kanirobo1',
-        iconURL: menu1IconURL,
+        iconURL: kani1,
         insetIconURL: menu1InsetIconURL,
         description: (
             <FormattedMessage
@@ -60,7 +65,7 @@ const extensions = [
             />
         ),
         extensionId: 'kanirobo2',
-        iconURL: menu1IconURL,
+        iconURL: kani2,
         insetIconURL: menu1InsetIconURL,
         description: (
             <FormattedMessage
@@ -80,7 +85,7 @@ const extensions = [
             />
         ),
         extensionId: 'tools',
-        iconURL: menu1IconURL,
+        iconURL: kani3,
         insetIconURL: menu1InsetIconURL,
         description: (
             <FormattedMessage
@@ -100,7 +105,7 @@ const extensions = [
             />
         ),
         extensionId: 'mboard1',
-        iconURL: menu2IconURL,
+        iconURL: mboard1,
         insetIconURL: menu2InsetIconURL,
         description: (
             <FormattedMessage
@@ -120,7 +125,7 @@ const extensions = [
             />
         ),
         extensionId: 'mboard2',
-        iconURL: menu2IconURL,
+        iconURL: mboard2,
         insetIconURL: menu2InsetIconURL,
         description: (
             <FormattedMessage
@@ -140,7 +145,7 @@ const extensions = [
             />
         ),
         extensionId: 'mboard3',
-        iconURL: menu2IconURL,
+        iconURL: mboard3,
         insetIconURL: menu2InsetIconURL,
         description: (
             <FormattedMessage
@@ -160,7 +165,7 @@ const extensions = [
             />
         ),
         extensionId: 'microcom',
-        iconURL: menu3IconURL,
+        iconURL: microcom1,
         insetIconURL: menu3InsetIconURL,
         description: (
             <FormattedMessage
@@ -180,7 +185,7 @@ const extensions = [
             />
         ),
         extensionId: 'm5stack',
-        iconURL: menu3IconURL,
+        iconURL: microcom2,
         insetIconURL: menu3InsetIconURL,
         description: (
             <FormattedMessage
@@ -200,7 +205,7 @@ const extensions = [
             />
         ),
         extensionId: 'sensor',
-        iconURL: menu3IconURL,
+        iconURL: microcom3,
         insetIconURL: menu3InsetIconURL,
         description: (
             <FormattedMessage

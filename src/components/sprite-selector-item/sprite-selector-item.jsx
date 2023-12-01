@@ -2,10 +2,9 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import DeleteButton from '../delete-button/delete-button.jsx';
 import styles from './sprite-selector-item.css';
 import {ContextMenuTrigger} from 'react-contextmenu';
-import {DangerousMenuItem, ContextMenu, MenuItem} from '../context-menu/context-menu.jsx';
+import {ContextMenu, MenuItem} from '../context-menu/context-menu.jsx';
 import {FormattedMessage} from 'react-intl';
 
 // react-contextmenu requires unique id to match trigger and context menu
@@ -47,13 +46,7 @@ const SpriteSelectorItem = props => (
                 <div className={styles.spriteDetails}>{props.details}</div>
             ) : null}
         </div>
-        {(props.selected && props.onDeleteButtonClick) ? (
-            <DeleteButton
-                className={styles.deleteButton}
-                onClick={props.onDeleteButtonClick}
-            />
-        ) : null }
-        {props.onDuplicateButtonClick || props.onDeleteButtonClick || props.onExportButtonClick ? (
+        {props.onDuplicateButtonClick || props.onExportButtonClick ? (
             <ContextMenu id={`${props.name}-${contextMenuId++}`}>
                 {props.onDuplicateButtonClick ? (
                     <MenuItem onClick={props.onDuplicateButtonClick}>
@@ -73,15 +66,6 @@ const SpriteSelectorItem = props => (
                         />
                     </MenuItem>
                 ) : null }
-                {props.onDeleteButtonClick ? (
-                    <DangerousMenuItem onClick={props.onDeleteButtonClick}>
-                        <FormattedMessage
-                            defaultMessage="delete"
-                            description="Menu item to delete in the right click menu"
-                            id="gui.spriteSelectorItem.contextMenuDelete"
-                        />
-                    </DangerousMenuItem>
-                ) : null }
             </ContextMenu>
         ) : null}
     </ContextMenuTrigger>
@@ -95,7 +79,6 @@ SpriteSelectorItem.propTypes = {
     name: PropTypes.string.isRequired,
     number: PropTypes.number,
     onClick: PropTypes.func,
-    onDeleteButtonClick: PropTypes.func,
     onDuplicateButtonClick: PropTypes.func,
     onExportButtonClick: PropTypes.func,
     onMouseDown: PropTypes.func,
