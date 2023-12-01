@@ -722,9 +722,10 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
     isStage = isInitialSetup || isStage;
     const gap = [categorySeparator];
 
-    costumeName = xmlEscape(costumeName);
-    backdropName = xmlEscape(backdropName);
-    soundName = xmlEscape(soundName);
+    // まだ使用されていないだけで、将来的に使用する可能性があるのでいかのように残しておく
+    const _costumeName = xmlEscape(costumeName);
+    const _backdropName = xmlEscape(backdropName);
+    const _soundName = xmlEscape(soundName);
 
     categoriesXML = categoriesXML.slice();
     const moveCategory = categoryId => {
@@ -736,25 +737,26 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         }
         // return `undefined`
     };
-    const motionXML = moveCategory('motion') || motion(isInitialSetup, isStage, targetId, colors.motion);
-    const looksXML = moveCategory('looks') ||
-        looks(isInitialSetup, isStage, targetId, costumeName, backdropName, colors.looks);
-    const soundXML = moveCategory('sound') || sound(isInitialSetup, isStage, targetId, soundName, colors.sounds);
-    const eventsXML = moveCategory('event') || events(isInitialSetup, isStage, targetId, colors.event);
+    // never used
+    // const motionXML = moveCategory('motion') || motion(isInitialSetup, isStage, targetId, colors.motion);
+    // const looksXML = moveCategory('looks') ||
+    //     looks(isInitialSetup, isStage, targetId, costumeName, backdropName, colors.looks);
+    // const soundXML = moveCategory('sound') || sound(isInitialSetup, isStage, targetId, soundName, colors.sounds);
+    // const eventsXML = moveCategory('event') || events(isInitialSetup, isStage, targetId, colors.event);
     const controlXML = moveCategory('control') || control(isInitialSetup, isStage, targetId, colors.control);
-    const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
+    // const sensingXML = moveCategory('sensing') || sensing(isInitialSetup, isStage, targetId, colors.sensing);
     const operatorsXML = moveCategory('operators') || operators(isInitialSetup, isStage, targetId, colors.operators);
     const variablesXML = moveCategory('data') || variables(isInitialSetup, isStage, targetId, colors.data);
     const myBlocksXML = moveCategory('procedures') || myBlocks(isInitialSetup, isStage, targetId, colors.more);
 
     const everything = [
         xmlOpen,
-//        motionXML, gap,
-//        looksXML, gap,
-//        soundXML, gap,
-//        eventsXML, gap,
+        // motionXML, gap,
+        // looksXML, gap,
+        // soundXML, gap,
+        // eventsXML, gap,
         controlXML, gap,
-//        sensingXML, gap,
+        // sensingXML, gap,
         operatorsXML, gap,
         variablesXML, gap,
         myBlocksXML
