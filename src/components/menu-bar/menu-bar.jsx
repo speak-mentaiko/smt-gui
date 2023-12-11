@@ -94,14 +94,6 @@ import {updateRubyCodeTarget} from '../../reducers/ruby-code';
 
 import sharedMessages from '../../lib/shared-messages';
 
-const ariaMessages = defineMessages({
-    tutorials: {
-        id: 'gui.menuBar.tutorialsLibrary',
-        defaultMessage: 'Tutorials',
-        description: 'accessibility text for the tutorials button'
-    }
-});
-
 const MenuBarItemTooltip = ({
     children,
     className,
@@ -737,19 +729,9 @@ class MenuBar extends React.Component {
                     </div>
                     <Divider className={classNames(styles.divider)} />
                     <div className={styles.fileGroup}>
-                        <div
-                            aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
-                            className={classNames(styles.menuBarItem, styles.hoverable)}
-                            onClick={this.props.onOpenTipLibrary}
-                        >
-                            <img
-                                className={styles.helpIcon}
-                                src={helpIcon}
-                            />
-                            <span className={styles.tutorialsLabel}>
-                                <FormattedMessage {...ariaMessages.tutorials} />
-                            </span>
-                        </div>
+                            <span><a href="https://www.shimane-oss.org/kani-robo/" target="_blank" rel="noopener noreferrer">
+				      <font color="white">🦀kani-robo</font>
+                            </a></span>
                     </div>
                 </div>
 
