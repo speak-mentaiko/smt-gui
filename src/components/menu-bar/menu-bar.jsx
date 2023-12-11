@@ -30,6 +30,7 @@ import MenuBarHOC from '../../containers/menu-bar-hoc.jsx';
 import SettingsMenu from './settings-menu.jsx';
 
 import RubyUploader from '../../containers/ruby-uploader.jsx'; // kani-robo
+import RubyUploaderOld from '../../containers/ruby-uploader-old.jsx'; // kani-robo
 
 import {openTipsLibrary} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
@@ -533,6 +534,24 @@ class MenuBar extends React.Component {
                                                 </MenuItem>
                                             )}
                                         </RubyUploader>
+                                    </MenuSection>
+                                    <MenuSection>
+                                        <RubyUploaderOld>
+                                            {(
+                                                className, _, uploadProject
+                                            ) => (
+                                                <MenuItem
+                                                    className={className}
+                                                    onClick={this.getSaveRubyToComputerHandler(uploadProject)}
+                                                >
+                                                    <FormattedMessage
+                                                        defaultMessage="Send to MicroComputer (old version)"
+                                                        description="Menu bar item for send to MicroComputer"
+                                                        id="gui.menuBar.uploadToServerOld"
+                                                    />
+                                                </MenuItem>
+                                            )}
+                                        </RubyUploaderOld>
                                     </MenuSection>
                                 </MenuBarMenu>
                             </div>

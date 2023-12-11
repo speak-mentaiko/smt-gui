@@ -44,6 +44,7 @@ export default {
     "gui.sensor.name": "センサー",
     "gui.sensor.description": "センサー用ブロック．SCD30, etc.",
     "gui.menuBar.uploadToServer": "マイコンへ書き出し",
+    "gui.menuBar.uploadToServerOld": "マイコンへ書き出し (旧版)",
     // MBoard共通
     "mboard.sound_C": "ド",
     "mboard.sound_D": "レ",
