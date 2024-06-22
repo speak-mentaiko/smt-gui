@@ -37,7 +37,7 @@ export default function (Generator) {
         const text1 = Generator.valueToCode(block, 'TEXT1', Generator.ORDER_NONE) || null;
         const text2 = Generator.valueToCode(block, 'TEXT2', Generator.ORDER_NONE) || null;
         const text3 = Generator.valueToCode(block, 'TEXT3', Generator.ORDER_NONE) || null;
-        return `motor${text1}_pwm.duty( 1000 + ${text3} - 2 * ${text2} * ${text3} ) \n` +
+        return `motor${text1}_pwm.duty( ( 1000 - 2 * ${text3} ) * ${text2} + ${text3} ) \n` +
                `motor${text1}.write(${text2})\n` +
                `sleep( 0.01 )\n`;
     };
