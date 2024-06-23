@@ -45,6 +45,8 @@ export default {
     "gui.sensor.description": "センサーようブロック．SCD30, など",
     "gui.menuBar.uploadToServer": "マイコンへかく",
     "gui.menuBar.uploadToServerOld": "マイコンへかく (きゅうばん)",
+    "gui.rboard.name": "RBoard",
+    "gui.rboard.description": "RBoard (GPIO, PWM, ADC, ...)",
     // MBoard共通
     "mboard.sound_C": "ド",
     "mboard.sound_D": "レ",
@@ -174,5 +176,23 @@ export default {
     "sensor.scd30": 'SCD30 [TYPE]',
     //
     "tools.name": "デバッグ",
-    "tools.puts": "ひょうじ [TEXT]"
+    "tools.puts": "ひょうじ [TEXT]",
+    // RBoard2
+    "rboard.name": "RBoard",
+    "rboard.gpio_output_init": "GPIO しゅつりょく: [NUM1] をつかう",
+    "rboard.gpio_output": "GPIO しゅつりょく: [NUM1] のあたいを [VALUE] にする",
+    "rboard.gpio_input_init": "GPIO にゅうりょく: [NUM1] をつかう",
+    "rboard.gpio_input": "GPIO にゅうりょく: [NUM1] のあたい",
+    "rboard.pwm_init": "PWM: [NUM1] をつかう",
+    "rboard.pwm_duty": "PWM: [NUM1] のデューティーひを [VALUE] (0~1023)にする",
+    "rboard.pwm_frequency": "PWM: [NUM1] のしゅうはすうを [VALUE] にする",
+    "rboard.adc_init": "ADC: [NUM1] をつかう",
+    "rboard.adc_volt": "ADC: [VALUE] のあたい",
+    "rboard.i2c_init": "I2C をつかう",
+    "rboard.i2c_write": "I2C しゅつりょく: あどれす 0x[NUM1], こまんど 0x[NUM2], あたい 0x[NUM3]",
+    "rboard.i2c_read": "I2C にゅうりょく: あどれす 0x[NUM1], ばいとすう [NUM2], こまんど 0x[NUM3]",
+    "rboard.uart_init": "UART をつかう. つうしんそくど [NUM]",
+    "rboard.uart_write": "UART しゅつりょく: [TEXT2]",
+    "rboard.uart_read": "UART にゅうりょく",
+    "rboard.puts": "ひょうじ [TEXT]"
 };

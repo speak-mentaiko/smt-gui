@@ -45,6 +45,8 @@ export default {
     "gui.sensor.description": "センサー用ブロック．SCD30, etc.",
     "gui.menuBar.uploadToServer": "マイコンへ書き出し",
     "gui.menuBar.uploadToServerOld": "マイコンへ書き出し (旧版)",
+    "gui.rboard.name": "RBoard",
+    "gui.rboard.description": "RBoard (GPIO, PWM, ADC, ...)",    
     // MBoard共通
     "mboard.sound_C": "ド",
     "mboard.sound_D": "レ",
@@ -174,5 +176,23 @@ export default {
     "sensor.scd30": 'SCD30 [TYPE]',
     //
     "tools.name": "デバッグ",
-    "tools.puts": "デバッグ出力 [TEXT]"
+    "tools.puts": "デバッグ出力 [TEXT]",
+    // RBoard
+    "rboard.name": "RBoard",
+    "rboard.gpio_output_init": "GPIO 出力: [NUM1] を使う",
+    "rboard.gpio_output": "GPIO 出力: [NUM1] の値を [VALUE] にする",
+    "rboard.gpio_input_init": "GPIO 入力: [NUM1] を使う",
+    "rboard.gpio_input": "GPIO 入力: [NUM1] の値",
+    "rboard.pwm_init": "PWM: [NUM1] を使う",
+    "rboard.pwm_duty": "PWM: [NUM1] のデューティー比を [VALUE] (0~1023)にする",
+    "rboard.pwm_frequency": "PWM: [NUM1] の周波数を [VALUE] にする",
+    "rboard.adc_init": "ADC: [NUM1] を使う",
+    "rboard.adc_volt": "ADC: [VALUE] の値",
+    "rboard.i2c_init": "I2C を使う",
+    "rboard.i2c_write": "I2C 出力: アドレス 0x[NUM1], コマンド 0x[NUM2], 値 [NUM3]",
+    "rboard.i2c_read":  "I2C 入力: アドレス 0x[NUM1], バイト数 [NUM2], コマンド 0x[NUM3]",
+    "rboard.uart_init": "UART を使う．通信速度 [NUM]",
+    "rboard.uart_write": "出力: UART 出力: [TEXT2]",
+    "rboard.uart_read": "入力: UART 入力",
+    "rboard.puts": "デバッグ出力: [TEXT]"
 };
