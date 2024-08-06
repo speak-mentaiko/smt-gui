@@ -51,11 +51,11 @@ export default function (Generator) {
         const value = Generator.getFieldValue(block, 'VALUE', Generator.ORDER_NONE);
         return [`adc${value}.read`, Generator.ORDER_ATOMIC];
     };
-
+/*
     Generator.rboard_i2c_init = function (block) {
         return `i2c = I2C.new()\n`;
     };
-
+*/
     Generator.rboard_i2c_write = function (block) {
         const num1 = Generator.valueToCode(block, 'NUM1', Generator.ORDER_NONE) || null;
         const num2 = Generator.valueToCode(block, 'NUM2', Generator.ORDER_NONE) || null;
