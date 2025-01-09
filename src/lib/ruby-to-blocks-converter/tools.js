@@ -11,11 +11,7 @@ const ToolsConverter = {
             const { receiver, args } = params;
             if (!converter.isStringOrBlock(args[0])) return null;
 
-            const block = converter.changeRubyExpressionBlock(
-                receiver,
-                "tools_puts",
-                "statement"
-            );
+            const block = converter.changeRubyExpressionBlock(receiver,      "tools_puts",            "statement"            );
             converter.addTextInput(block, "TEXT", args[0], "test");
             return block;
         });
